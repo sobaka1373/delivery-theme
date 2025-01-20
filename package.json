@@ -1,0 +1,16 @@
+{
+  "name": "dilivery-theme",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass assets/scss/main.scss assets/css/main.css && sass assets/scss/main-page.scss:assets/css/main-page.css",
+    "watch": "sass --watch assets/scss/main.scss:assets/css/main.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.82.0"
+  }
+}

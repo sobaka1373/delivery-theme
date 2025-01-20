@@ -1,0 +1,167 @@
+@use 'index' as main;
+
+.footer {
+  margin-top: 20px;
+  background-color: #fff;
+  color: main.$fontColor;
+  font-family: main.$fontTitle, serif;
+  font-size: 24px;
+  text-align: left;
+
+  .image__logo {
+    height: 32px;
+  }
+
+  &__info {
+    font-size: 20px;
+  }
+
+  .address {
+    color: main.$greyColor;
+  }
+
+  &__info {
+    font-size: 20px;
+  }
+
+  .catalog {
+    li {
+      margin: 0;
+      font-size: 28px;
+      height: 30px;
+
+      a {
+        font-size: 20px;
+
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &__order {
+    p {
+      margin: 5px 0;
+    }
+    a {
+      text-decoration: none;
+      color: main.$fontColor;
+      font-size: 20px;
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+      img {
+        height: 30px;
+      }
+    }
+    .flex {
+      img {
+        margin-top: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+
+.footer-column {
+  flex: 1;
+  min-width: 250px;
+  margin-right: 20px;
+  padding: 0 20px;
+  .title {
+    color: main.$greyColor;
+    font-size: 28px;
+  }
+}
+
+
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin: 8px 0;
+}
+
+.footer-column ul li a {
+  color: main.$fontColor;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-column ul li a:hover {
+  text-decoration: underline;
+}
+
+
+.footer-column form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-column input {
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+}
+
+.footer-column button {
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-column button:hover {
+  background-color: #0056b3;
+}
+
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    margin-bottom: 30px;
+  }
+}
+
+.address__link {
+  font-size: 20px;
+
+  a {
+    text-decoration: none;
+    color: main.$fontColor;
+
+    &:hover {
+      transition: .2s;
+      opacity: .7;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+//@charset "UTF-8";
+@use "header";
+@use "footer";
+@use 'main-page';
+
+
+
+@font-face {
+  font-family: CyrillicOld;
+  src: url(../fonts/CyrillicOld/CyrillicOld.otf);
+}
+
+.flex {
+  display: flex;
+}
+
+.container {
+  max-width: 1400px;
+  &__submenu {
+    max-width: 1000px;
+  }
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  &__two {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+}
+
+.justify-content {
+  justify-content: space-between;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

@@ -1,0 +1,123 @@
+@use 'index' as main;
+
+.home {
+  nav {
+    padding: 10px 0;
+  }
+  .image {
+    &__logo {
+      height: 48px;
+    }
+
+    &__phone {
+      max-height: 24px;
+    }
+
+    &__location {
+      max-height: 24px;
+    }
+
+    &__icon {
+      border: 1px solid #686870;
+      border-radius: 15px;
+      padding: 15px;
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  nav.flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    @media (min-width: 600px) {
+      justify-content: space-between;
+    }
+
+    ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    ul li {
+      font-family: main.$fontTitle, serif;
+      margin-right: 20px;
+      font-size: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      a {
+        color: main.$fontColor;
+        text-decoration: none;
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+        }
+      }
+    }
+
+    p {
+      font-family: main.$fontTitle, serif;
+      font-size: 15px;
+      color: main.$fontColor;
+      margin: 15px 0 5px 10px;
+
+      a {
+        color: main.$fontColor;
+        text-decoration: none;
+
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+        }
+      }
+    }
+
+    .icon-block {
+      a {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+        }
+      }
+    }
+  }
+
+  .background_grey {
+    background-color: #ededed;
+    padding: 15px 0 20px 0;
+    .submenu {
+      background-color: white;
+      padding: 10px 47px;
+      border-radius: 16px;
+      div {
+        text-align: center;
+        .image {
+          &__logo {
+            height: 45px;
+          }
+        }
+        a {
+          text-decoration: none;
+          p {
+            color: main.$fontColor;
+            font-family: main.$fontTitle, serif;
+            font-size: 18px;
+            margin: 0;
+          }
+          &:hover {
+            transition: .2s;
+            opacity: .7;
+          }
+        }
+      }
+    }
+  }
+}
