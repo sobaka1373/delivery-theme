@@ -18,3 +18,15 @@ add_action( 'after_setup_theme', 'theme_register_nav_menu' );
 function theme_register_nav_menu() {
     register_nav_menu( 'main', 'Top Menu' );
 }
+
+add_filter('woocommerce_checkout_fields', 'custom_checkout_fields');
+
+function custom_checkout_fields($fields) {
+    // Удалить поле "Компания"
+    unset($fields['billing']['billing_company']);
+
+    // Переименовать поле "Телефон"
+    $fields['billing']['billing_phone']['label'] = 'Контактный телефон';
+
+    return $fields;
+}
