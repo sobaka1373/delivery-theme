@@ -1,6 +1,8 @@
 <?php
 // Add theme support
 require_once get_template_directory() . '/inc/setup.php';
+require_once get_template_directory() . '/shortcodes.php';
+require_once get_template_directory() . '/helpers.php';
 
 // Enqueue styles and scripts
 function my_theme_enqueue_assets() {
@@ -30,3 +32,32 @@ function custom_checkout_fields($fields) {
 
     return $fields;
 }
+
+add_action('woocommerce_thankyou', 'custom_redirect_after_checkout');
+// По каким-то причинам данная функция пока не работает, след. функция жестко редиректит после заказа
+function custom_redirect_after_checkout( $order_id ) {
+    if ( ! $order_id ) {
+        return;
+    }
+
+    $order = wc_get_order( $order_id );
+
+    if ( $order ) {
+        $redirect_url = home_url( '/thank-you/' ) . '?order=' . $order_id;
+
+        wp_safe_redirect( $redirect_url );
+        exit;
+    }
+}
+
+add_action( 'template_redirect', function() {
+    if ( is_wc_endpoint_url( 'order-received' ) ) {
+        if ( isset( $_GET['key'] ) ) {
+            $order_id = wc_get_order_id_by_order_key( $_GET['key'] );
+            if ( $order_id ) {
+                wp_safe_redirect( home_url( '/thank-you/' ) . '?order=' . $order_id );
+                exit;
+            }
+        }
+    }
+});

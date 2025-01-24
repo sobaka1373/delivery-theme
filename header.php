@@ -51,14 +51,14 @@
     <nav class="container__submenu submenu flexbox center">
         <?php
         $menu_items = [
-            ['href' => '#Pizza', 'icon' => 'pizza.svg', 'label' => 'Пицца'],
-            ['href' => '#Kulek', 'icon' => 'kulek.svg', 'label' => 'Кульки'],
-            ['href' => '#Lunch', 'icon' => 'lunch.svg', 'label' => 'Ланчи'],
-            ['href' => '#Sides', 'icon' => 'zakus.svg', 'label' => 'Закуски'],
-            ['href' => '#Combo', 'icon' => 'fries.png', 'label' => 'Комбо'],
-            ['href' => '#Dessert', 'icon' => 'dessert.svg', 'label' => 'Десерты'],
-            ['href' => '#Drinks', 'icon' => 'drinks.svg', 'label' => 'Напитки'],
-            ['href' => '#Sause', 'icon' => 'sos.svg', 'label' => 'Соусы']
+            ['href' => esc_url(home_url('#Pizza')), 'icon' => 'pizza.svg', 'label' => 'Пицца'],
+            ['href' => esc_url(home_url('#Kulek')), 'icon' => 'kulek.svg', 'label' => 'Кульки'],
+            ['href' => esc_url(home_url('#Lunch')), 'icon' => 'lunch.svg', 'label' => 'Ланчи'],
+            ['href' => esc_url(home_url('#Sides')), 'icon' => 'zakus.svg', 'label' => 'Закуски'],
+            ['href' => esc_url(home_url('#Combo')), 'icon' => 'fries.png', 'label' => 'Комбо'],
+            ['href' => esc_url(home_url('#Dessert')), 'icon' => 'dessert.svg', 'label' => 'Десерты'],
+            ['href' => esc_url(home_url('#Drinks')), 'icon' => 'drinks.svg', 'label' => 'Напитки'],
+            ['href' => esc_url(home_url('#Sause')), 'icon' => 'sos.svg', 'label' => 'Соусы']
         ];
         foreach ($menu_items as $item): ?>
           <div>
