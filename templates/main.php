@@ -153,10 +153,26 @@
                 <div class="pizza__subtitle">
                   <?php echo $product->get_short_description(); ?>
                 </div>
-                <div class="pizza__size flex">
-                  <div> 30 см</div>
-                  <div> 40 см</div>
-                </div>
+                  <?php
+                  if ($product->is_type('variable')) {
+                      $variations = $product->get_available_variations();
+
+                      if (!empty($variations)) {
+                          foreach ($variations as $variation) {
+
+                              $size = $variation['attributes']['attribute_pa_size']; // Убедитесь, что 'pa_size' — это слаг вашего атрибута размера.
+                              $price = wc_price($variation['display_price']); // Цена вариации
+
+                              if ($size) {
+                                  echo '<div class="variation-size">';
+                                  echo $size . ' — ' . $price;
+                                  echo '</div>';
+                              }
+                          }
+                      }
+                  }
+                  ?>
+
                 <div class="pizza__price flex">
                   <div class="price">
                       <?php echo $product->get_price_html(); ?>
