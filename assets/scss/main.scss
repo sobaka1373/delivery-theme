@@ -47,3 +47,56 @@
   top: 0;
   z-index: 1;
 }
+
+.pizza__size {
+  display: flex;
+  gap: 10px; /* Расстояние между тоглами */
+}
+
+.size-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px; /* Увеличена ширина для отображения цены */
+  height: 40px; /* Высота тогла */
+  border: 2px solid #ddd; /* Цвет границы */
+  border-radius: 20px; /* Скругление для тогла */
+  background-color: #f9f9f9; /* Цвет фона */
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.size-toggle input {
+  display: none; /* Скрываем стандартный input */
+}
+
+.size-toggle span {
+  color: #333; /* Цвет текста */
+  pointer-events: none; /* Отключаем взаимодействие с текстом */
+}
+
+.size-toggle:hover {
+  border-color: #bbb; /* Цвет границы при наведении */
+}
+
+.size-toggle input:checked + span {
+  background-color: #4caf50; /* Цвет фона при выборе */
+  color: white; /* Цвет текста при выборе */
+  padding: 5px 15px;
+  border-radius: 20px; /* Скругление внутри */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+}
+
+.variation-container {
+  .pizza__price {
+    display: none;
+  }
+
+  .pizza__price.active {
+    display: flex;
+  }
+}
