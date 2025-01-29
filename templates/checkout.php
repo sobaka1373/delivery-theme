@@ -5,8 +5,8 @@
 
 get_header(); ?>
 
-<div class="checkout-page container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Оформление заказа</h1>
+<div class="checkout-page container center mx-auto px-4 py-8">
+    <h1 class="title text-3xl font-bold mb-6">Оформление заказа</h1>
 
     <?php
     if (class_exists('WooCommerce')) {
