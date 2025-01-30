@@ -30,44 +30,39 @@ add_filter('woocommerce_checkout_fields', 'custom_checkout_fields');
 function custom_checkout_fields($fields)
 {
     // Удалить поле "Компания"
-    unset($fields['billing']['billing_company']);
-    unset($fields['billing']['billing_last_name']);
-    unset($fields['billing']['billing_country']);
-    unset($fields['billing']['billing_city']);
-    unset($fields['billing']['billing_state']);
-    unset($fields['billing']['billing_postcode']);
-    unset($fields['billing']['billing_email']);
-    unset($fields['billing']['billing_address_2']);
+//    unset($fields['billing']['billing_company']);
+//    unset($fields['billing']['billing_last_name']);
+//    unset($fields['billing']['billing_country']);
+//    unset($fields['billing']['billing_city']);
+//    unset($fields['billing']['billing_state']);
+//    unset($fields['billing']['billing_postcode']);
+//    unset($fields['billing']['billing_email']);
+//    unset($fields['billing']['billing_address_2']);
 
     // Переименовать поле "Телефон"
-    $fields['billing']['billing_first_name']['label'] = 'Ваше имя:';
-    $fields['billing']['billing_first_name']['placeholder'] = 'Ваше имя*';
-    $fields['billing']['billing_phone']['label'] = 'Контактный телефон';
-    $fields['billing']['billing_phone']['placeholder'] = 'Ваш телефон*';
-    $fields['billing']['billing_address_1']['label'] = 'Улица';
-    $fields['billing']['billing_address_1']['placeholder'] = '';
-    $fields['billing']['billing_address_house']['label'] = 'Дом';
-    $fields['billing']['billing_address_house']['placeholder'] = '';
-    $fields['billing']['billing_address_entrance']['label'] = 'Подъезд';
-    $fields['billing']['billing_address_entrance']['placeholder'] = '';
-    $fields['billing']['billing_address_floor']['label'] = 'Этаж';
-    $fields['billing']['billing_address_floor']['placeholder'] = '';
-    $fields['billing']['billing_address_flat']['label'] = 'Квартира';
-    $fields['billing']['billing_address_flat']['placeholder'] = '';
-    $fields['billing']['order_comments']['label'] = 'Дополнительная информация';
-    $fields['billing']['order_comments']['placeholder'] = 'Дополнительная информация';
-    $fields['billing']['order_comments']['type'] = 'textarea';
+//    $fields['billing']['billing_first_name']['label'] = 'Ваше имя:';
+//    $fields['billing']['billing_first_name']['placeholder'] = 'Ваше имя*';
+//    $fields['billing']['billing_phone']['label'] = 'Контактный телефон';
+//    $fields['billing']['billing_phone']['placeholder'] = 'Ваш телефон*';
+//    $fields['billing']['billing_address_1']['label'] = 'Улица';
+//    $fields['billing']['billing_address_1']['placeholder'] = '';
+//    $fields['billing']['billing_address_house']['label'] = 'Дом';
+//    $fields['billing']['billing_address_house']['placeholder'] = '';
+//    $fields['billing']['billing_address_entrance']['label'] = 'Подъезд';
+//    $fields['billing']['billing_address_entrance']['placeholder'] = '';
+//    $fields['billing']['billing_address_floor']['label'] = 'Этаж';
+//    $fields['billing']['billing_address_floor']['placeholder'] = '';
+//    $fields['billing']['billing_address_flat']['label'] = 'Квартира';
+//    $fields['billing']['billing_address_flat']['placeholder'] = '';
+//    $fields['billing']['order_comments']['label'] = 'Дополнительная информация';
+//    $fields['billing']['order_comments']['placeholder'] = 'Дополнительная информация';
+//    $fields['billing']['order_comments']['type'] = 'textarea';
+
+    $fields['billing']['billing_phone']['priority'] = 4;
 
     return $fields;
 }
 
-add_filter('woocommerce_checkout_fields', 'wplb_phone_first');
-
-function wplb_phone_first($array)
-{
-    $array['billing']['billing_phone']['priority'] = 4;
-    return $array;
-}
 add_action('woocommerce_thankyou', 'custom_redirect_after_checkout');
 // По каким-то причинам данная функция пока не работает, след. функция жестко редиректит после заказа
 function custom_redirect_after_checkout( $order_id ) {
