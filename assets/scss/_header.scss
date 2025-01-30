@@ -78,6 +78,9 @@ header {
     }
 
     .icon-block {
+      display: flex;
+      gap: 10px;
+
       a {
         &:not(:last-child) {
           margin-right: 10px;
@@ -85,6 +88,78 @@ header {
         &:hover {
           transition: .2s;
           opacity: .7;
+        }
+      }
+
+      .basket-container {
+        position: relative;
+
+        .basket-icon {
+          display: inline-block;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
+
+          .basket-image-icon {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #686870;
+            border-radius: 15px;
+            padding: 15px;
+            height: 20px;
+          }
+        }
+
+        .basket-dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 220px;
+          background: white;
+          border: 1px solid #ccc;
+          padding: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          display: none;
+          z-index: 100;
+
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: block;
+          }
+
+          li {
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+          }
+
+          img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+          }
+
+          p {
+            margin: 0;
+          }
+        }
+
+        &:hover .basket-dropdown {
+          display: block;
+        }
+
+        .cart-total {
+          font-size: 16px;
+          font-weight: bold;
+          margin-top: 10px;
+          color: #333;
+        }
+
+        &:hover .cart-total {
+          display: none;
         }
       }
     }

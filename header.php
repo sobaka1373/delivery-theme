@@ -42,9 +42,41 @@
       <a href="#">
         <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/account.svg'); ?>" alt="account">
       </a>
-      <a href="/cart">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
-      </a>
+        <!-- Basket with Dropdown -->
+        <div class="basket-container">
+            <?php $cart = WC()->cart->get_cart(); ?>
+
+            <a href="/cart" class="basket-icon">
+                <div class="basket-image-icon">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
+                    <?php if (!empty($cart)): ?>
+                        <p><?php echo WC()->cart->get_total(); ?></p>
+                    <?php endif; ?>
+                </div>
+            </a>
+
+            <div class="basket-dropdown">
+                <?php if (!empty($cart)): ?>
+                    <ul>
+                        <?php foreach ($cart as $cart_item_key => $cart_item):
+                            $product = wc_get_product($cart_item['product_id']);
+                            $quantity = $cart_item['quantity'];
+                            ?>
+                            <li>
+                                <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
+                                <div style="display: flex">
+                                    <p><?php echo esc_html($product->get_name()); ?></p>
+                                    <p> <?php echo esc_html($quantity); ?></p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <p><strong>Итого:</strong> <?php echo WC()->cart->get_total(); ?></p>
+                <?php else: ?>
+                    <p>Корзина пуста</p>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
   </nav>
   <div class="background_grey sticky">
