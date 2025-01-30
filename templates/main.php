@@ -2,79 +2,10 @@
 
 <?php get_header(); ?>
 
-<div id="slider">
-    <a href="#" class="control_next">></a>
-    <a href="#" class="control_prev"><</a>
-    <ul>
-        <li>
-            <div class="grid__two">
-                <div class="left-item">
-                    <div class="title">
-                        ПИЩЕБЛОКЪ №1 В ГОМЕЛЕ!
-                    </div>
-                    <div class="subtitle">
-                        Доставку делаем с 10:00 до 22:30
-                    </div>
-                    <button class="" type="button">Перейти к акциям!</button>
-                </div>
-                <div>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pepperoni.jpg">
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="grid__two">
-                <div class="left-item">
-                    <div class="title">
-                        ПИЩЕБЛОКЪ №1 В ГОМЕЛЕ!
-                    </div>
-                    <div class="subtitle">
-                        Доставку делаем с 10:00 до 22:30
-                    </div>
-                    <button class="" type="button">Перейти к акциям!</button>
-                </div>
-                <div>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pepperoni.jpg">
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="grid__two">
-                <div class="left-item">
-                    <div class="title">
-                        ПИЩЕБЛОКЪ №1 В ГОМЕЛЕ!
-                    </div>
-                    <div class="subtitle">
-                        Доставку делаем с 10:00 до 22:30
-                    </div>
-                    <button class="" type="button">Перейти к акциям!</button>
-                </div>
-                <div>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pepperoni.jpg">
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="grid__two">
-                <div class="left-item">
-                    <div class="title">
-                        ПИЩЕБЛОКЪ №1 В ГОМЕЛЕ!
-                    </div>
-                    <div class="subtitle">
-                        Доставку делаем с 10:00 до 22:30
-                    </div>
-                    <button class="" type="button">Перейти к акциям!</button>
-                </div>
-                <div>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pepperoni.jpg">
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-
-
 <?php
+
+require_once locate_template('templates/parts/banner.php');
+
 require_once locate_template('templates/parts/pizza-block.php');
 ?>
 
