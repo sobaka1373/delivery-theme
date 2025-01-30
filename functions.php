@@ -3,6 +3,7 @@
 require_once get_template_directory() . '/inc/setup.php';
 require_once get_template_directory() . '/shortcodes.php';
 require_once get_template_directory() . '/helpers.php';
+require_once get_template_directory() . '/acf/init.php';
 
 // Enqueue styles and scripts
 function my_theme_enqueue_assets()
