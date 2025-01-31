@@ -61,12 +61,14 @@
                         <?php foreach ($cart as $cart_item_key => $cart_item):
                             $product = wc_get_product($cart_item['product_id']);
                             $quantity = $cart_item['quantity'];
+                            $price = $product->get_price() * $quantity;
                             ?>
-                            <li>
+                            <li class="basket-item">
                                 <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
-                                <div style="display: flex">
+                                <div class="basket-item-info">
                                     <p><?php echo esc_html($product->get_name()); ?></p>
-                                    <p> <?php echo esc_html($quantity); ?></p>
+                                    <p><?php echo esc_html($quantity); ?> шт </p>
+                                    <p><?php echo wc_price($price); ?></p>
                                 </div>
                             </li>
                         <?php endforeach; ?>
