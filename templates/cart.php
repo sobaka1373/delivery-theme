@@ -150,13 +150,13 @@ get_header(); ?>
                     <div class="quantity">
                         <form method="post" action="">
                             <div class="flex">
-                                <div class="decrease">
+                                <div class="decrease" onclick="changeQuantity(-1)">
                                     &#8722;
                                 </div>
-                                <input type="text" name=""
+                                <input id="quantityInput" type="text" name=""
                                        value="1" min="1"
                                        class="w-16 text-center border border-gray-300 rounded"/>
-                                <div class="increase">
+                                <div class="increase" onclick="changeQuantity(1)">
                                     &#43;
                                 </div>
                             </div>
@@ -248,7 +248,15 @@ get_header(); ?>
             </div>
             <div class="basket__delivery">
                 Оформление заказа
-                <div>
+                <div class="delivery-self flex">
+                    <div class="delivery active" id="deliveryButton1">
+                        Доставка
+                    </div>
+                    <div class="self-delivery" id="deliveryButton2">
+                        Самовывоз
+                    </div>
+                </div>
+                <div class="delivery-information">
                     <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
                     <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
                     <input id="billing_address_1" type="text" placeholder="Город"/>

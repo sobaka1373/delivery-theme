@@ -222,6 +222,7 @@
     font-size: 20px;
     color: main.$greyColor;
   }
+
   .item {
     img {
       max-width: 200px;
@@ -234,23 +235,29 @@
     color: main.$greyColor;
     margin-left: 20px;
   }
+
   .additional {
     margin-top: 20px;
+
     .flex {
       align-items: end;
     }
+
     .add-sos {
       font-family: main.$fontTitle, serif;
       font-size: 24px;
       color: main.$fontColor;
       margin-left: 20px;
       align-items: center;
+
       img {
-        max-width:100px;
+        max-width: 100px;
       }
+
       .flex {
         align-items: center;
       }
+
       .add-button-sos {
         color: main.$fontColor;
         font-family: "Arial", sans-serif;
@@ -258,7 +265,7 @@
         font-size: 28px;
         border: 1px solid main.$greenColor;
         background-color: main.$greenColor;
-        padding: 1px 12px;
+        padding: 0 12px;
         border-radius: 50%;
 
         &:hover {
@@ -267,6 +274,7 @@
         }
       }
     }
+
     .add-button {
       color: main.$fontColor;
       font-family: "Arial", sans-serif;
@@ -283,6 +291,27 @@
       }
     }
   }
+
+  .delivery-self {
+    .active {
+      background-color: main.$greenColor;
+    }
+
+    div {
+      background-color: #eaeaea;
+      color: main.$fontColor;
+      font-family: main.$fontTitle, serif;
+      cursor: pointer;
+      padding: 0 20px;
+      border-radius: 5%;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+  }
+
   .decrease {
     color: main.$greenColor;
     font-family: main.$fontTitle, serif;
@@ -378,9 +407,18 @@
       }
     }
 
+    .delivery-information {
+      min-width: 520px;
+      margin-top: 10px;
+    }
+
     input {
       width: 100%;
       display: block;
+    }
+
+    .hidden {
+      display: none;
     }
   }
 
