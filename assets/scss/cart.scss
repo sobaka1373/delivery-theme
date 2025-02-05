@@ -1,47 +1,309 @@
 @use 'index' as main;
 
-.cart-container {
-  min-height: 500px;
+//.cart-container {
+//  min-height: 500px;
+//
+//  .cart__title {
+//    font-family: main.$fontTitle, serif;
+//    font-size: 36px;
+//    color: main.$greenColor;
+//  }
+//
+//  .text__empty {
+//    font-family: main.$fontTitle, serif;
+//    font-size: 28px;
+//    color: main.$fontColor;
+//    min-height: 80px;
+//  }
+//
+//  .button__return {
+//    background-color: main.$greenColor;
+//    padding: 20px 85px;
+//    border: none;
+//    border-radius: 12px;
+//    font-family: main.$fontTitle, serif;
+//    font-size: 24px;
+//    color: #ffffff;
+//    cursor: pointer;
+//    text-decoration: none;
+//
+//    &:hover {
+//      transition: .2s;
+//      opacity: .7;
+//    }
+//  }
+//
+//  .cart-item {
+//    gap: 70px;
+//    font-family: main.$fontTitle, serif;
+//    font-size: 22px;
+//    color: main.$greenColor;
+//
+//    a {
+//      color: main.$greyColor;
+//      text-decoration: none;
+//
+//      &:hover {
+//        transition: .2s;
+//        opacity: .7;
+//      }
+//    }
+//  }
+//
+//  .decrease {
+//    font-family: 'Arial', sans-serif;
+//    cursor: pointer;
+//    padding: 0 20px;
+//
+//    &:hover {
+//      transition: .2s;
+//      opacity: .7;
+//    }
+//  }
+//
+//  .increase {
+//    font-family: 'Arial', sans-serif;
+//    cursor: pointer;
+//    padding: 0 20px;
+//
+//    &:hover {
+//      transition: .2s;
+//      opacity: .7;
+//    }
+//  }
+//
+//  .item__size {
+//    font-size: 20px;
+//    color: main.$greyColor;
+//  }
+//
+//  .cart-item-actions {
+//    line-height: 150px;
+//
+//    :not(:last-child) {
+//      margin-right: 40px;
+//    }
+//
+//    input {
+//      border: none;
+//      width: 30px;
+//      font-family: main.$fontTitle;
+//      font-size: 28px;
+//    }
+//  }
+//
+//  .promo {
+//    font-family: main.$fontTitle, serif;
+//    font-size: 24px;
+//    align-items: end;
+//
+//    .coupon-add {
+//      background-color: main.$greenColor;
+//      height: 49px;
+//      padding: 0 47px;
+//      border: none;
+//      border-radius: 12px;
+//      font-size: 24px;
+//      color: #ffffff;
+//      cursor: pointer;
+//      text-decoration: none;
+//      font-family: main.$fontTitle, serif;
+//
+//      &:hover {
+//        transition: .2s;
+//        opacity: .7;
+//      }
+//    }
+//
+//    :not(:last-child) {
+//      margin-right: 40px;
+//    }
+//
+//    input {
+//      padding: 15px;
+//      border: 1px solid main.$greyColor;
+//      border-radius: 5px;
+//    }
+//  }
+//
+//  .summary-total {
+//    font-family: main.$fontTitle, serif;
+//    color: main.$fontColor;
+//    font-size: 24px;
+//    margin-top: 50px;
+//  }
+//
+//  .cart-actions {
+//    margin-top: 20px;
+//    align-items: center;
+//
+//    .ordering {
+//      background-color: main.$greenColor;
+//      padding: 15px 47px;
+//      border: none;
+//      border-radius: 12px;
+//      font-size: 24px;
+//      color: #fff;
+//      cursor: pointer;
+//      text-decoration: none;
+//      font-family: main.$fontTitle, serif;
+//
+//      &:hover {
+//        transition: .2s;
+//        opacity: .7;
+//      }
+//    }
+//
+//    .continue {
+//      text-decoration: underline;
+//      border: none;
+//      border-radius: 12px;
+//      font-size: 24px;
+//      color: main.$fontColor;
+//      cursor: pointer;
+//      font-family: main.$fontTitle, serif;
+//
+//      &:hover {
+//        transition: .2s;
+//        opacity: .7;
+//      }
+//    }
+//
+//    :not(:last-child) {
+//      margin-right: 40px;
+//    }
+//  }
+//}
+//
+//.checkout-page {
+//  .title {
+//    font-family: main.$fontTitle, serif;
+//    font-size: 36px;
+//    color: main.$fontColor;
+//  }
+//
+//  .checkout {
+//    font-family: main.$fontTitle, serif;
+//    font-size: 24px;
+//    color: main.$fontColor;
+//  }
+//}
+//
+//.woocommerce form .form-row .optional {
+//  display: none;
+//}
 
-  .cart__title {
+.basket {
+  &__title {
     font-family: main.$fontTitle, serif;
     font-size: 36px;
     color: main.$greenColor;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 
-  .text__empty {
-    font-family: main.$fontTitle, serif;
-    font-size: 28px;
-    color: main.$fontColor;
-    min-height: 80px;
-  }
-
-  .button__return {
-    background-color: main.$greenColor;
-    padding: 20px 85px;
-    border: none;
-    border-radius: 12px;
+  .name {
     font-family: main.$fontTitle, serif;
     font-size: 24px;
-    color: #ffffff;
-    cursor: pointer;
-    text-decoration: none;
+    color: main.$greyColor;
+    align-items: center;
+    width: 500px;
+    place-content: space-between;
+  }
 
-    &:hover {
-      transition: .2s;
-      opacity: .7;
+  .weight {
+    font-family: main.$fontTitle, serif;
+    font-size: 20px;
+    color: main.$greyColor;
+  }
+
+  .size {
+    font-family: main.$fontTitle, serif;
+    font-size: 20px;
+    color: main.$greyColor;
+  }
+
+  .item {
+    img {
+      max-width: 200px;
     }
   }
 
-  .cart-item {
-    gap: 70px;
+  .item__name {
     font-family: main.$fontTitle, serif;
-    font-size: 22px;
-    color: main.$greenColor;
+    font-size: 24px;
+    color: main.$greyColor;
+    margin-left: 20px;
+  }
 
-    a {
-      color: main.$greyColor;
-      text-decoration: none;
+  .additional {
+    margin-top: 20px;
+
+    .flex {
+      align-items: end;
+    }
+
+    .add-sos {
+      font-family: main.$fontTitle, serif;
+      font-size: 24px;
+      color: main.$fontColor;
+      margin-left: 20px;
+      align-items: center;
+
+      img {
+        max-width: 100px;
+      }
+
+      .flex {
+        align-items: center;
+      }
+
+      .add-button-sos {
+        color: main.$fontColor;
+        font-family: "Arial", sans-serif;
+        cursor: pointer;
+        font-size: 28px;
+        border: 1px solid main.$greenColor;
+        background-color: main.$greenColor;
+        padding: 0 12px;
+        border-radius: 50%;
+
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+        }
+      }
+    }
+
+    .add-button {
+      color: main.$fontColor;
+      font-family: "Arial", sans-serif;
+      cursor: pointer;
+      font-size: 28px;
+      border: 1px solid #ddd;
+      background-color: #ddd;
+      padding: 1px 12px;
+      border-radius: 50%;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+  }
+
+  .delivery-self {
+    .active {
+      background-color: main.$greenColor;
+    }
+
+    div {
+      background-color: #eaeaea;
+      color: main.$fontColor;
+      font-family: main.$fontTitle, serif;
+      cursor: pointer;
+      padding: 0 20px;
+      border-radius: 5%;
 
       &:hover {
         transition: .2s;
@@ -51,7 +313,8 @@
   }
 
   .decrease {
-    font-family: 'Arial', sans-serif;
+    color: main.$greenColor;
+    font-family: main.$fontTitle, serif;
     cursor: pointer;
     padding: 0 20px;
 
@@ -62,6 +325,7 @@
   }
 
   .increase {
+    color: main.$greenColor;
     font-family: 'Arial', sans-serif;
     cursor: pointer;
     padding: 0 20px;
@@ -72,32 +336,25 @@
     }
   }
 
-  .item__size {
-    font-size: 20px;
-    color: main.$greyColor;
-  }
+  .delete {
+    color: main.$greenColor;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    padding: 0 20px;
 
-  .cart-item-actions {
-    line-height: 150px;
-
-    :not(:last-child) {
-      margin-right: 40px;
-    }
-
-    input {
-      border: none;
-      width: 30px;
-      font-family: main.$fontTitle;
-      font-size: 28px;
+    &:hover {
+      transition: .2s;
+      opacity: .7;
     }
   }
 
-  .promo {
+  .basket__promo {
     font-family: main.$fontTitle, serif;
     font-size: 24px;
     align-items: end;
 
     .coupon-add {
+      margin-left: 20px;
       background-color: main.$greenColor;
       height: 49px;
       padding: 0 47px;
@@ -115,80 +372,72 @@
       }
     }
 
-    :not(:last-child) {
-      margin-right: 40px;
+    .promo-input {
+      :not(:last-child) {
+        margin-right: 40px;
+      }
     }
 
+
     input {
-      padding: 15px;
+      padding: 5px;
       border: 1px solid main.$greyColor;
       border-radius: 5px;
     }
   }
 
-  .summary-total {
+  .total {
+    color: main.$greenColor;
     font-family: main.$fontTitle, serif;
-    color: main.$fontColor;
-    font-size: 24px;
-    margin-top: 50px;
-  }
-
-  .cart-actions {
     margin-top: 20px;
-    align-items: center;
+  }
 
-    .ordering {
-      background-color: main.$greenColor;
-      padding: 15px 47px;
-      border: none;
-      border-radius: 12px;
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: main.$fontTitle, serif;
+  .basket__delivery {
+    margin-top: 20px;
 
-      &:hover {
-        transition: .2s;
-        opacity: .7;
+    input {
+      margin-bottom: 10px;
+    }
+
+    div {
+      margin-top: 10px;
+
+      :first-child {
+        margin-right: 10px
       }
     }
 
-    .continue {
-      text-decoration: underline;
-      border: none;
-      border-radius: 12px;
-      font-size: 24px;
-      color: main.$fontColor;
-      cursor: pointer;
-      font-family: main.$fontTitle, serif;
-
-      &:hover {
-        transition: .2s;
-        opacity: .7;
-      }
+    .delivery-information {
+      min-width: 520px;
+      margin-top: 10px;
     }
 
-    :not(:last-child) {
-      margin-right: 40px;
+    input {
+      width: 100%;
+      display: block;
+    }
+
+    .hidden {
+      display: none;
     }
   }
-}
 
-.checkout-page {
-  .title {
-    font-family: main.$fontTitle, serif;
-    font-size: 36px;
-    color: main.$fontColor;
-  }
-
-  .checkout {
-    font-family: main.$fontTitle, serif;
+  .complete-order {
+    margin-top: 20px;
+    background-color: main.$greenColor;
+    height: 49px;
+    padding: 0 47px;
+    border: none;
+    border-radius: 12px;
     font-size: 24px;
-    color: main.$fontColor;
-  }
-}
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: main.$fontTitle, serif;
 
-.woocommerce form .form-row .optional {
-  display: none;
+    &:hover {
+      transition: .2s;
+      opacity: .7;
+    }
+  }
 }

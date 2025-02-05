@@ -14,6 +14,8 @@ function my_theme_enqueue_assets()
     wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/js/slider.js');
     wp_enqueue_style( 'css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
     wp_enqueue_script( 'attr-toggle', get_template_directory_uri() . '/assets/js/attr-toggle.js');
+    wp_enqueue_script( 'switch-delivery', get_template_directory_uri() . '/assets/js/switch-delivery.js');
+    wp_enqueue_script( 'increase-quantity', get_template_directory_uri() . '/assets/js/increase-quantity.js');
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
