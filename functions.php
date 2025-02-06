@@ -17,6 +17,8 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'switch-delivery', get_template_directory_uri() . '/assets/js/switch-delivery.js');
     wp_enqueue_script( 'increase-quantity', get_template_directory_uri() . '/assets/js/increase-quantity.js');
     wp_enqueue_script( 'switch-size', get_template_directory_uri() . '/assets/js/switch-size.js', array(), null, true );
+    wp_enqueue_script('remove-item', get_template_directory_uri() . '/assets/js/remove-item.js', array('jquery'), null, true);
+    wp_localize_script('remove-item', 'ajaxurl', admin_url('admin-ajax.php'));
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -95,3 +97,20 @@ add_action( 'template_redirect', function() {
         }
     }
 });
+
+function remove_item_from_cart() {
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
+
+    $cart = WC()->cart;
+    $cart->remove_cart_item($cart_item_key);
+
+    $new_total = WC()->cart->get_cart_total();
+    $cart_empty = WC()->cart->is_empty() ? true : false;
+
+    wp_send_json_success([
+        'new_total' => $new_total,
+        'cart_empty' => $cart_empty
+    ]);
+}
+add_action('wp_ajax_remove_item_from_cart', 'remove_item_from_cart');
+add_action('wp_ajax_nopriv_remove_item_from_cart', 'remove_item_from_cart');

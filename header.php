@@ -43,9 +43,51 @@
       <a href="#">
         <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/account.svg'); ?>" alt="account">
       </a>
-      <a href="/cart">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
-      </a>
+        <div class="basket-container">
+            <?php $cart = WC()->cart->get_cart(); ?>
+
+            <a href="/cart" class="basket-icon">
+                <div class="basket-image-icon">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
+                    <?php if (!empty($cart)): ?>
+                        <p class="cart-total-text"><?php echo WC()->cart->get_cart_total(); ?></p>
+                    <?php endif; ?>
+                </div>
+            </a>
+
+            <div class="basket-dropdown">
+                <?php if (!empty($cart)): ?>
+                    <ul>
+                        <?php foreach ($cart as $cart_item_key => $cart_item):
+                            $product = wc_get_product($cart_item['product_id']);
+                            $quantity = $cart_item['quantity'];
+                            $price = $product->get_price() * $quantity;
+                            ?>
+                            <li class="basket-item-wrapper" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">
+                                <div class="basket-item-image-wrapper">
+                                    <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
+                                </div>
+                                <div class="basket-item-info">
+                                    <div class="basket-item-name">
+                                        <p><?php echo esc_html($product->get_name()); ?></p>
+                                    </div>
+                                    <div class="basket-item-description">
+                                        <p><?php echo esc_html($quantity); ?> шт</p>
+                                        <p><?php echo wc_price($price); ?></p>
+                                    </div>
+                                </div>
+                                <div class="remove-item">
+                                    <button data-cart-item="<?php echo esc_attr($cart_item_key); ?>">✖</button>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <p class="cart-total-text"><strong>Итого:</strong> <?php echo WC()->cart->get_cart_total(); ?></p>
+                <?php else: ?>
+                    <p>Корзина пуста</p>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
   </nav>
   <div class="background_grey sticky">
