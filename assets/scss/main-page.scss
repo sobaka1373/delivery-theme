@@ -143,6 +143,7 @@ a.control_next {
     background-color: #fff;
 
     .new {
+      min-height: 35px;
       div {
         font-family: main.$fontTitle, serif;
         font-size: 24px;
@@ -151,7 +152,7 @@ a.control_next {
       .red-title {
         color: main.$redColor;
         background-color: rgba(152, 54, 74, 0.38);
-        padding: 6px 12px;
+        padding: 0px 8px;
         border-radius: 8%;
         margin-right: 10px;
       }
@@ -159,14 +160,16 @@ a.control_next {
       .green-title {
         color: main.$greenColor;
         background-color: rgba(1, 152, 117, 0.47);
-        padding: 6px 12px;
+        padding: 0px 8px;
         border-radius: 8%;
       }
     }
   }
 
   &__image {
+    justify-items: center;
     text-align: center;
+    min-height: 290px;
     img {
       max-width: 250px;
     }
@@ -186,6 +189,7 @@ a.control_next {
   }
 
   &__subtitle {
+    min-height: 85px;
     font-family: main.$fontTitle, serif;
     font-size: 20px;
     color: main.$greyColor;
@@ -222,10 +226,11 @@ a.control_next {
     }
 
     .basket {
+      cursor:pointer;
       background-color: main.$greenColor;
       padding: 0 20px;
       border-radius: 12px;
-
+      align-content: center;
       &:hover {
         transition: .2s;
         opacity: .7;

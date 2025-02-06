@@ -16,7 +16,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Кульки
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
           <?php
@@ -178,7 +178,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Ланчи
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
           <?php
@@ -340,7 +340,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Закуски
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php
@@ -502,7 +502,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Комбо
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php
@@ -664,7 +664,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Десерты
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php
@@ -826,7 +826,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Напитки
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php
@@ -988,7 +988,7 @@ require_once locate_template('templates/parts/pizza-block.php');
             <div class="title">
                 Соусы
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php

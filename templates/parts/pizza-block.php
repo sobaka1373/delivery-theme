@@ -4,7 +4,7 @@
             <div class="title">
                 Пицца
             </div>
-            <button class="" type="button">Смотреть все</button>
+<!--            <button class="" type="button">Смотреть все</button>-->
         </div>
         <div class="grid">
             <?php
