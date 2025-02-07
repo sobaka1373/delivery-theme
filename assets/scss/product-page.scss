@@ -1,0 +1,185 @@
+@use 'index' as main;
+
+.dominos-product-page {
+  background-color: #fff;
+}
+
+.product-page {
+  background-color: #fff;
+
+  .category {
+    background-color: #fff;
+    margin-top: 20px;
+    font-family: main.$fontTitle, serif;
+    align-items: center;
+
+    .arrow {
+      margin: 0 10px;
+    }
+
+    .button__back {
+      background-color: #ececec;
+      border-radius: 10%;
+      padding: 10px 17px;
+      color: main.$greenColor;
+      font-size: 24px;
+      margin-right: 10px;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+
+    .button__home {
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+
+      img {
+        height: 27px;
+      }
+    }
+
+    .button__category {
+      font-size: 24px;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+
+    .button__name {
+      font-size: 24px;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+  }
+
+  .item-content {
+    background-color: #fff;
+    .item-information {
+      margin-bottom: 40px;
+    }
+    .new {
+      div {
+        font-family: main.$fontTitle, serif;
+        font-size: 24px;
+      }
+
+      .red-title {
+        color: main.$redColor;
+        background-color: rgba(152, 54, 74, 0.38);
+        padding: 0 6px;
+        border-radius: 8%;
+        margin-right: 10px;
+      }
+
+      .green-title {
+        color: main.$greenColor;
+        background-color: rgba(1, 152, 117, 0.47);
+        padding: 0 6px;
+        border-radius: 8%;
+      }
+    }
+
+    .product-details {
+      font-family: main.$fontTitle, serif;
+      font-size: 24px;
+      color: main.$fontColor;
+
+      .price {
+        font-size: 36px;
+        color: main.$greenColor;
+
+        .active {
+          display: block;
+        }
+
+        div {
+          display: none;
+        }
+      }
+
+      .pizza__weight {
+        font-size: 24px;
+        margin-bottom: 20px;
+
+        .active {
+          display: block;
+        }
+
+        div {
+          display: none;
+        }
+      }
+
+      .add-information {
+        p {
+          color: main.$greyColor;
+        }
+
+        .pizza__size {
+          max-width: 300px;
+          text-align: center;
+          cursor: pointer;
+          padding: 0;
+
+          .active {
+            background-color: #d9d9d9;
+          }
+
+          div {
+            width: 50%;
+            background-color: #efefef;
+          }
+        }
+      }
+    }
+
+    .same-items {
+      .pizza {
+        background-color: #fff;
+      }
+    }
+  }
+
+  .cart {
+    align-items: center;
+    margin-top: 20px;
+
+    .button {
+      background-color: main.$greenColor !important;
+      color: main.$fontColor;
+      margin-left: 30px;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+
+    .increase {
+      cursor: pointer;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+
+    .decrease {
+      cursor: pointer;
+
+      &:hover {
+        transition: .2s;
+        opacity: .7;
+      }
+    }
+  }
+}

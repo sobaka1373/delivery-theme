@@ -78,6 +78,9 @@ header {
     }
 
     .icon-block {
+      display: flex;
+      gap: 10px;
+
       a {
         &:not(:last-child) {
           margin-right: 10px;
@@ -85,6 +88,107 @@ header {
         &:hover {
           transition: .2s;
           opacity: .7;
+        }
+      }
+
+      .basket-container {
+        position: relative;
+
+        .basket-icon {
+          display: inline-block;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
+
+          .basket-image-icon {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #686870;
+            border-radius: 15px;
+            padding: 15px;
+            height: 20px;
+          }
+        }
+
+        .basket-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: #fff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 15px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          display: none;
+          width: 300px;
+          z-index: 100;
+
+          ul {
+            display: block;
+          }
+
+          .basket-item-wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+          }
+
+          .basket-item-image-wrapper {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 10px;
+          }
+
+          .basket-item-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .basket-item-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+
+          .basket-item-name{
+            display: flex;
+          }
+
+          .basket-item-description {
+            display: flex;
+          }
+
+          .remove-item {
+            display: flex;
+            background: none;
+            border: none;
+            color: #a00;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s ease-in-out;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .remove-item:hover {
+            background-color: black;
+          }
+        }
+
+        &:hover .basket-dropdown {
+          display: block;
         }
       }
     }
