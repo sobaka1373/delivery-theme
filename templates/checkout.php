@@ -116,17 +116,48 @@ get_header(); ?>
             &#43;
           </div>
         </div>
-        <div class="add-sos justify-content flex">
-          <div class="flex">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/sause.png">
-            <div class="">
-              Сырный
-            </div>
-          </div>
-          <div class="add-button-sos">
-            &#43;
-          </div>
-        </div>
+          <?php
+          $category_slug = 'sauces';
+          $args = array(
+              'post_type' => 'product',
+              'posts_per_page' => -1,
+              'tax_query' => array(
+                  array(
+                      'taxonomy' => 'product_cat',
+                      'field' => 'slug',
+                      'terms' => $category_slug,
+                  ),
+              ),
+          );
+          $query = new WP_Query($args);
+
+
+          if ($query->have_posts()) : ?>
+              <?php while ($query->have_posts()) :
+                  $query->the_post();
+                  $product = wc_get_product(get_the_ID());
+                  ?>
+
+              <div class="add-sos justify-content flex">
+
+                <div class="grid-third">
+                  <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
+                  <div class="name">
+                      <?php echo esc_html($product->get_name()); ?>
+                  </div>
+                  <div class="price">
+                      <?php echo $product->get_price_html(); ?>
+                  </div>
+                </div>
+                <div class="add-button-sos">
+                  <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                    &#43;
+                  </a>
+                </div>
+              </div>
+
+              <?php endwhile;
+          endif; ?>
       </div>
     </div>
     <div class="basket__promo">
