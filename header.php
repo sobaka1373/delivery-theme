@@ -37,16 +37,10 @@
       </div>
     </div>
     <div class="icon-block flex">
-      <a href="#">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/like.svg'); ?>" alt="like">
-      </a>
-      <a href="#">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/account.svg'); ?>" alt="account">
-      </a>
         <div class="basket-container">
             <?php $cart = WC()->cart->get_cart(); ?>
 
-            <a href="/cart" class="basket-icon">
+            <a href="/checkout" class="basket-icon">
                 <div class="basket-image-icon">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
                     <?php if (!empty($cart)): ?>

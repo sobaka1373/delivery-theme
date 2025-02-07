@@ -441,3 +441,20 @@
     }
   }
 }
+
+.hidden-basket {
+  display: none;
+}
+
+.grid-third {
+  display: grid;
+  grid-template-columns: 100px 400px 100px;
+
+  .name {
+    margin: auto 0 auto 20px;
+  }
+
+  .price {
+    margin: auto;
+  }
+}
