@@ -16,6 +16,10 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'attr-toggle', get_template_directory_uri() . '/assets/js/attr-toggle.js');
     wp_enqueue_script( 'switch-delivery', get_template_directory_uri() . '/assets/js/switch-delivery.js');
     wp_enqueue_script( 'increase-quantity', get_template_directory_uri() . '/assets/js/increase-quantity.js');
+
+    wp_enqueue_script( 'cart-checkout', get_template_directory_uri() . '/assets/js/cart-checkout.js');
+    wp_localize_script("cart-checkout", "wc_cart_params",
+        ["ajax_url" => admin_url("admin-ajax.php"), 'apply_coupon_nonce' => wp_create_nonce('apply_coupon')]);
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -94,3 +98,29 @@ add_action( 'template_redirect', function() {
         }
     }
 });
+
+add_action("wp_ajax_update_cart_total", "custom_update_cart_total");
+add_action("wp_ajax_nopriv_update_cart_total", "custom_update_cart_total");
+
+function custom_update_cart_total() {
+    wp_send_json_success(["total" => WC()->cart->get_total()]);
+}
+
+add_action("wp_ajax_update_cart_quantity", "update_cart_quantity");
+add_action("wp_ajax_nopriv_update_cart_quantity", "update_cart_quantity");
+
+function update_cart_quantity() {
+    if (!isset($_POST["quantity"]) || !isset($_POST["cart_item_key"])) {
+        wp_send_json_error("Неверные данные");
+    }
+
+    $quantity = (int) sanitize_text_field($_POST["quantity"]);
+    $cart_item_key = sanitize_text_field($_POST["cart_item_key"]);
+
+    if (WC()->cart->set_quantity($cart_item_key, $quantity, true)) {
+        WC()->cart->calculate_totals();
+        wp_send_json_success("Количество обновлено");
+    } else {
+        wp_send_json_error("Не удалось обновить количество");
+    }
+}

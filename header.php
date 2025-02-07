@@ -37,13 +37,7 @@
       </div>
     </div>
     <div class="icon-block flex">
-      <a href="#">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/like.svg'); ?>" alt="like">
-      </a>
-      <a href="#">
-        <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/account.svg'); ?>" alt="account">
-      </a>
-      <a href="/cart">
+      <a href="/checkout">
         <img class="image__icon" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
       </a>
     </div>

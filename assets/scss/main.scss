@@ -9,6 +9,8 @@
 @font-face {
   font-family: CyrillicOld;
   src: url(../fonts/CyrillicOld/CyrillicOld.otf);
+  ascent-override: 90%;
+  descent-override: 20%;
 }
 
 .flex {
