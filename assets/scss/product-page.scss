@@ -105,7 +105,9 @@
           display: none;
         }
       }
-
+      .variations {
+        display:none;
+      }
       .pizza__weight {
         font-size: 24px;
         margin-bottom: 20px;
@@ -139,6 +141,17 @@
             background-color: #efefef;
           }
         }
+      }
+      .quantity {
+        margin: 10px 0 20px 0;
+      }
+      .single_variation_wrap {
+        .price {
+          display: none;
+        }
+      }
+      .button {
+        margin-left: 0;
       }
     }
 
