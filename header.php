@@ -53,13 +53,18 @@
                     <?php if (!empty($cart)): ?>
                         <ul>
                             <?php foreach ($cart as $cart_item_key => $cart_item):
-                                $product = wc_get_product($cart_item['product_id']);
+                                $hasVariation = $cart_item['variation_id'] && !empty($cart_item['variation']);
+                                $product = $hasVariation ?
+                                    wc_get_product($cart_item['variation_id']) :
+                                    wc_get_product($cart_item['product_id']);
                                 $quantity = $cart_item['quantity'];
                                 $price = $product->get_price() * $quantity;
                                 ?>
-                                <li class="basket-item-wrapper" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">
+                                <li class="basket-item-wrapper"
+                                    data-cart-item="<?php echo esc_attr($cart_item_key); ?>">
                                     <div class="basket-item-image-wrapper">
-                                        <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
+                                        <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>"
+                                             alt="<?php echo esc_attr($product->get_name()); ?>">
                                     </div>
                                     <div class="basket-item-info">
                                         <div class="basket-item-name">
@@ -76,7 +81,27 @@
                                 </li>
                             <?php endforeach; ?>
                         </ul>
-                        <p class="cart-total-text"><strong>Итого:</strong> <?php echo WC()->cart->get_cart_total(); ?></p>
+                        <div class="cart-total">
+                            <?php
+                            $applied_coupons = WC()->cart->get_applied_coupons();
+                            if (!empty($applied_coupons)):
+                                $coupon = new WC_Coupon($applied_coupons[0]);
+                                ?>
+                                <div class="cart-discount">
+                                    <p>Промокод: <?php echo esc_html($coupon->get_code()); ?></p>
+                                    <p>Скидка: -
+                                        <span class="cart-discount-text">
+                                            <?php echo wc_price(WC()->cart->get_cart_discount_total()); ?>
+                                        </span>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+                            <p>Итого:
+                                <span class="cart-total-text">
+                                    <?php echo WC()->cart->get_cart_total(); ?>
+                                </span>
+                            </p>
+                        </div>
                     <?php else: ?>
                         <p>Корзина пуста</p>
                     <?php endif; ?>

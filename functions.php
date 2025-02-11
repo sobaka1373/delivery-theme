@@ -109,11 +109,13 @@ function remove_item_from_cart() {
     $cart = WC()->cart;
     $cart->remove_cart_item($cart_item_key);
 
-    $new_total = WC()->cart->get_cart_total();
-    $cart_empty = WC()->cart->is_empty() ? true : false;
+    $new_total = WC()->cart->get_total();
+    $new_discount = wc_price(WC()->cart->get_discount_total());
+    $cart_empty = WC()->cart->is_empty();
 
     wp_send_json_success([
         'new_total' => $new_total,
+        'new_discount' => $new_discount,
         'cart_empty' => $cart_empty
     ]);
 }
