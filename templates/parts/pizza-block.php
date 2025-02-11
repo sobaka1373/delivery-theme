@@ -78,7 +78,7 @@
                         <div class="pizza__subtitle">
                             <?php echo $product->get_short_description(); ?>
                         </div>
-                        <div class="toggle-container">
+                        <div class="toggle-container center">
                             <?php
                             if ($product->is_type('variable')) {
                                 $variations = $product->get_available_variations();
@@ -92,7 +92,7 @@
                                         if ($size) {
                                             $size_output = str_replace('cm', '', $size);
                                             $checked = $index === 0 ? 'checked' : '';
-                                            echo "<label class='size-toggle product-$variation_id'>";
+                                            echo "<label class='size-toggle pizza__size product-$variation_id'>";
                                             echo '<input type="radio" name="pizza_size" value="' . esc_attr($size) . '" ' . $checked . '>';
                                             echo '<span>' . esc_html($size_output) . ' см</span>';
                                             echo '</label>';
