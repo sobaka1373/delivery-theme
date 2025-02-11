@@ -13,6 +13,7 @@ function my_theme_enqueue_assets()
     wp_enqueue_script('cdn', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js');
     wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/js/slider.js');
     wp_enqueue_style( 'css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
+    wp_enqueue_style( 'css-thank-you-page', get_template_directory_uri() . '/assets/css/thank-you-page.css');
     wp_enqueue_script( 'attr-toggle', get_template_directory_uri() . '/assets/js/attr-toggle.js');
     wp_enqueue_script( 'switch-delivery', get_template_directory_uri() . '/assets/js/switch-delivery.js');
     wp_enqueue_script( 'increase-quantity', get_template_directory_uri() . '/assets/js/increase-quantity.js');

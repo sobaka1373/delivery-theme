@@ -110,6 +110,7 @@ a.control_next {
   background-color: #f3f3f3;
   padding-top: 20px;
   padding-bottom: 20px;
+
   .grid {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
@@ -144,6 +145,7 @@ a.control_next {
 
     .new {
       min-height: 35px;
+
       div {
         font-family: main.$fontTitle, serif;
         font-size: 24px;
@@ -158,6 +160,7 @@ a.control_next {
       }
 
       .green-title {
+        margin-right: 5px;
         color: main.$greenColor;
         background-color: rgba(1, 152, 117, 0.47);
         padding: 0px 8px;
@@ -170,6 +173,7 @@ a.control_next {
     justify-items: center;
     text-align: center;
     min-height: 290px;
+
     img {
       max-width: 250px;
     }
@@ -197,11 +201,19 @@ a.control_next {
     line-height: 18px;
   }
 
+  .toggle-container {
+    text-align: center;
+    background-color: #D9D9D9;
+  }
+  .size-toggle {
+    width:50%;
+    background-color: #D9D9D9;
+  }
+
   &__size {
     justify-content: space-around;
-    padding: 12px 20px;
     background-color: #D9D9D9;
-    border-radius: 7px;
+    border-radius: 0;
     font-family: main.$fontTitle, serif;
     font-size: 24px;
   }
@@ -226,11 +238,14 @@ a.control_next {
     }
 
     .basket {
-      cursor:pointer;
-      background-color: main.$greenColor;
-      padding: 0 20px;
+      cursor: pointer;
+      background-color: #019875;
+      padding: 5px 15px;
       border-radius: 12px;
       align-content: center;
+      max-height: 40px;
+      align-self: center;
+
       &:hover {
         transition: .2s;
         opacity: .7;

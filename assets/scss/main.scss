@@ -4,6 +4,8 @@
 @use 'main-page';
 @use 'cart';
 @use 'product-page';
+@use 'thank-you-page';
+
 
 
 
@@ -49,14 +51,13 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 111;
 }
 
 .pizza__size {
   display: flex;
   gap: 10px; /* Расстояние между тоглами */
 }
-
 .size-toggle {
   position: relative;
   display: inline-flex;
@@ -64,9 +65,9 @@
   justify-content: center;
   width: 120px; /* Увеличена ширина для отображения цены */
   height: 40px; /* Высота тогла */
-  border: 2px solid #ddd; /* Цвет границы */
+  border: 2px solid #efefef; /* Цвет границы */
   border-radius: 20px; /* Скругление для тогла */
-  background-color: #f9f9f9; /* Цвет фона */
+  background-color: #efefef; /* Цвет фона */
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
@@ -84,15 +85,12 @@
 }
 
 .size-toggle:hover {
-  border-color: #bbb; /* Цвет границы при наведении */
+  //border-color: #bbb; /* Цвет границы при наведении */
 }
 
 .size-toggle input:checked + span {
-  background-color: #4caf50; /* Цвет фона при выборе */
-  color: white; /* Цвет текста при выборе */
-  padding: 5px 15px;
-  border-radius: 20px; /* Скругление внутри */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+  width: 100%;
+  background-color: #efefef;
 }
 
 .variation-container {
