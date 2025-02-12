@@ -9,22 +9,27 @@
   align-items: center;
   padding: 20px;
   text-align: justify;
+
   h1, h2, p, ul {
     width: 100%;
     max-width: 800px;
     text-align: justify;
   }
+
   ul {
     padding-left: 20px;
     list-style-type: none;
   }
+
   ul li {
     margin-bottom: 10px;
   }
+
   p {
     text-align: justify;
     line-height: 1.5;
   }
+
   .container {
     display: flex;
     justify-content: center;
@@ -32,6 +37,7 @@
     min-height: 100vh;
     padding: 20px;
   }
+
   .flex {
     display: flex;
     justify-content: space-between;
@@ -42,31 +48,38 @@
   .thank-you-left {
     flex: 1;
     padding-right: 20px;
+
     span {
       background-color: main.$greenColor;
       border-radius: 10px;
       padding: 5px;
     }
   }
+
   .thank-you-right {
     color: main.$greyColor;
     flex: 2;
     padding-left: 20px;
   }
+
   h1, .thank-you-page h2 {
     margin-bottom: 10px;
   }
+
   ul {
     padding-left: 20px;
     list-style-type: none;
   }
+
   ul li {
     margin-bottom: 5px;
   }
+
   p {
     text-align: justify;
     line-height: 1.5;
   }
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -92,6 +105,7 @@
   .value {
     white-space: nowrap;
   }
+
   h2 {
     color: main.$fontColor;
   }
