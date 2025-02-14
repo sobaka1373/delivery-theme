@@ -25,6 +25,12 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'switch-size', get_template_directory_uri() . '/assets/js/switch-size.js', array(), null, true );
     wp_enqueue_script('remove-item', get_template_directory_uri() . '/assets/js/remove-item.js', array('jquery'), null, true);
     wp_localize_script('remove-item', 'ajaxurl', admin_url('admin-ajax.php'));
+
+    wp_enqueue_script( 'delivery_zones', get_template_directory_uri() . '/assets/js/delivery_zones.js', array('jquery'));
+    wp_localize_script(
+        'delivery_zones',
+        'OBJ',
+        array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ));
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -110,11 +116,13 @@ function remove_item_from_cart() {
     $cart = WC()->cart;
     $cart->remove_cart_item($cart_item_key);
 
-    $new_total = WC()->cart->get_cart_total();
-    $cart_empty = WC()->cart->is_empty() ? true : false;
+    $new_total = WC()->cart->get_total();
+    $new_discount = wc_price(WC()->cart->get_discount_total());
+    $cart_empty = WC()->cart->is_empty();
 
     wp_send_json_success([
         'new_total' => $new_total,
+        'new_discount' => $new_discount,
         'cart_empty' => $cart_empty
     ]);
 }
@@ -146,3 +154,20 @@ function update_cart_quantity() {
         wp_send_json_error("Не удалось обновить количество");
     }
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('custom-routes', '/geojson', [
+        'methods'  => 'GET',
+        'callback' => function () {
+            $file_path = get_template_directory() . '/assets/js/data.geojson';
+
+            if (!file_exists($file_path)) {
+                return new WP_Error('not_found', 'Файл не найден', ['status' => 404]);
+            }
+
+            $file_content = file_get_contents($file_path);
+            return new WP_REST_Response(json_decode($file_content), 200);
+        },
+        'permission_callback' => '__return_true',
+    ]);
+});

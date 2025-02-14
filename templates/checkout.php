@@ -199,6 +199,12 @@ get_header(); ?>
             <input id="billing_address_floor" type="text" placeholder="Этаж"/>
           </div>
           <input type="text" id="billing_address_note" placeholder="Примечание к заказу"/>
+          <div id="map"></div>
+          <p id="notice">Адрес не найден</p>
+          <div id="footer">
+            <div id="messageHeader"></div>
+            <div id="message"></div>
+          </div>
         </div>
         <button class="complete-order" type="submit" class="text-sm text-blue-600 hover:underline">Оформить
         </button>

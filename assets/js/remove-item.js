@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
                     });
 
                     $('.cart-total-text').html(response.data.new_total);
+                    $('.cart-discount-text').html(response.data.new_discount);
 
                     if (response.data.cart_empty) {
                         $('.basket-dropdown').html('<p style="text-align: center">Корзина пуста</p>');
