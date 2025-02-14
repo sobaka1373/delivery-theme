@@ -12,12 +12,17 @@
         <a href="<?php echo esc_url(home_url('/')); ?>">
             <img class="image__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="logo">
         </a>
-        <ul class="flex">
+        <ul class="flex menu">
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
             <li><a href="<?php echo esc_url(home_url('/delivery')); ?>">Доставка</a></li>
             <li><a href="<?php echo esc_url(home_url('/about')); ?>">О нас</a></li>
             <li><a href="<?php echo esc_url(home_url('/promo')); ?>">Акции</a></li>
         </ul>
+        <div class="hamburger-menu" id="hamburger-menu" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         <div>
             <div class="align-center flex">
                 <img class="image__location" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>" alt="location">
@@ -108,6 +113,7 @@
         </nav>
     </div>
 </header>
+
 <?php wp_footer(); ?>
 </body>
 </html>
