@@ -4,14 +4,16 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=a036afad-cc41-455e-b4fb-8a902f3496b0&suggest_apikey=c1670e47-aa05-4b57-83d6-772f46f9ca2b" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=a036afad-cc41-455e-b4fb-8a902f3496b0&suggest_apikey=c1670e47-aa05-4b57-83d6-772f46f9ca2b"
+            type="text/javascript"></script>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 <header>
     <nav class="container flexbox center">
         <a href="<?php echo esc_url(home_url('/')); ?>">
-            <img class="image__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="logo">
+            <img class="image__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>"
+                 alt="logo">
         </a>
         <ul class="flex menu">
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
@@ -26,7 +28,9 @@
         </div>
         <div>
             <div class="align-center flex">
-                <img class="image__location" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>" alt="location">
+                <img class="image__location"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>"
+                     alt="location">
                 <p>
                     <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
                         Самовывоз: ул. Рабочая, 22
@@ -34,7 +38,8 @@
                 </p>
             </div>
             <div class="align-center flex">
-                <img class="image__phone" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
+                <img class="image__phone"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
                 <p>
                     <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                         +375 44 712-71-17
@@ -48,7 +53,8 @@
 
                 <a href="/checkout" class="basket-icon">
                     <div class="basket-image-icon">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>" alt="basket">
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>"
+                             alt="basket">
                         <?php if (!empty($cart)): ?>
                             <p class="cart-total-text"><?php echo WC()->cart->get_cart_total(); ?></p>
                         <?php endif; ?>
@@ -131,7 +137,9 @@
             foreach ($menu_items as $item): ?>
                 <div>
                     <a href="<?php echo esc_url($item['href']); ?>">
-                        <img class="image__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/menu/' . $item['icon']); ?>" alt="<?php echo esc_attr($item['label']); ?>">
+                        <img class="image__logo"
+                             src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/menu/' . $item['icon']); ?>"
+                             alt="<?php echo esc_attr($item['label']); ?>">
                         <p><?php echo esc_html($item['label']); ?></p>
                     </a>
                 </div>
