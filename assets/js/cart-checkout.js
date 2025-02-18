@@ -82,10 +82,30 @@
 
         // Нет никакого идентификатара успешно или нет! Доделать.
         $('.basket__promo .coupon-add').click(function (){
-            $('.checkout_coupon').submit();
-            setTimeout(function() {
-                $(totalUpdate);
-            }, 1000);
+            let couponCode = $('#coupon_code').val();
+            $.ajax({
+                url: wc_cart_params.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'apply_coupon',
+                    coupon_code: couponCode,
+                },
+                beforeSend: function() {
+                    $('#coupon_message').text('Проверяем купон...').show();
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#coupon_message').text(response.data.message).css('color', 'green');
+                        $(totalUpdate);
+                    } else {
+                        $('#coupon_message').text(response.data.message).css('color', 'red');
+                    }
+                },
+                error: function() {
+                    $('#coupon_message').text('Ошибка запроса').css('color', 'red');
+                }
+            });
+
         });
 
         $('.promo-input #coupon-input').change(function (){

@@ -86,16 +86,18 @@
                             <?php
                             $applied_coupons = WC()->cart->get_applied_coupons();
                             if (!empty($applied_coupons)):
-                                $coupon = new WC_Coupon($applied_coupons[0]);
-                                ?>
-                                <div class="cart-discount">
-                                    <p>Промокод: <?php echo esc_html($coupon->get_code()); ?></p>
+                                foreach ($applied_coupons as $key => $coupon):
+                                    $coupon_obj = new WC_Coupon($coupon);
+                                    ?>
+                                  <div class="cart-discount">
+                                    <p>Промокод: <?php echo esc_html($coupon_obj->get_code()); ?></p>
                                     <p>Скидка: -
-                                        <span class="cart-discount-text">
-                                            <?php echo wc_price(WC()->cart->get_cart_discount_total()); ?>
-                                        </span>
+                                      <span class="cart-discount-text">
+                                          <?php echo wc_price(WC()->cart->get_cart_discount_total()); ?>
+                                      </span>
                                     </p>
-                                </div>
+                                  </div>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                             <p>Итого:
                                 <span class="cart-total-text">
