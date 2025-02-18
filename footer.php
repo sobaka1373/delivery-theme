@@ -78,6 +78,33 @@
             <p>ПТ-ВС: 11:00 до 22:45</p>
         </div>
     </div>
+    <div class="container center test">
+        <div class="payment-info flex">
+            <p>Мы принимаем к оплате:</p>
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/visa.png'); ?>"
+                 alt="basket">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mastercard.png'); ?>"
+                 alt="basket">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mastercard-securecode.png'); ?>"
+                 alt="basket">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/belcart_internetpass.png'); ?>"
+                 alt="basket">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mir.png'); ?>"
+                 alt="basket">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/belcart.png'); ?>"
+                 alt="basket">
+        </div>
+    </div>
+    <div class="public-info">
+        <div class="container center">
+            <p>
+                Внешний вид продукта может отличаться от рекламного изображения.
+            </p>
+            <p>
+                Полное наименование и место нахождение продавца находится в <a href="">публичной оферте</a>
+            </p>
+        </div>
+    </div>
 </footer>
 
 </body>
