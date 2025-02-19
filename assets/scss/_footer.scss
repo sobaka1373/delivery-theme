@@ -105,13 +105,17 @@
       color: main.$greyColor;
       margin-right: 10px;
     }
+    .flex {
+      gap: 40px;
+      align-items: stretch;
+    }
   }
 
   .public-info {
     color: main.$fontColor;
     font-family: main.$fontTitle, serif;
     padding: 40px 0;
-    font-size: 20px;
+
     p {
       color: main.$greyColor;
     }
