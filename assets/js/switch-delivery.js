@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const billingAddressPod = document.getElementById('billing_address_pod');
         const billingAddressFlat = document.getElementById('billing_address_flat');
         const billingAddressFloor = document.getElementById('billing_address_floor');
+        const deliveryPrice = document.getElementById('delivery-price');
 
         function toggleActiveClass(clickedElement, otherElement) {
             clickedElement.classList.add('active');
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 billingAddressPod.classList.add('hidden');
                 billingAddressFlat.classList.add('hidden');
                 billingAddressFloor.classList.add('hidden');
+                deliveryPrice.classList.add('hidden');
             } else {
                 billingAddress2.classList.remove('hidden');
                 billingAddressHouse.classList.remove('hidden');
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 billingAddressPod.classList.remove('hidden');
                 billingAddressFlat.classList.remove('hidden');
                 billingAddressFloor.classList.remove('hidden');
+                deliveryPrice.classList.remove('hidden');
             }
         }
 

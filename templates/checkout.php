@@ -170,6 +170,25 @@ get_header(); ?>
           <button type="submit" class="coupon-add text-sm text-blue-600 hover:underline">Применить
           </button>
         </div>
+        <p id="coupon_message" style="display:none;"></p>
+        <div class="applied-coupon">
+            <?php
+            $applied_coupons = WC()->cart->get_applied_coupons();
+            if (!empty($applied_coupons)):
+                foreach ($applied_coupons as $key => $coupon):
+                $coupon_obj = new WC_Coupon($coupon);
+                ?>
+              <div class="cart-discount">
+                <p>Промокод: <?php echo esc_html($coupon_obj->get_code()); ?></p>
+                <p>Скидка: -
+                  <span class="cart-discount-text">
+                        <?php echo wc_price(WC()->cart->get_cart_discount_total()); ?>
+                    </span>
+                </p>
+              </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
       </div>
       <div class="total">
         Итого: <?php echo WC()->cart->get_total(); ?>
@@ -185,6 +204,16 @@ get_header(); ?>
           </div>
         </div>
         <div class="delivery-information">
+          <div id="delivery-price">
+            <p>
+                Стоимость доставки:
+                <?php
+                $packages = WC()->shipping->get_packages();
+                $rate = $packages[0]['rates']['flat_rate:2'];
+                echo wc_price($rate->cost);
+                ?>
+            </p>
+          </div>
           <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
           <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
           <!--                    <input id="billing_address_1" type="text" placeholder="Город"/>-->

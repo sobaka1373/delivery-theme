@@ -171,3 +171,23 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true',
     ]);
 });
+
+add_action('wp_ajax_apply_coupon', 'apply_coupon_ajax');
+add_action('wp_ajax_nopriv_apply_coupon', 'apply_coupon_ajax');
+
+function apply_coupon_ajax() {
+    if (!isset($_POST['coupon_code'])) {
+        wp_send_json_error(['message' => 'Купон не передан']);
+    }
+
+    $coupon_code = sanitize_text_field($_POST['coupon_code']);
+
+    WC()->cart->apply_coupon($coupon_code);
+    WC()->cart->calculate_totals();
+
+    if (WC()->cart->has_discount($coupon_code)) {
+        wp_send_json_success(['message' => 'Купон успешно применен']);
+    } else {
+        wp_send_json_error(['message' => 'Неверный код купона']);
+    }
+}
