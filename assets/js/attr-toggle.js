@@ -1,19 +1,29 @@
-(function( $) {
-    'use strict';
-    $(document).ready(function() {
-        $('.toggle-container .size-toggle').click(function (){
-            console.log();
-            let allClasses = $(this).attr('class');
-            if (allClasses) {
-                let classesArray = allClasses.split(' ');
-                let productClass = classesArray.filter(cls => cls.startsWith('product-'));
+jQuery(document).ready(function($) {
+    function updateVariation(selectedSize) {
+        let productId = selectedSize === "30cm" ? "134" : "135";
 
-                if (productClass.length > 0) {
-                    let targetClass = productClass[0];
-                    $('.variation-container .pizza__price').removeClass('active');
-                    $('.variation-container .pizza__price.' + targetClass).addClass('active');
-                }
-            }
-        });
+        // Убираем active у всех переключателей размеров
+        $(".size-toggle").removeClass("active");
+        $(".pizza__weight_val, .pizza__price").removeClass("active");
+
+        // Добавляем active выбранным элементам
+        $(".size-toggle input[value='" + selectedSize + "']").parent().addClass("active");
+        $(".pizza__weight_val.product-" + productId).addClass("active");
+        $(".pizza__price.product-" + productId).addClass("active");
+
+        // Обновляем скрытые поля вариации
+        $(".variation_id").val(productId);
+        $("select[name='attribute_pa_size']").val(selectedSize).trigger("change");
+    }
+
+    $(".toggle-container .size-toggle").on("click", function() {
+        let selectedSize = $(this).find("input").val();
+        updateVariation(selectedSize);
     });
-})(jQuery);
+
+    // Устанавливаем начальное значение вариации при загрузке
+    if ($('.woocommerce-variation-add-to-cart').length) {
+        let initialSize = $("select[name='attribute_pa_size']").val() || "30cm"; // Если не выбрано, ставим 30cm
+        updateVariation(initialSize);
+    }
+});
