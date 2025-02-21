@@ -104,10 +104,16 @@
     p {
       color: main.$greyColor;
       margin-right: 10px;
+      @media (max-width: 970px) {
+       margin: 0 0 10px 0;
+      }
     }
     .flex {
       gap: 40px;
       align-items: stretch;
+    }
+    @media (max-width: 970px) {
+      display: block;
     }
   }
 
