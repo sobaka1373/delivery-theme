@@ -1,0 +1,8 @@
+@use 'index' as main;
+
+.delivery-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
