@@ -81,18 +81,44 @@
     <div class="container center test">
         <div class="payment-info flex">
             <p>Мы принимаем к оплате:</p>
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/visa.png'); ?>"
-                 alt="basket">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mastercard.png'); ?>"
-                 alt="basket">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mastercard-securecode.png'); ?>"
-                 alt="basket">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/belcart_internetpass.png'); ?>"
-                 alt="basket">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/mir.png'); ?>"
-                 alt="basket">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/belcart.png'); ?>"
-                 alt="basket">
+            <div class="flex">
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-21.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-22.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-23.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-24.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-25.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-26.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-28.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-29.png'); ?><!--"-->
+<!--                     alt="basket">-->
+<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-30.png'); ?><!--"-->
+<!--                     alt="basket">-->
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-11.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-12.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-13.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-14.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-15.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-16.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-18.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-19.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-20.png'); ?>"
+                     alt="basket">
+            </div>
         </div>
     </div>
     <div class="public-info">
