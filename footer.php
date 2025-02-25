@@ -78,7 +78,7 @@
             <p>ПТ-ВС: 10:00 до 23:00</p>
         </div>
     </div>
-    <div class="container center test">
+    <div class="container center">
         <div class="payment-info flex">
             <p>Мы принимаем к оплате:</p>
             <div class="flex">
