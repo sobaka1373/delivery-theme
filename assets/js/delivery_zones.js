@@ -65,9 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Находим полигон, в который входят переданные координаты.
                     polygon = deliveryZones.searchContaining(coords).get(0);
 
-                console.log(polygon)
                 if (polygon) {
-                    if (polygon.properties.get('description') == "Красная зона") {
+                    if (polygon.properties.get('description') == "Красная") {
                         // $('#payment_method_tkm-oplati').prop('disabled', true);
                         // $('#payment_method_cod').prop('disabled', true);
                         // $('.payment_method_tkm-oplati').hide();
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         // }, 3500);
 
                     }
-                    if (polygon.properties.get('description') == "Желтая зона") {
+                    if (polygon.properties.get('description') == "Желтая") {
                         $('#billing_zone').val("yellow_zone");
                         // $('#payment_method_tkm-oplati').prop('disabled', false);
                         // $('#payment_method_cod').prop('disabled', false);
@@ -100,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         // }, 1000);
 
                     }
-                    if (polygon.properties.get('description') == "Зеленая зона") {
+                    if (polygon.properties.get('description') == "Зеленая") {
                         $('#billing_zone').val("green_zone");
                         // $('#payment_method_tkm-oplati').prop('disabled', false);
                         // $('#payment_method_cod').prop('disabled', false);
