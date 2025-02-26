@@ -74,36 +74,18 @@
         </div>
         <div class="footer-column">
             <div class="title">Время работы:</div>
-            <p>ПН-ЧТ: 11:00 до 22:45
+            <p>ПН-ЧТ: 10:00 до 22:00
             </p>
-            <p>ПТ-ВС: 11:00 до 22:45</p>
+            <p>ПТ-ВС: 10:00 до 23:00</p>
         </div>
     </div>
-    <div class="container center test">
+    <div class="container center">
         <div class="payment-info flex">
             <p>Мы принимаем к оплате:</p>
             <div class="flex">
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-21.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-22.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-23.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-24.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-25.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-26.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-28.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-29.png'); ?><!--"-->
-<!--                     alt="basket">-->
-<!--                <img src="--><?php //echo esc_url(get_template_directory_uri() . '/assets/img/logos/color-30.png'); ?><!--"-->
-<!--                     alt="basket">-->
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-11.png'); ?>"
-                     alt="basket">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-12.png'); ?>"
+                     alt="basket">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-11.png'); ?>"
                      alt="basket">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-13.png'); ?>"
                      alt="basket">
