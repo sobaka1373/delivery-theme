@@ -42,6 +42,25 @@
   }
 }
 
+.sample-page {
+  margin: 40px 0;
+  font-family: CyrillicOld, sans-serif;
+
+  .container {
+    padding: 0 20px;
+  }
+
+  p  {
+    font-size: 24px;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin: 36px 0 24px 0;
+  }
+}
+
 .center {
   margin: 0 auto;
 }
