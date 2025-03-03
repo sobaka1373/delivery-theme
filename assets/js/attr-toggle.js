@@ -1,7 +1,27 @@
 jQuery(document).ready(function($) {
     function updateVariation(selectedSize, container) {
-        let productId = selectedSize === "30cm" ? container.find(".pizza__weight_val").first().attr("class").match(/product-(\d+)/)[1]
-            : container.find(".pizza__weight_val").last().attr("class").match(/product-(\d+)/)[1];
+        let productId;
+        let weightElements = container.find(".pizza__weight_val");
+        if (!weightElements.length) {
+            console.error("Элементы .pizza__weight_val не найдены!");
+            return;
+        }
+
+        let weightElement = selectedSize === "30cm" ? weightElements.first() : weightElements.last();
+        let classAttr = weightElement.attr("class");
+
+        if (!classAttr) {
+            console.error("Атрибут class отсутствует у .pizza__weight_val", weightElement);
+            return;
+        }
+
+        let match = classAttr.match(/product-(\d+)/);
+        if (!match) {
+            console.error("Не найден product-ID в классе", classAttr);
+            return;
+        }
+
+        productId = match[1];
 
         container.find(".size-toggle").removeClass("active");
         container.find(".pizza__weight_val, .pizza__price").removeClass("active");
@@ -14,16 +34,16 @@ jQuery(document).ready(function($) {
         container.find("select[name='attribute_pa_size']").val(selectedSize).trigger("change");
     }
 
-    $(".toggle-container .size-toggle").on("click", function() {
-        let container = $(this).closest(".pizza__item");
+    $(document).on("click", ".size-toggle", function() {
+        let container = $(this).closest(".pizza__item, .product-details");
         let selectedSize = $(this).find("input").val();
         updateVariation(selectedSize, container);
     });
 
-    $(".pizza__item").each(function() {
+    $(".pizza__item, .product-details").each(function() {
         let container = $(this);
-        if (container.find('.woocommerce-variation-add-to-cart').length) {
-            let initialSize = container.find("select[name='attribute_pa_size']").val() || "30cm"; // Если не выбрано, ставим 30cm
+        if (container.find('.woocommerce-variation-add-to-cart').length || container.find(".variations_form").length) {
+            let initialSize = container.find("select[name='attribute_pa_size']").val() || "30cm";
             updateVariation(initialSize, container);
         }
     });
