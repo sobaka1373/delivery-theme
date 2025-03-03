@@ -68,6 +68,13 @@ header {
 
       &:last-child {
         margin-right: 0;
+        margin-left: 50px;
+        @media (max-width: 1320px) {
+          margin-left: 20px;
+        }
+        @media (max-width: 1100px) {
+          margin-left: 0;
+        }
       }
 
       a {
@@ -239,7 +246,7 @@ header {
       border-radius: 16px;
 
       div {
-        text-align: center;
+        text-align: -webkit-center;
 
         .image {
           &__logo {
