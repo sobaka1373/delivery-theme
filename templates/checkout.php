@@ -209,8 +209,10 @@ get_header(); ?>
                 Стоимость доставки:
                 <?php
                 $packages = WC()->shipping->get_packages();
-                $rate = $packages[0]['rates']['flat_rate:2'];
-                echo wc_price($rate->cost);
+                if (!empty($packages)) {
+                    $rate = $packages[0]['rates']['flat_rate:2'];
+                    echo wc_price($rate->cost);
+                }
                 ?>
             </p>
           </div>
@@ -234,6 +236,17 @@ get_header(); ?>
             <div id="messageHeader"></div>
             <div id="message"></div>
           </div>
+            <div class="payment-type">
+                <label>
+                    <input type="radio" name="payment" value="cash" checked>
+                    Оплата наличными
+                </label>
+                <label>
+                    <input type="radio" name="payment" value="online">
+                    Оплата онлайн
+                </label>
+            </div>
+
         </div>
         <button class="complete-order" type="submit" class="text-sm text-blue-600 hover:underline">Оформить
         </button>

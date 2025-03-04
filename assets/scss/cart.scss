@@ -448,10 +448,21 @@
       opacity: .3;
     }
   }
+
+  .payment-type {
+    label {
+      display: flex;
+
+      input {
+        width: 20px;
+        margin: 0 40px 0 0;
+      }
+    }
+  }
 }
 
 .hidden-basket {
-  display: none;
+  //display: none;
 }
 
 .grid-third {

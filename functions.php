@@ -27,6 +27,7 @@ function my_theme_enqueue_assets()
     wp_localize_script('remove-item', 'ajaxurl', admin_url('admin-ajax.php'));
 
     wp_enqueue_script( 'delivery_zones', get_template_directory_uri() . '/assets/js/delivery_zones.js', array('jquery'));
+    wp_enqueue_script( 'work-time', get_template_directory_uri() . '/assets/js/work-time.js', array('jquery'));
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');

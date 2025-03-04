@@ -9,6 +9,15 @@
                 $(totalUpdate);
             }, 500);
         }
+        let paymentMethod = $("#payment ul #payment_method_cod");
+        if (paymentMethod.length) {
+            paymentMethod.trigger("click");
+            setTimeout(function() {
+                $(totalUpdate);
+            }, 500);
+        }
+
+
 
         $('.delivery-information #billing_phone').change(function (){
             $('.woocommerce-input-wrapper #billing_phone').val($(this).val());
@@ -112,6 +121,17 @@
             $('.woocommerce-form-coupon #coupon_code').val($(this).val());
         })
 
+        $('.payment-type input').click(function (){
+            if ($(this).val() === 'cash') {
+                $("#payment ul #payment_method_cod").trigger("click");
+            } else if ($(this).val() === 'online') {
+                $("#payment ul #payment_method_alfabankby").trigger("click");
+            } else {
+                $('.complete-order').prop('disabled', true);
+                $('.complete-order').addClass('disabled');
+            }
+        })
+
         function setLocalPickUp() {
             $('.woocommerce-input-wrapper #billing_street').val('.');
             $('.woocommerce-input-wrapper #billing_house').val('.');
@@ -205,7 +225,6 @@
             const match = input.name.match(/\[([a-f0-9]{32})\]\[qty\]/);
             return match ? match[1] : null;
         }
-
 
     });
 })(jQuery);
