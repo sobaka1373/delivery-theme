@@ -19,7 +19,7 @@
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
             <li><a href="<?php echo esc_url(home_url('/delivery')); ?>">Доставка</a></li>
             <li><a href="<?php echo esc_url(home_url('/about')); ?>">О нас</a></li>
-            <li><a href="<?php echo esc_url(home_url('/promo')); ?>">Акции</a></li>
+<!--            <li><a href="--><?php //echo esc_url(home_url('/promo')); ?><!--">Акции</a></li>-->
            <li>
                <div class="align-center flex">
                    <img class="image__location"
