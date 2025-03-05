@@ -24,7 +24,7 @@
                 Адрес:
             </p>
             <p class="address__link"><a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank">
-                    г. Гомель, ул. Рабочая, 22
+                   Беларусь, г. Гомель, ул. Рабочая, 22, помещение 2
                 </a>
             </p>
         </div>
@@ -33,14 +33,14 @@
                 Каталог
             </div>
             <ul class="catalog">
-                <li><a href="#">Пицца</a></li>
-                <li><a href="#">Кульки</a></li>
-                <li><a href="#">Ланчи</a></li>
-                <li><a href="#">Закуски</a></li>
-                <li><a href="#">Комбо</a></li>
-                <li><a href="#">Десерты</a></li>
-                <li><a href="#">Напитки</a></li>
-                <li><a href="#">Соусы</a></li>
+                <li><a href="#Pizza">Пицца</a></li>
+                <li><a href="#Kulek">Кульки</a></li>
+                <li><a href="#Lunch">Ланчи</a></li>
+                <li><a href="#Sides">Закуски</a></li>
+                <li><a href="#Combo">Комбо</a></li>
+                <li><a href="#Dessert">Десерты</a></li>
+                <li><a href="#Drinks">Напитки</a></li>
+                <li><a href="#Sause">Соусы</a></li>
             </ul>
         </div>
         <div class="footer-column footer__order">
