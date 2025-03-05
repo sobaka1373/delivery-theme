@@ -4,5 +4,17 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 auto;
+  font-family: main.$fontTitle, serif;
+  font-size: 48px;
+  color: main.$fontColor;
+  line-height: 80px;
+  justify-self: center;
+  p {
+    color: main.$greyColor;
+    font-size: 18px;
+    font-weight: 200;
+    margin: 0;
+    line-height: 30px;
+  }
+  margin-bottom: 50px;
 }
