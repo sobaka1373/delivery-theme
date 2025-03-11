@@ -11,6 +11,10 @@
   .left-item {
     //padding-top: 10%;
   }
+
+  @media (max-width: 890px) {
+    display: none;
+  }
 }
 
 #slider ul {

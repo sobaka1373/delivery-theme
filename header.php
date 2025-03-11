@@ -20,28 +20,31 @@
             <li><a href="<?php echo esc_url(home_url('/delivery')); ?>">Доставка</a></li>
             <li><a href="<?php echo esc_url(home_url('/about')); ?>">О нас</a></li>
 <!--            <li><a href="--><?php //echo esc_url(home_url('/promo')); ?><!--">Акции</a></li>-->
-           <li>
-               <div class="align-center flex">
-                   <img class="image__location"
-                        src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>"
-                        alt="location">
-                   <p>
-                       <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
-                           Самовывоз: ул. Рабочая, 22
-                       </a>
-                   </p>
-               </div>
-               <div class="align-center flex">
-                   <img class="image__phone"
-                        src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
-                   <p>
-                       <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
-                           +375 44 712-71-17
-                       </a>
-                   </p>
-               </div>
-           </li>
+<!--           <li>-->
+<!---->
+<!--           </li>-->
         </ul>
+        <div class="header-info-container">
+            <div class="align-center flex">
+                <img class="image__location"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>"
+                     alt="location">
+                <p>
+                    <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
+                        Самовывоз: ул. Рабочая, 22
+                    </a>
+                </p>
+            </div>
+            <div class="align-center flex">
+                <img class="image__phone"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
+                <p>
+                    <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
+                        +375 44 712-71-17
+                    </a>
+                </p>
+            </div>
+        </div>
         <div class="hamburger-menu" id="hamburger-menu" onclick="toggleMenu()">
             <span class="bar"></span>
             <span class="bar"></span>
