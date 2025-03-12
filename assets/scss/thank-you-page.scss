@@ -110,3 +110,16 @@
     color: main.$fontColor;
   }
 }
+
+@media (max-width: 890px) {
+  .thank-you-page {
+    .flex {
+      display: block;
+    }
+
+    .thank-you-right {
+      padding-left: 0;
+      margin-top: 20px;
+    }
+  }
+}

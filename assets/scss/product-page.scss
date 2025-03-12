@@ -127,6 +127,10 @@
       font-size: 24px;
       color: main.$fontColor;
 
+      @media (max-width: 890px) {
+        margin-top: 20px;
+      }
+
       .price {
         font-size: 36px;
         color: main.$greenColor;
@@ -213,6 +217,10 @@
   .cart {
     align-items: center;
     margin-top: 20px;
+
+    @media (max-width: 890px) {
+      display: block;
+    }
 
     .button {
       background-color: main.$greenColor !important;

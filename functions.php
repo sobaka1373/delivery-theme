@@ -161,3 +161,11 @@ function apply_coupon_ajax() {
     }
 }
 
+add_action('template_redirect', 'custom_redirect_on_payment_failure');
+
+function custom_redirect_on_payment_failure() {
+    if (isset($_GET['pay_for_order']) && isset($_GET['key'])) {
+        wp_redirect('http://localhost:10181/checkout');
+        exit;
+    }
+}
