@@ -6,6 +6,7 @@ require_once get_template_directory() . '/helpers.php';
 require_once get_template_directory() . '/acf/init.php';
 
 // Enqueue styles and scripts
+
 function my_theme_enqueue_assets()
 {
     wp_enqueue_style('my-theme-style', get_template_directory_uri() . '/assets/css/main.css');
@@ -159,3 +160,4 @@ function apply_coupon_ajax() {
         wp_send_json_error(['message' => 'Неверный код купона']);
     }
 }
+

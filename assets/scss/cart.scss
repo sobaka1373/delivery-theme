@@ -459,6 +459,11 @@
       }
     }
   }
+  .basket-mobile-flex {
+    @media (max-width: 1300px) {
+    display: block;
+    }
+  }
 }
 
 .hidden-basket {
