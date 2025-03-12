@@ -202,6 +202,27 @@
     margin-bottom: 15px;
   }
 
+  &__information {
+    .item {
+      a {
+        img {
+          @media (max-width: 1300px) {
+            max-width: 65px;
+          }
+          @media (max-width: 500px) {
+            max-width: 40px;
+          }
+        }
+      }
+    }
+
+    .price {
+      @media (max-width: 500px) {
+        font-size: 20px;
+      }
+    }
+  }
+
   .name {
     font-family: main.$fontTitle, serif;
     font-size: 24px;
@@ -209,18 +230,27 @@
     align-items: center;
     width: 500px;
     place-content: space-between;
+    @media (max-width: 1300px) {
+      width: 100%;
+    }
   }
 
   .weight {
     font-family: main.$fontTitle, serif;
     font-size: 20px;
     color: main.$greyColor;
+    @media (max-width: 400px) {
+      font-size: 16px;
+    }
   }
 
   .size {
     font-family: main.$fontTitle, serif;
     font-size: 20px;
     color: main.$greyColor;
+    @media (max-width: 400px) {
+      font-size: 16px;
+    }
   }
 
   .item {
@@ -234,6 +264,34 @@
     font-size: 24px;
     color: main.$greyColor;
     margin-left: 20px;
+    @media (max-width: 1300px) {
+      min-width: 225px;
+    }
+    @media (max-width: 768px) {
+      line-height: 25px;
+      min-width: 215px;
+    }
+    @media (max-width: 720px) {
+      min-width: 240px;
+    }
+    @media (max-width: 660px) {
+      min-width: 204px;
+    }
+    @media (max-width: 620px) {
+      min-width: 170px;
+    }
+    @media (max-width: 565px) {
+      font-size: 18px;
+      min-width: 169px;
+    }
+    @media (max-width: 500px) {
+      min-width: 130px;
+    }
+    @media (max-width: 400px) {
+      margin-left: 10px;
+      min-width: 100px;
+      line-height: 20px;
+    }
   }
 
   .additional {
@@ -322,6 +380,13 @@
       transition: .2s;
       opacity: .7;
     }
+
+    @media (max-width: 565px) {
+      padding: 0 10px;
+    }
+    @media (max-width: 400px) {
+      padding: 0 5px;
+    }
   }
 
   .increase {
@@ -333,6 +398,13 @@
     &:hover {
       transition: .2s;
       opacity: .7;
+    }
+
+    @media (max-width: 565px) {
+      padding: 0 10px;
+    }
+    @media (max-width: 400px) {
+      padding: 0 5px;
     }
   }
 
@@ -346,13 +418,32 @@
       transition: .2s;
       opacity: .7;
     }
+
+    @media (max-width: 400px) {
+      padding: 0;
+    }
+
+    a {
+      img {
+        @media (max-width: 400px) {
+          max-width: 15px;
+        }
+      }
+    }
   }
 
   .basket__promo {
     font-family: main.$fontTitle, serif;
     font-size: 24px;
     align-items: end;
-
+    @media (max-width: 500px) {
+      font-size: 20px;
+    }
+    #coupon-input {
+      @media (max-width: 400px) {
+        max-width: 140px;
+      }
+    }
     .coupon-add {
       margin-left: 20px;
       background-color: main.$greenColor;
@@ -369,6 +460,15 @@
       &:hover {
         transition: .2s;
         opacity: .7;
+      }
+
+      @media (max-width: 500px) {
+        padding: 0 20px;
+      }
+      @media (max-width: 400px) {
+        height: 43px;
+        margin-left: 10px;
+        font-size: 20px;
       }
     }
 
@@ -410,6 +510,9 @@
     .delivery-information {
       min-width: 520px;
       margin-top: 10px;
+      @media (max-width: 500px) {
+        min-width: auto;
+      }
     }
 
     input {
@@ -423,6 +526,17 @@
 
     .ymaps-2-1-79-controls__toolbar_left {
       display: none;
+    }
+  }
+
+  #quantityInput {
+    @media (max-width: 560px) {
+      width: 33px;
+      font-size: 20px;
+    }
+    @media (max-width: 400px) {
+      width: 25px;
+      font-size: 18px;
     }
   }
 
@@ -459,9 +573,58 @@
       }
     }
   }
+
   .basket-mobile-flex {
+    @media (max-width: 1400px) {
+      padding: 0 10px;
+    }
     @media (max-width: 1300px) {
-    display: block;
+      display: block;
+      padding: 0 10px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 500px) {
+      margin-bottom: 30px;
+    }
+  }
+
+  .additional {
+    .add-sos {
+      .grid-third {
+        img {
+          @media (max-width: 1300px) {
+            max-width: 70px;
+          }
+          @media (max-width: 400px) {
+            max-width: 40px;
+          }
+        }
+
+        .name {
+          @media (max-width: 1300px) {
+            max-width: 130px;
+            line-height: 25px;
+          }
+          @media (max-width: 500px) {
+            min-width: 100px;
+            margin-left: 0;
+            font-size: 20px;
+          }
+          @media (max-width: 400px) {
+            min-width: 95px;
+          }
+        }
+
+        @media (max-width: 1300px) {
+          grid-template-columns: 100px 220px 100px;
+        }
+        @media (max-width: 500px) {
+          grid-template-columns: 100px 90px 100px;
+        }
+        @media (max-width: 400px) {
+          grid-template-columns: 50px 90px 100px;
+        }
+      }
     }
   }
 }
