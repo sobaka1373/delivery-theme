@@ -26,7 +26,7 @@ get_header(); ?>
   <div class="basket__title">
     Ваш заказ
   </div>
-  <div class="flex justify-content center">
+  <div class="basket-mobile-flex flex justify-content center">
     <div class="basket__information">
         <?php if (WC()->cart->get_cart_contents_count() > 0):
             foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):

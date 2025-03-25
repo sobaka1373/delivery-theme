@@ -33,7 +33,7 @@ $terms = get_the_terms($product->get_id(), 'product_cat');
     <div class="item-content container mx-auto py-10">
         <div class="item-information flex flex-wrap">
             <!-- Изображение товара -->
-            <div class="w-full lg:w-1/2 px-4">
+            <div class="center w-full lg:w-1/2 px-4">
                 <div class="product-image">
                     <?php
                     if (has_post_thumbnail()) {
@@ -49,10 +49,10 @@ $terms = get_the_terms($product->get_id(), 'product_cat');
                     <div class="new flex">
                         <?php showTags($product); ?>
                     </div>
-                    <h1 class="text-4xl font-bold mb-4">
+                    <h1 class="mobile-title text-4xl font-bold mb-4">
                         <?php the_title(); ?>
                     </h1>
-                    <p class="text-xl text-gray-700 mb-4">
+                    <p class="desc-mobile text-xl text-gray-700 mb-4">
                         <?php echo $product->get_short_description(); ?>
                     </p>
 
