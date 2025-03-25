@@ -163,8 +163,13 @@ function apply_coupon_ajax() {
 add_action('template_redirect', 'custom_redirect_on_payment_failure');
 
 function custom_redirect_on_payment_failure() {
-    if (isset($_GET['pay_for_order']) && isset($_GET['key'])) {
-        wp_redirect('http://localhost:10181/checkout');
-        exit;
+    if (!empty($_GET['pay_for_order']) && !empty($_GET['key'])) {
+        $allowed_host = parse_url(home_url(), PHP_URL_HOST);
+        $current_host = $_SERVER['HTTP_HOST'];
+
+        if ($current_host === $allowed_host) {
+            wp_safe_redirect(home_url('/checkout'));
+            exit;
+        }
     }
 }

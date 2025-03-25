@@ -6,12 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const weight30cm = document.getElementById("weight-30cm");
     const weight40cm = document.getElementById("weight-40cm");
 
-    console.log(size30cm);
-    console.log(size40cm);
 
     function initialize() {
         if (!size30cm || !size40cm || !price30cm || !price40cm || !weight30cm || !weight40cm) {
-            console.error("Не все элементы найдены.");
             return;
         }
 

@@ -3,6 +3,9 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Пищеблок №1 | Доставка пиццы, шаурмы, закусок
+    </title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=a036afad-cc41-455e-b4fb-8a902f3496b0&suggest_apikey=c1670e47-aa05-4b57-83d6-772f46f9ca2b"
             type="text/javascript"></script>
@@ -19,10 +22,6 @@
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
             <li><a href="<?php echo esc_url(home_url('/delivery')); ?>">Доставка</a></li>
             <li><a href="<?php echo esc_url(home_url('/about')); ?>">О нас</a></li>
-<!--            <li><a href="--><?php //echo esc_url(home_url('/promo')); ?><!--">Акции</a></li>-->
-<!--           <li>-->
-<!---->
-<!--           </li>-->
         </ul>
         <div class="header-info-container">
             <div class="align-center flex">

@@ -47,4 +47,13 @@ jQuery(document).ready(function($) {
             updateVariation(initialSize, container);
         }
     });
+
+    $(".pizza__item .toggle-container").each(function () {
+        const labels = $(this).find("label");
+        if (labels.length === 1) {
+            labels.css("width", "100%");
+        }
+    });
+
+
 });

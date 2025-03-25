@@ -141,7 +141,9 @@ get_header(); ?>
               <div class="add-sos justify-content flex">
 
                 <div class="grid-third">
-                  <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <?php the_post_thumbnail('medium'); ?>
+                    <?php endif; ?>
                   <div class="name">
                       <?php echo esc_html($product->get_name()); ?>
                   </div>
