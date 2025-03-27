@@ -655,3 +655,24 @@
   color: #f33;
   display: none;
 }
+
+.tmp-basket {
+  display: block;
+
+  .basket-container {
+    max-width: 1400px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-family: CyrillicOld, serif;
+    font-size: 48px;
+    color: #1d1d1f;
+    line-height: 80px;
+    justify-self: center;
+    margin: 200px 0;
+
+    @media (max-width: 500px) {
+      padding: 15px;
+    }
+  }
+}

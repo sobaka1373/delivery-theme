@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    if (window.location.pathname.includes("checkout")) {
+    if (window.location.pathname.includes("checkout") || window.location.pathname.includes("cart")) {
 
         ymaps.ready(init);
     }

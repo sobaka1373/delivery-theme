@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    if (window.location.pathname === '/checkout/') {
+    if (window.location.pathname === '/checkout/' || window.location.pathname === '/cart/') {
         const deliveryButton = document.getElementById('deliveryButton1');
         const selfDeliveryButton = document.getElementById('deliveryButton2');
         const billingAddress2 = document.getElementById('billing_address_2');
@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const billingAddressFlat = document.getElementById('billing_address_flat');
         const billingAddressFloor = document.getElementById('billing_address_floor');
         const deliveryPrice = document.getElementById('delivery-price');
+        const pickupLocation = document.getElementById('pickup-location');
+        pickupLocation.classList.add('hidden');
 
         function toggleActiveClass(clickedElement, otherElement) {
             clickedElement.classList.add('active');
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 billingAddressFlat.classList.add('hidden');
                 billingAddressFloor.classList.add('hidden');
                 deliveryPrice.classList.add('hidden');
+                pickupLocation.classList.remove('hidden');
             } else {
                 billingAddress2.classList.remove('hidden');
                 billingAddressHouse.classList.remove('hidden');
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 billingAddressFlat.classList.remove('hidden');
                 billingAddressFloor.classList.remove('hidden');
                 deliveryPrice.classList.remove('hidden');
+                pickupLocation.classList.add('hidden');
             }
         }
 

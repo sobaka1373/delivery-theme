@@ -218,9 +218,13 @@ get_header(); ?>
                 ?>
             </p>
           </div>
+            <div id="pickup-location">
+                <p>
+                    Самовывоз - 20%
+                </p>
+            </div>
           <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
           <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
-          <!--                    <input id="billing_address_1" type="text" placeholder="Город"/>-->
           <input id="billing_address_2" type="text" placeholder="Улица"/>
           <input id="billing_address_house" type="text" placeholder="Дом"/>
           <div class="flex">
@@ -256,5 +260,14 @@ get_header(); ?>
     </div>
   </div>
 </div>
+
+<!--<div class="tmp-basket">-->
+<!--    <div class="basket-container">-->
+<!--        <p>-->
+<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
+<!--            Дата и время открытия: 28 марта 15:00-->
+<!--        </p>-->
+<!--    </div>-->
+<!--</div>-->
 
 <?php get_footer(); ?>
