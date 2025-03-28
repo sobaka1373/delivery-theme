@@ -185,6 +185,12 @@
                     $(".basket__promo .total").removeClass("loading");
                 },
             });
+
+            $('body').trigger('update_checkout');
+
+            setTimeout(function() {
+                $('#billing_address_house').trigger('change');
+            }, 2000);
         }
 
         function changeQuantity(amount) {

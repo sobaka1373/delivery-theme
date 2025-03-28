@@ -22,7 +22,7 @@ get_header(); ?>
     ?>
 </div>
 
-<div class="basket container center">
+<div class="basket container center hidden-basket">
   <div class="basket__title">
     Ваш заказ
   </div>
@@ -87,7 +87,7 @@ get_header(); ?>
                     </div>
                     <input id="quantityInput" type="text" name="cart[<?php echo $cart_item_key; ?>][qty]"
                            value="<?php echo esc_attr($product_quantity); ?>" min="1"
-                           class="w-16 text-center border border-gray-300 rounded"/>
+                           class="w-16 text-center border border-gray-300 rounded" disabled/>
                     <div class="increase">
                       &#43;
                     </div>
@@ -207,16 +207,24 @@ get_header(); ?>
         </div>
         <div class="delivery-information">
           <div id="delivery-price">
-            <p>
-                Стоимость доставки:
-                <?php
-                $packages = WC()->shipping->get_packages();
-                if (!empty($packages)) {
-                    $rate = $packages[0]['rates']['flat_rate:2'];
-                    echo wc_price($rate->cost);
-                }
-                ?>
-            </p>
+              <p class="delivery-info">
+                  Суммы для бесплатной доставки:
+              </p>
+              <p class="delivery-info">
+                  Зеленая зона: 25 руб, иначе доставка 5 руб
+              </p>
+              <p class="delivery-info">
+                  Желтая зона: 35 руб, иначе доставка 8 руб
+              </p>
+              <p class="delivery-info">
+                  Красная зона: 45 руб, иначе доставка 10 руб
+              </p>
+              <p>
+                  Стоимость доставки:
+                  <span id="delivery-price-value">
+                    Введите адрес
+                </span>
+              </p>
           </div>
             <div id="pickup-location">
                 <p>
@@ -261,13 +269,13 @@ get_header(); ?>
   </div>
 </div>
 
-<!--<div class="tmp-basket">-->
-<!--    <div class="basket-container">-->
-<!--        <p>-->
-<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
-<!--            Дата и время открытия: 28 марта 15:00-->
-<!--        </p>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="tmp-basket">
+    <div class="basket-container">
+        <p>
+            В данный момент мы еще не открылись и вы не можете сделать заказ.
+            Дата и время открытия: 28 марта 16:00
+        </p>
+    </div>
+</div>
 
 <?php get_footer(); ?>

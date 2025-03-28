@@ -22,7 +22,11 @@ function my_theme_enqueue_assets()
 
     wp_enqueue_script( 'cart-checkout', get_template_directory_uri() . '/assets/js/cart-checkout.js');
     wp_localize_script("cart-checkout", "wc_cart_params",
-        ["ajax_url" => admin_url("admin-ajax.php"), 'apply_coupon_nonce' => wp_create_nonce('apply_coupon')]);
+        [
+            "ajax_url" => admin_url("admin-ajax.php"),
+            'apply_coupon_nonce' => wp_create_nonce('apply_coupon'),
+            'update_order_nonce' => wp_create_nonce('woocommerce-process-checkout'),
+        ]);
     wp_enqueue_script( 'switch-size', get_template_directory_uri() . '/assets/js/switch-size.js', array(), null, true );
     wp_enqueue_script('remove-item', get_template_directory_uri() . '/assets/js/remove-item.js', array('jquery'), null, true);
     wp_localize_script('remove-item', 'ajaxurl', admin_url('admin-ajax.php'));

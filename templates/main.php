@@ -3,8 +3,10 @@
 <?php get_header(); ?>
 
 <?php
+//require_once locate_template('templates/parts/banner.php');
+?>
 
-require_once locate_template('templates/parts/banner.php');
+<?php
 
 require_once locate_template('templates/parts/pizza-block.php');
 

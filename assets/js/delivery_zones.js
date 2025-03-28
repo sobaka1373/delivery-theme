@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function init() {
         var myMap = new ymaps.Map('map', {
                 center: [31.0041591111, 52.41496211111],
-                zoom: 11,
+                zoom: 10,
                 controls: ['geolocationControl', 'searchControl']
             }),
             deliveryPoint = new ymaps.GeoObject({
@@ -59,57 +59,78 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             function highlightResult(obj) {
-                console.log("test")
                 // Сохраняем координаты переданного объекта.
                 var coords = obj.geometry.getCoordinates(),
                     // Находим полигон, в который входят переданные координаты.
                     polygon = deliveryZones.searchContaining(coords).get(0);
 
                 if (polygon) {
-                    if (polygon.properties.get('description') == "Красная") {
-                        // $('#payment_method_tkm-oplati').prop('disabled', true);
-                        // $('#payment_method_cod').prop('disabled', true);
-                        // $('.payment_method_tkm-oplati').hide();
-                        // $('.payment_method_cod').hide();
 
+                    let cartTotalElement = document.querySelector('.cart-subtotal .woocommerce-Price-amount');
+                    let totalCart = 0;
+
+                    if (cartTotalElement) {
+                        let rawText = cartTotalElement.innerText || cartTotalElement.textContent;
+                        totalCart = parseFloat(rawText.replace(/[^\d,.]/g, '').replace(',', '.'));
+                    } else {
+                        console.log("Cart total element not found.");
+                    }
+
+
+                    if (polygon.properties.get('description').toLowerCase() === "красная") {
                         $('#billing_zone').val("red_zone");
-                        // $('#payment_method_rbspayment').click();
-                        // setTimeout(function () {
-                        //     $('#ship-to-different-address-checkbox').click();
-                        //     $('#ship-to-different-address-checkbox').prop('checked', false);
-                        // }, 1000);
-                        // setTimeout(function () {
-                        //     $('#payment_method_tkm-oplati').prop('disabled', true);
-                        //     $('#payment_method_cod').prop('disabled', true);
-                        //     $('.payment_method_tkm-oplati').hide();
-                        //     $('.payment_method_cod').hide();
-                        // }, 3500);
+                        if (totalCart && totalCart >= 45) {
+                            $('#shipping_method_0_free_shipping3').click();
+                            console.log("Красная зона бесплатная доставка")
+                            updateDeliveryPrice(0);
+                        } else if (totalCart && totalCart < 45) {
+                            $('#shipping_method_0_flat_rate5').click();
+                            console.log("Красная зона платная доставка")
 
+                            setTimeout(function() {
+                                let priceFlatRate5 = getShippingPrice('#shipping_method_0_flat_rate5');
+                                updateDeliveryPrice(priceFlatRate5);
+                            }, 1000);
+
+                        }
+
+                        enableOrdBtn();
                     }
-                    if (polygon.properties.get('description') == "Желтая") {
+                    if (polygon.properties.get('description').toLowerCase() === "желтая") {
                         $('#billing_zone').val("yellow_zone");
-                        // $('#payment_method_tkm-oplati').prop('disabled', false);
-                        // $('#payment_method_cod').prop('disabled', false);
-                        // $('.payment_method_tkm-oplati').show();
-                        // $('.payment_method_cod').show();
-                        //
-                        // setTimeout(function () {
-                        //     $('#ship-to-different-address-checkbox').click();
-                        //     $('#ship-to-different-address-checkbox').prop('checked', false);
-                        // }, 1000);
+                        if (totalCart && totalCart >= 35) {
+                            $('#shipping_method_0_free_shipping3').click();
+                            console.log("Желтая зона бесплатная доставка")
+                            updateDeliveryPrice(0);
+                        } else if (totalCart && totalCart < 35) {
+                            $('#shipping_method_0_flat_rate4').click();
+                            console.log("Желтая зона платная доставка")
 
+                            setTimeout(function() {
+                                let priceFlatRate4 = getShippingPrice('#shipping_method_0_flat_rate4');
+                                updateDeliveryPrice(priceFlatRate4);
+                            }, 1000);
+                        }
+
+                        enableOrdBtn();
                     }
-                    if (polygon.properties.get('description') == "Зеленая") {
+                    if (polygon.properties.get('description').toLowerCase() === "зеленая") {
                         $('#billing_zone').val("green_zone");
-                        // $('#payment_method_tkm-oplati').prop('disabled', false);
-                        // $('#payment_method_cod').prop('disabled', false);
-                        // $('.payment_method_tkm-oplati').show();
-                        // $('.payment_method_cod').show();
-                        //
-                        // setTimeout(function () {
-                        //     $('#ship-to-different-address-checkbox').click();
-                        //     $('#ship-to-different-address-checkbox').prop('checked', false);
-                        // }, 1000);
+                        if (totalCart && totalCart >= 25) {
+                            $('#shipping_method_0_free_shipping3').click();
+                            console.log("Зеленая зона бесплатная доставка")
+                            updateDeliveryPrice(0);
+                        } else if (totalCart && totalCart < 25) {
+                            $('#shipping_method_0_flat_rate2').click();
+                            console.log("Зеленая зона платная доставка")
+
+                            setTimeout(function() {
+                                let priceFlatRate2 = getShippingPrice('#shipping_method_0_flat_rate2');
+                                updateDeliveryPrice(priceFlatRate2);
+                            }, 1000);
+                        }
+
+                        enableOrdBtn();
                     }
 
                     deliveryZones.setOptions('fillOpacity', 0.4);
@@ -125,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         // закомментируйте код ниже.
                         ymaps.geocode(coords, {results: 1}).then(function (res) {
                             var obj = res.geoObjects.get(0);
-                            console.log("test2")
                             setData(obj);
                         });
                     }
@@ -290,6 +310,27 @@ document.addEventListener("DOMContentLoaded", function() {
             $('.delivery-information #billing_address_house').on('change', function (e) {
                 geocode();
             });
+
+            function enableOrdBtn() {
+                $('.complete-order').prop('disabled', false);
+                $('.complete-order').removeClass('disabled');
+                deliveryPoint.properties.set({
+                    iconCaption: 'Адрес',
+                });
+            }
+
+            function getShippingPrice(shippingMethodId) {
+                let amount = $(shippingMethodId).siblings().find('.woocommerce-Price-amount');
+                let total = amount[0].innerText
+                console.log(total)
+                return total;
+            }
+
+            function updateDeliveryPrice(price) {
+                $('#delivery-price-value').text(price );
+            }
+
+
         }
 
         $.ajax({

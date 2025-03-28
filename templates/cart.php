@@ -105,67 +105,62 @@ get_header(); ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <div class="additional">
-                    <div class="justify-content flex">
-                        <div class="add-sos">
-                            Добавить соусы?
-                        </div>
-                        <div class="add-button">
-                            &#43;
-                        </div>
-                    </div>
-                    <?php
-                    $category_slug = 'sauces';
-                    $args = array(
-                        'post_type' => 'product',
-                        'posts_per_page' => -1,
-                        'tax_query' => array(
-                            array(
-                                'taxonomy' => 'product_cat',
-                                'field' => 'slug',
-                                'terms' => $category_slug,
-                            ),
-                        ),
-                    );
-                    $query = new WP_Query($args);
-
-
-                    if ($query->have_posts()) : ?>
-                        <?php while ($query->have_posts()) :
-                            $query->the_post();
-                            $product = wc_get_product(get_the_ID());
-                            ?>
-
-                            <div class="add-sos justify-content flex">
-
-                                <div class="grid-third">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    <?php endif; ?>
-                                    <div class="name">
-                                        <?php echo esc_html($product->get_name()); ?>
-                                    </div>
-                                    <div class="price">
-                                        <?php echo $product->get_price_html(); ?>
-                                    </div>
-                                </div>
-                                <div class="add-button-sos">
-                                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
-                                        &#43;
-                                    </a>
-                                </div>
-                            </div>
-
-                        <?php endwhile;
-                    endif; ?>
-                </div>
-            <?php else: ?>
-                <div class="empty-basket">
-                    <p>Ваша корзина пуста</p>
-                </div>
             <?php endif; ?>
 
+            <div class="additional">
+                <div class="justify-content flex">
+                    <div class="add-sos">
+                        Добавить соусы?
+                    </div>
+                    <div class="add-button">
+                        &#43;
+                    </div>
+                </div>
+                <?php
+                $category_slug = 'sauces';
+                $args = array(
+                    'post_type' => 'product',
+                    'posts_per_page' => -1,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field' => 'slug',
+                            'terms' => $category_slug,
+                        ),
+                    ),
+                );
+                $query = new WP_Query($args);
 
+
+                if ($query->have_posts()) : ?>
+                    <?php while ($query->have_posts()) :
+                        $query->the_post();
+                        $product = wc_get_product(get_the_ID());
+                        ?>
+
+                        <div class="add-sos justify-content flex">
+
+                            <div class="grid-third">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <?php the_post_thumbnail('medium'); ?>
+                                <?php endif; ?>
+                                <div class="name">
+                                    <?php echo esc_html($product->get_name()); ?>
+                                </div>
+                                <div class="price">
+                                    <?php echo $product->get_price_html(); ?>
+                                </div>
+                            </div>
+                            <div class="add-button-sos">
+                                <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                    &#43;
+                                </a>
+                            </div>
+                        </div>
+
+                    <?php endwhile;
+                endif; ?>
+            </div>
         </div>
         <div class="basket__promo">
             <div>
@@ -212,20 +207,32 @@ get_header(); ?>
                 </div>
                 <div class="delivery-information">
                     <div id="delivery-price">
+                        <p class="delivery-info">
+                            Суммы для бесплатной доставки:
+                        </p>
+                        <p class="delivery-info">
+                            Зеленая зона: 25 руб, иначе доставка 5 руб
+                        </p>
+                        <p class="delivery-info">
+                            Желтая зона: 35 руб, иначе доставка 8 руб
+                        </p>
+                        <p class="delivery-info">
+                            Красная зона: 45 руб, иначе доставка 10 руб
+                        </p>
                         <p>
                             Стоимость доставки:
-                            <?php
-                            $packages = WC()->shipping->get_packages();
-                            if (!empty($packages)) {
-                                $rate = $packages[0]['rates']['flat_rate:2'];
-                                echo wc_price($rate->cost);
-                            }
-                            ?>
+                            <span id="delivery-price-value">
+                    Введите адрес
+                </span>
+                        </p>
+                    </div>
+                    <div id="pickup-location">
+                        <p>
+                            Самовывоз - 20%
                         </p>
                     </div>
                     <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
                     <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
-                    <!--                    <input id="billing_address_1" type="text" placeholder="Город"/>-->
                     <input id="billing_address_2" type="text" placeholder="Улица"/>
                     <input id="billing_address_house" type="text" placeholder="Дом"/>
                     <div class="flex">
@@ -261,5 +268,14 @@ get_header(); ?>
         </div>
     </div>
 </div>
+
+<!--<div class="tmp-basket">-->
+<!--    <div class="basket-container">-->
+<!--        <p>-->
+<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
+<!--            Дата и время открытия: 28 марта 15:00-->
+<!--        </p>-->
+<!--    </div>-->
+<!--</div>-->
 
 <?php get_footer(); ?>
