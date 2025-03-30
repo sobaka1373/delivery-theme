@@ -57,6 +57,21 @@
 
         $('.basket__delivery .complete-order').click(function (){
             $('#place_order').click();
+            $('.custom-error-container').hide();
+
+            setTimeout(function() {
+                if($('.woocommerce-error')) {
+                    var $noticeGroup = $('.woocommerce-NoticeGroup.woocommerce-NoticeGroup-checkout');
+                    var $customErrorContainer = $('.custom-error-container');
+
+                    if ($noticeGroup.length && $customErrorContainer.length) {
+                        $customErrorContainer.html($noticeGroup.html());
+                        $noticeGroup.remove();
+                    }
+
+                    $customErrorContainer.show();
+                }
+            }, 1500);
         });
 
         $('.basket__delivery #deliveryButton1').click(function (){
@@ -146,6 +161,14 @@
             $('.delivery-information #billing_address_pod').val('.');
             $('.delivery-information #billing_address_flat').val('.');
             $('.delivery-information #billing_address_floor').val('.');
+
+            setTimeout(function () {
+                $('.complete-order').prop('disabled', false);
+                $('.complete-order').remove('disabled');
+                $('#notice').hide();
+                $('#footer').hide();
+            }, 500);
+
         }
 
         function setDelivery() {
@@ -231,6 +254,9 @@
             const match = input.name.match(/\[([a-f0-9]{32})\]\[qty\]/);
             return match ? match[1] : null;
         }
+
+
+
 
     });
 })(jQuery);

@@ -638,6 +638,26 @@
   font-weight: normal;
 }
 
+.title-container {
+  .add-button {
+    display: none;
+  }
+}
+
+.basket .basket__delivery .billing-container {
+  margin: 0;
+}
+
+.custom-error-container {
+  background: #ffebe8;
+  color: #d9534f;
+  padding: 10px;
+  border: 1px solid #d9534f;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+
 .grid-third {
   display: grid;
   grid-template-columns: 100px 400px 100px;

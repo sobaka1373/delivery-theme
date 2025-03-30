@@ -22,7 +22,7 @@ get_header(); ?>
     ?>
 </div>
 
-<div class="basket container center hidden-basket">
+<div class="basket container center">
   <div class="basket__title">
     Ваш заказ
   </div>
@@ -108,7 +108,7 @@ get_header(); ?>
         <?php endif; ?>
 
       <div class="additional">
-        <div class="justify-content flex">
+        <div class="justify-content flex title-container">
           <div class="add-sos">
             Добавить соусы?
           </div>
@@ -195,7 +195,11 @@ get_header(); ?>
       <div class="total">
         Итого: <?php echo WC()->cart->get_total(); ?>
       </div>
-      <div class="basket__delivery">
+        <div class="custom-error-container" style="display: none">
+            <?php wc_print_notices(); ?>
+        </div>
+
+        <div class="basket__delivery">
         Оформление заказа
         <div class="delivery-self flex">
           <div class="delivery active" id="deliveryButton1">
@@ -235,11 +239,11 @@ get_header(); ?>
           <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
           <input id="billing_address_2" type="text" placeholder="Улица"/>
           <input id="billing_address_house" type="text" placeholder="Дом"/>
-          <div class="flex">
+          <div class="flex billing-container">
             <input id="billing_address_korp" type="text" placeholder="Корпус"/>
             <input id="billing_address_pod" type="text" placeholder="Подъезд"/>
           </div>
-          <div class="flex">
+          <div class="flex billing-container">
             <input id="billing_address_flat" type="text" placeholder="Квартира"/>
             <input id="billing_address_floor" type="text" placeholder="Этаж"/>
           </div>
@@ -262,20 +266,20 @@ get_header(); ?>
             </div>
 
         </div>
-        <button class="complete-order" type="submit" class="text-sm text-blue-600 hover:underline">Оформить
+        <button type="submit" class="complete-order text-sm text-blue-600 hover:underline">Оформить
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="tmp-basket">
-    <div class="basket-container">
-        <p>
-            В данный момент мы еще не открылись и вы не можете сделать заказ.
-            Дата и время открытия: 28 марта 16:00
-        </p>
-    </div>
-</div>
+<!--<div class="tmp-basket">-->
+<!--    <div class="basket-container">-->
+<!--        <p>-->
+<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
+<!--            Дата и время открытия: 28 марта 16:00-->
+<!--        </p>-->
+<!--    </div>-->
+<!--</div>-->
 
 <?php get_footer(); ?>

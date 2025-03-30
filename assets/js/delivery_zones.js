@@ -233,8 +233,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         $('.complete-order').prop('disabled', true);
                         $('.complete-order').addClass('disabled');
 
-                        showError(error);
-                        showMessage(hint);
+                        if (!$('#shipping_method_0_pickup_location0').prop('checked')) {
+
+                            showError(error);
+                            showMessage(hint);
+                        }
                     } else {
                         // console.log(obj.geometry.getCoordinates());
                         // showResult(obj);
@@ -308,7 +311,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             $('.delivery-information #billing_address_house').on('change', function (e) {
-                geocode();
+                if (!$('#shipping_method_0_pickup_location0').prop('checked')) {
+                    geocode();
+                }
             });
 
             function enableOrdBtn() {
@@ -334,8 +339,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         $.ajax({
-            url: 'http://localhost:10181/wp-json/custom-routes/geojson',
+            url: 'https://pishcheblok.by/wp-json/custom-routes/geojson',
             dataType: 'json',
+            timeout: 15000,
             success: onZonesLoad
         });
     }

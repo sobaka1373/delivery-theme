@@ -11,7 +11,7 @@ function my_theme_enqueue_assets()
 {
     wp_enqueue_style('my-theme-style', get_template_directory_uri() . '/assets/css/main.css');
     wp_enqueue_style('css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
-    wp_enqueue_script('cdn', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js');
+//    wp_enqueue_script('cdn', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js');
     wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/js/slider.js');
     wp_enqueue_style( 'css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
     wp_enqueue_style( 'css-thank-you-page', get_template_directory_uri() . '/assets/css/thank-you-page.css');
@@ -20,7 +20,7 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'increase-quantity', get_template_directory_uri() . '/assets/js/increase-quantity.js');
     wp_enqueue_script( 'burger-toggle', get_template_directory_uri() . '/assets/js/burger-toggle.js');
 
-    wp_enqueue_script( 'cart-checkout', get_template_directory_uri() . '/assets/js/cart-checkout.js');
+    wp_enqueue_script( 'cart-checkout', get_template_directory_uri() . '/assets/js/cart-checkout.js', array('jquery'), null, true);
     wp_localize_script("cart-checkout", "wc_cart_params",
         [
             "ajax_url" => admin_url("admin-ajax.php"),
@@ -200,3 +200,13 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         $cart->add_fee("Доставка ", 5.00);
     }
 });
+
+add_action('woocommerce_before_checkout_form', 'move_woocommerce_notices');
+
+function move_woocommerce_notices() {
+    if (wc_notice_count('error') > 0) {
+        echo '<div class="custom-error-container">';
+        wc_print_notices();
+        echo '</div>';
+    }
+}
