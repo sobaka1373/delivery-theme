@@ -54,7 +54,7 @@
         <div class="header-info-container">
             <div class="align-center flex">
                 <img class="image__location"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
                      alt="location">
                 <p>
                     <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
@@ -64,7 +64,7 @@
             </div>
             <div class="align-center flex">
                 <img class="image__phone"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
                 <p>
                     <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                         +375 44 712-71-17
@@ -80,7 +80,7 @@
         <div class="location-mobile">
             <div class="align-center flex">
                 <img class="image__location"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.png'); ?>"
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
                      alt="location">
                 <p>
                     <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
@@ -90,7 +90,7 @@
             </div>
             <div class="align-center flex">
                 <img class="image__phone"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.png'); ?>" alt="phone">
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
                 <p>
                     <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                         +375 44 712-71-17
@@ -174,6 +174,19 @@
             </div>
         </div>
     </nav>
+    <div class="nav-mobile-container">
+        <div class="align-center flex">
+            <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
+                <div class="flex container-phone">
+                    <img class="image__phone"
+                         src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
+                    <p>
+                        +375 44 712-71-17
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
     <div class="background_grey sticky submenu-mobile">
         <nav class="container__submenu submenu flexbox center">
             <?php

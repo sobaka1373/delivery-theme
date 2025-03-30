@@ -1,4 +1,4 @@
-(function( $) {
+(function( $ ) {
     'use strict';
     $(document).ready(function() {
 
@@ -7,17 +7,16 @@
             shippingMethod.trigger("click");
             setTimeout(function() {
                 $(totalUpdate);
-            }, 500);
+            }, 500); // Добавил задержку 500ms
         }
+
         let paymentMethod = $("#payment ul #payment_method_cod");
         if (paymentMethod.length) {
             paymentMethod.trigger("click");
             setTimeout(function() {
                 $(totalUpdate);
-            }, 500);
+            }, 500); // Добавил задержку 500ms
         }
-
-
 
         $('.delivery-information #billing_phone').change(function (){
             $('.woocommerce-input-wrapper #billing_phone').val($(this).val());
@@ -98,13 +97,12 @@
 
         $('.decrease').click(function () {
             changeQuantity(-1);
-        })
+        });
 
         $('.increase').click(function () {
             changeQuantity(1);
-        })
+        });
 
-        // Нет никакого идентификатара успешно или нет! Доделать.
         $('.basket__promo .coupon-add').click(function (){
             let couponCode = $('#coupon_code').val();
             $.ajax({
@@ -116,6 +114,7 @@
                 },
                 beforeSend: function() {
                     $('#coupon_message').text('Проверяем купон...').show();
+                    toggleLoading(true); // Показываем лоадер при отправке запроса
                 },
                 success: function(response) {
                     if (response.success) {
@@ -127,14 +126,16 @@
                 },
                 error: function() {
                     $('#coupon_message').text('Ошибка запроса').css('color', 'red');
+                },
+                complete: function() {
+                    toggleLoading(false); // Скрываем лоадер по завершении запроса
                 }
             });
-
         });
 
         $('.promo-input #coupon-input').change(function (){
             $('.woocommerce-form-coupon #coupon_code').val($(this).val());
-        })
+        });
 
         $('.payment-type input').click(function (){
             if ($(this).val() === 'cash') {
@@ -145,7 +146,7 @@
                 $('.complete-order').prop('disabled', true);
                 $('.complete-order').addClass('disabled');
             }
-        })
+        });
 
         function setLocalPickUp() {
             $('.woocommerce-input-wrapper #billing_street').val('.');
@@ -164,11 +165,10 @@
 
             setTimeout(function () {
                 $('.complete-order').prop('disabled', false);
-                $('.complete-order').remove('disabled');
+                $('.complete-order').removeClass('disabled');
                 $('#notice').hide();
                 $('#footer').hide();
-            }, 500);
-
+            }, 1500);
         }
 
         function setDelivery() {
@@ -195,7 +195,8 @@
                     action: "update_cart_total",
                 },
                 beforeSend: function () {
-                    $(".basket__promo .total").addClass("loading"); // Можно добавить индикатор загрузки
+                    $(".basket__promo .total").addClass("loading"); // Показываем лоадер при обновлении
+                    toggleLoading(true);
                 },
                 success: function (response) {
                     if (response.success) {
@@ -205,7 +206,8 @@
                     }
                 },
                 complete: function () {
-                    $(".basket__promo .total").removeClass("loading");
+                    $(".basket__promo .total").removeClass("loading"); // Убираем лоадер
+                    toggleLoading(false);
                 },
             });
 
@@ -240,12 +242,18 @@
                     quantity: quantity,
                     cart_item_key: cartItemKey
                 },
+                beforeSend: function() {
+                    toggleLoading(true); // Показываем лоадер при обновлении количества
+                },
                 success: function (response) {
                     if (response.success) {
                         totalUpdate();
                     } else {
                         alert("Ошибка обновления корзины.");
                     }
+                },
+                complete: function() {
+                    toggleLoading(false); // Скрываем лоадер после обновления
                 },
             });
         }
@@ -255,9 +263,13 @@
             return match ? match[1] : null;
         }
 
-
-
-
+        function toggleLoading(isLoading) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (isLoading) {
+                overlay.classList.add('visible');
+            } else {
+                overlay.classList.remove('visible');
+            }
+        }
     });
 })(jQuery);
-

@@ -163,7 +163,7 @@ get_header(); ?>
       </div>
     </div>
     <div class="basket__promo">
-      <div>
+      <div class="promocode-container">
         Промокод:
         <div class="flex">
           <div class="promo-input">
@@ -273,13 +273,8 @@ get_header(); ?>
   </div>
 </div>
 
-<!--<div class="tmp-basket">-->
-<!--    <div class="basket-container">-->
-<!--        <p>-->
-<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
-<!--            Дата и время открытия: 28 марта 16:00-->
-<!--        </p>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
 
 <?php get_footer(); ?>

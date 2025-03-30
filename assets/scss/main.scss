@@ -153,3 +153,28 @@
     display: flex;
   }
 }
+
+.nav-mobile-container {
+  display: none;
+  padding: 16px 0;
+
+  @media (max-width: 500px) {
+    display: block;
+  }
+
+  a {
+    display: flex;
+    margin: 0 auto;
+
+    .container-phone {
+      margin: 0 auto;
+
+      p {
+        font-family: CyrillicOld, serif;
+        font-size: 15px;
+        color: #1d1d1f;
+        margin: 0 0 0 10px;
+      }
+    }
+  }
+}
