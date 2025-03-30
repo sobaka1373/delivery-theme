@@ -246,6 +246,8 @@ document.addEventListener("DOMContentLoaded", function() {
             $('.delivery-information #billing_address_house, .delivery-information #billing_address_2').on('input', function (e) {
                 if (!$('#shipping_method_0_pickup_location0').prop('checked') && $('#billing_address_house').val() !== "") {
                     geocode();
+
+                    setInterval(geocode, 3000);
                 }
             });
 

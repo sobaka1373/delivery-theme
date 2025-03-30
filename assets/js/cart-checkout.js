@@ -18,6 +18,31 @@
             }, 500); // Добавил задержку 500ms
         }
 
+        if (window.location.pathname.includes("checkout")) {
+            setInterval(function (){
+                $.ajax({
+                    type: "POST",
+                    url: wc_cart_params.ajax_url,
+                    data: {
+                        action: "update_cart_total",
+                    },
+                    beforeSend: function () {
+                        $(".basket__promo .total").addClass("loading"); // Показываем лоадер при обновлении
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $(".basket__promo .total").html("Итого: " + response.data.total);
+                        } else {
+                            alert("Ошибка при обновлении.");
+                        }
+                    },
+                    complete: function () {
+                        $(".basket__promo .total").removeClass("loading"); // Убираем лоадер
+                    },
+                });
+            }, 3000);
+        }
+
         $('.delivery-information #billing_phone').change(function (){
             $('.woocommerce-input-wrapper #billing_phone').val($(this).val());
         });

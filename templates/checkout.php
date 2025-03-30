@@ -226,8 +226,8 @@ get_header(); ?>
               <p>
                   Стоимость доставки:
                   <span id="delivery-price-value">
-                    Введите адрес
-                </span>
+                  Мин 5,00 Br Введите адрес
+                  </span>
               </p>
           </div>
             <div id="pickup-location">

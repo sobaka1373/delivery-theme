@@ -179,27 +179,18 @@ function custom_redirect_on_payment_failure() {
     }
 }
 
-//add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
-//    if (is_admin() && !defined('DOING_AJAX')) return;
-//
-//    $chosen_method = WC()->session->get('chosen_shipping_methods')[0] ?? '';
-//
-//    // Проверьте, содержит ли метод доставки 'local_pickup'
-//    if (strpos($chosen_method, 'pickup_location') !== false) {
-//        $discount = WC()->cart->subtotal * 0.20;
-//        WC()->cart->add_fee('Скидка за самовывоз', -$discount);
-//    }
-//
-//    if (isset($_POST['billing_zone']) && $_POST['billing_zone'] === 'red_zone') {
-//        $cart->add_fee("Доставка ", 9.00);
-//    }
-//    if (isset($_POST['billing_zone']) && $_POST['billing_zone'] === 'yellow_zone' && $cart->get_cart_contents_total() < 30) {
-//        $cart->add_fee("Доставка ", 7.00);
-//    }
-//    if (isset($_POST['billing_zone']) && $_POST['billing_zone'] === 'green_zone' && $cart->get_cart_contents_total() < 25) {
-//        $cart->add_fee("Доставка ", 5.00);
-//    }
-//});
+add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
+    if (is_admin() && !defined('DOING_AJAX')) return;
+
+    $chosen_method = WC()->session->get('chosen_shipping_methods')[0] ?? '';
+
+    // Проверьте, содержит ли метод доставки 'local_pickup'
+    if (strpos($chosen_method, 'pickup_location') !== false) {
+        $discount = WC()->cart->subtotal * 0.20;
+        WC()->cart->add_fee('Скидка за самовывоз', -$discount);
+    }
+
+});
 //
 //add_action('woocommerce_before_checkout_form', 'move_woocommerce_notices');
 //
