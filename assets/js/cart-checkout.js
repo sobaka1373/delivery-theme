@@ -122,10 +122,12 @@
 
         $('.decrease').click(function () {
             changeQuantity(-1);
+            updateCustomFee();
         });
 
         $('.increase').click(function () {
             changeQuantity(1);
+            updateCustomFee();
         });
 
         $('.basket__promo .coupon-add').click(function (){
@@ -296,5 +298,28 @@
                 overlay.classList.remove('visible');
             }
         }
+
+
+        function updateCustomFee() {
+            $.ajax({
+                url: wc_cart_params.ajax_url,
+                type: 'GET',
+                data: {
+                    action: "get_pizza_discount_html"
+                },
+                success: function (response) {
+                    if (response.success) {
+                        if ($('.custom-fee').length === 0) {
+                            $('<div class="custom-fee"></div>').insertAfter('.cart_totals');
+                        }
+                        $('.custom-fee').html(response.data);
+                    }
+                }
+            });
+        }
+
+        updateCustomFee();
+
+
     });
 })(jQuery);

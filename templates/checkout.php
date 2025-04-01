@@ -192,6 +192,9 @@ get_header(); ?>
             <?php endif; ?>
         </div>
       </div>
+        <div class="custom-fee">
+
+        </div>
       <div class="total">
         Итого: <?php echo WC()->cart->get_total(); ?>
       </div>

@@ -87,7 +87,7 @@ get_header(); ?>
                                         </div>
                                         <input id="quantityInput" type="text" name="cart[<?php echo $cart_item_key; ?>][qty]"
                                                value="<?php echo esc_attr($product_quantity); ?>" min="1"
-                                               class="w-16 text-center border border-gray-300 rounded"/>
+                                               class="w-16 text-center border border-gray-300 rounded" disabled/>
                                         <div class="increase">
                                             &#43;
                                         </div>
@@ -108,7 +108,7 @@ get_header(); ?>
             <?php endif; ?>
 
             <div class="additional">
-                <div class="justify-content flex">
+                <div class="justify-content flex title-container">
                     <div class="add-sos">
                         Добавить соусы?
                     </div>
@@ -163,7 +163,7 @@ get_header(); ?>
             </div>
         </div>
         <div class="basket__promo">
-            <div>
+            <div class="promocode-container">
                 Промокод:
                 <div class="flex">
                     <div class="promo-input">
@@ -195,6 +195,10 @@ get_header(); ?>
             <div class="total">
                 Итого: <?php echo WC()->cart->get_total(); ?>
             </div>
+            <div class="custom-error-container" style="display: none">
+                <?php wc_print_notices(); ?>
+            </div>
+
             <div class="basket__delivery">
                 Оформление заказа
                 <div class="delivery-self flex">
@@ -222,8 +226,8 @@ get_header(); ?>
                         <p>
                             Стоимость доставки:
                             <span id="delivery-price-value">
-                    Введите адрес
-                </span>
+                  Мин 5,00 Br Введите адрес
+                  </span>
                         </p>
                     </div>
                     <div id="pickup-location">
@@ -235,11 +239,11 @@ get_header(); ?>
                     <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>
                     <input id="billing_address_2" type="text" placeholder="Улица"/>
                     <input id="billing_address_house" type="text" placeholder="Дом"/>
-                    <div class="flex">
+                    <div class="flex billing-container">
                         <input id="billing_address_korp" type="text" placeholder="Корпус"/>
                         <input id="billing_address_pod" type="text" placeholder="Подъезд"/>
                     </div>
-                    <div class="flex">
+                    <div class="flex billing-container">
                         <input id="billing_address_flat" type="text" placeholder="Квартира"/>
                         <input id="billing_address_floor" type="text" placeholder="Этаж"/>
                     </div>
@@ -262,20 +266,15 @@ get_header(); ?>
                     </div>
 
                 </div>
-                <button class="complete-order" type="submit" class="text-sm text-blue-600 hover:underline">Оформить
+                <button type="submit" class="complete-order text-sm text-blue-600 hover:underline">Оформить
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<!--<div class="tmp-basket">-->
-<!--    <div class="basket-container">-->
-<!--        <p>-->
-<!--            В данный момент мы еще не открылись и вы не можете сделать заказ.-->
-<!--            Дата и время открытия: 28 марта 15:00-->
-<!--        </p>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
 
 <?php get_footer(); ?>

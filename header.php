@@ -4,7 +4,7 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Пищеблок №1 | Доставка пиццы, шаурмы, закусок
+        Пищеблок №1 Гомель | Доставка пиццы, шаурмы, закусок Гомель
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Google Tag Manager -->
@@ -57,7 +57,7 @@
                      src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
                      alt="location">
                 <p>
-                    <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
+                    <a href="https://yandex.by/maps/-/CHRHmR4r" target="_blank" rel="noopener noreferrer">
                         Самовывоз: ул. Рабочая, 22
                     </a>
                 </p>
@@ -83,7 +83,7 @@
                      src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
                      alt="location">
                 <p>
-                    <a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank" rel="noopener noreferrer">
+                    <a href="https://yandex.by/maps/-/CHRHmR4r" target="_blank" rel="noopener noreferrer">
                         Самовывоз: ул. Рабочая, 22
                     </a>
                 </p>
