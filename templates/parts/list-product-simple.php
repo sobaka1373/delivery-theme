@@ -10,7 +10,7 @@ if (!$product) return;
     <a href="<?php the_permalink(); ?>">
         <div class="pizza__image">
             <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('medium'); ?>
+                <?php the_post_thumbnail('medium', array('loading' => 'lazy')); ?>
             <?php endif; ?>
         </div>
     </a>

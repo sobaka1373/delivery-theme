@@ -1,50 +1,17 @@
-jQuery(document).ready(function ($) {
-
-    // $('#checkbox').change(function(){
-    //     setInterval(function () {
-    //         moveRight();
-    //     }, 3000);
-    // });
-
-    var slideCount = $('#slider ul li').length;
-    var slideWidth = $('#slider ul li').width();
-    var slideHeight = $('#slider ul li').height();
-    var sliderUlWidth = slideCount * slideWidth;
-
-    $('#slider').css({ width: slideWidth, height: slideHeight });
-
-    $('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
-
-    $('#slider ul li:last-child').prependTo('#slider ul');
-
-    setInterval(function () {
-        moveRight();
-    }, 3000);
-
-    function moveLeft() {
-        $('#slider ul').animate({
-            left: + slideWidth
-        }, 2000, function () {
-            $('#slider ul li:last-child').prependTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
-
-    function moveRight() {
-        $('#slider ul').animate({
-            left: - slideWidth
-        }, 2000, function () {
-            $('#slider ul li:first-child').appendTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
-
-    $('a.control_prev').click(function () {
-        moveLeft();
+document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper('#slider', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        speed: 1500,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        grabCursor: true,
     });
-
-    $('a.control_next').click(function () {
-        moveRight();
-    });
-
 });

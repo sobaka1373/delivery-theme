@@ -3,7 +3,9 @@
 <?php get_header(); ?>
 
 <?php
-//require_once locate_template('templates/parts/banner.php');
+if( get_field('activate', 'options') === 'yes' ) {
+    require_once locate_template('templates/parts/banner.php');
+}
 ?>
 
 <?php

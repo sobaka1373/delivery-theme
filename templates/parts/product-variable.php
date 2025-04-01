@@ -13,7 +13,7 @@ $variations = $product->get_available_variations();
         </div>
         <div class="button__home">
             <a href="">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/home.svg">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/home.svg" loading="lazy">
             </a>
         </div>
         <div class="arrow">
@@ -38,7 +38,7 @@ $variations = $product->get_available_variations();
                 <div class="product-image">
                     <?php
                     if (has_post_thumbnail()) {
-                        the_post_thumbnail('large', ['class' => 'rounded-lg shadow-md']);
+                        the_post_thumbnail('large', array('loading' => 'lazy', 'class' => 'rounded-lg shadow-md'));
                     }
                     ?>
                 </div>

@@ -7,6 +7,27 @@ if( function_exists('acf_add_local_field_group') ):
         'title' => 'Banner',
         'fields' => array(
             array(
+                'key' => 'field_679b60f01ecac',
+                'label' => 'Activate',
+                'name' => 'activate',
+                'type' => 'radio',
+                'instructions' => 'Enable or disable the banner block',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'choices' => array(
+                    'yes' => 'Yes',
+                    'no' => 'No',
+                ),
+                'default_value' => 'no',
+                'layout' => 'horizontal',
+                'return_format' => 'value',
+            ),
+            array(
                 'key' => 'field_679b60331eca8',
                 'label' => 'banner_block',
                 'name' => 'banner_block',

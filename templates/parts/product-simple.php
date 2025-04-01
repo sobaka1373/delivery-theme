@@ -37,7 +37,7 @@ $terms = get_the_terms($product->get_id(), 'product_cat');
                 <div class="product-image">
                     <?php
                     if (has_post_thumbnail()) {
-                        the_post_thumbnail('large', ['class' => 'rounded-lg shadow-md']);
+                        the_post_thumbnail('large', array('loading' => 'lazy', 'class' => 'rounded-lg shadow-md'));
                     }
                     ?>
                 </div>
