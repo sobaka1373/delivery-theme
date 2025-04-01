@@ -47,7 +47,7 @@
     <nav class="container flexbox center">
         <a href="<?php echo esc_url(home_url('/')); ?>">
             <img class="image__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>"
-                 alt="logo">
+                 alt="logo" loading="lazy">
         </a>
         <ul class="flex menu mobile-menu">
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
@@ -58,7 +58,7 @@
             <div class="align-center flex">
                 <img class="image__location"
                      src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
-                     alt="location">
+                     alt="location" loading="lazy">
                 <p>
                     <a href="https://yandex.by/maps/-/CHRHmR4r" target="_blank" rel="noopener noreferrer">
                         Самовывоз: ул. Рабочая, 22
@@ -67,7 +67,7 @@
             </div>
             <div class="align-center flex">
                 <img class="image__phone"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone" loading="lazy">
                 <p>
                     <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                         +375 44 712-71-17
@@ -84,7 +84,7 @@
             <div class="align-center flex">
                 <img class="image__location"
                      src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/location.svg'); ?>"
-                     alt="location">
+                     alt="location" loading="lazy">
                 <p>
                     <a href="https://yandex.by/maps/-/CHRHmR4r" target="_blank" rel="noopener noreferrer">
                         Самовывоз: ул. Рабочая, 22
@@ -93,7 +93,7 @@
             </div>
             <div class="align-center flex">
                 <img class="image__phone"
-                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
+                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone" loading="lazy">
                 <p>
                     <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                         +375 44 712-71-17
@@ -108,7 +108,7 @@
                 <a href="/checkout" class="basket-icon">
                     <div class="basket-image-icon">
                         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>"
-                             alt="basket">
+                             alt="basket" loading="lazy">
                         <?php if (!empty($cart)): ?>
                             <p class="cart-total-text"><?php echo WC()->cart->get_cart_total(); ?></p>
                         <?php endif; ?>
@@ -130,7 +130,7 @@
                                     data-cart-item="<?php echo esc_attr($cart_item_key); ?>">
                                     <div class="basket-item-image-wrapper">
                                         <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>"
-                                             alt="<?php echo esc_attr($product->get_name()); ?>">
+                                             alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
                                     </div>
                                     <div class="basket-item-info">
                                         <div class="basket-item-name">
@@ -182,7 +182,7 @@
             <a href="tel:+375447127117" target="_blank" rel="noopener noreferrer">
                 <div class="flex container-phone">
                     <img class="image__phone"
-                         src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone">
+                         src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/phone.svg'); ?>" alt="phone" loading="lazy">
                     <p>
                         +375 44 712-71-17
                     </p>
@@ -208,7 +208,7 @@
                     <a href="<?php echo esc_url($item['href']); ?>">
                         <img class="image__logo"
                              src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/menu/' . $item['icon']); ?>"
-                             alt="<?php echo esc_attr($item['label']); ?>">
+                             alt="<?php echo esc_attr($item['label']); ?>" loading="lazy">
                         <p><?php echo esc_html($item['label']); ?></p>
                     </a>
                 </div>

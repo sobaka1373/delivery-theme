@@ -12,7 +12,7 @@
         <div class="footer-column">
             <a href="/">
                 <img class="image__logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.png"
-                     alt="logo">
+                     alt="logo" loading="lazy">
             </a>
             <p class="footer__info">УНП 491390946</p>
             <p>ООО "Фуд Найс"</p>
@@ -86,23 +86,23 @@
             <p>Мы принимаем к оплате:</p>
             <div class="flex">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-12.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-11.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-13.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-14.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-15.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-16.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-18.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-19.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logos/black/Black-20.png'); ?>"
-                     alt="basket">
+                     alt="basket" loading="lazy">
             </div>
         </div>
     </div>
