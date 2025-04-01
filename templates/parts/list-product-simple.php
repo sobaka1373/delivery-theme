@@ -28,7 +28,7 @@ if (!$product) return;
         <div class="flex">
             <div class="basket">
                 <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
                 </a>
             </div>
         </div>
