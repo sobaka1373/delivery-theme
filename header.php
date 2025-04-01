@@ -35,9 +35,9 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/100664224" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+<!--    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">-->
+<!--    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>-->
+<!--    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>-->
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=a036afad-cc41-455e-b4fb-8a902f3496b0&suggest_apikey=c1670e47-aa05-4b57-83d6-772f46f9ca2b"
             type="text/javascript"></script>
     <?php wp_head(); ?>
@@ -107,7 +107,7 @@
 
                 <a href="/checkout" class="basket-icon">
                     <div class="basket-image-icon">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/basket.svg'); ?>"
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/order.svg'); ?>"
                              alt="basket" loading="lazy">
                         <?php if (!empty($cart)): ?>
                             <p class="cart-total-text"><?php echo WC()->cart->get_cart_total(); ?></p>
