@@ -47,4 +47,5 @@
         },
         grabCursor: true,
     });
+    // swiper.autoplay.stop();
 </script>
