@@ -35,7 +35,6 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'delivery_zones', get_template_directory_uri() . '/assets/js/delivery_zones.js', array('jquery'));
     wp_enqueue_script( 'work-time', get_template_directory_uri() . '/assets/js/work-time.js', array('jquery'));
 }
-
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
 
 //THEME MENUS
@@ -294,3 +293,5 @@ function get_pizza_discount_html() {
 
 add_action('wp_ajax_get_pizza_discount_html', 'get_pizza_discount_html');
 add_action('wp_ajax_nopriv_get_pizza_discount_html', 'get_pizza_discount_html');
+
+
