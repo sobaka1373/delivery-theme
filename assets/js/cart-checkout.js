@@ -122,12 +122,12 @@
 
         $('.decrease').click(function () {
             changeQuantity(-1);
-            // updateCustomFee();
+            updateCustomFee();
         });
 
         $('.increase').click(function () {
             changeQuantity(1);
-            // updateCustomFee();
+            updateCustomFee();
         });
 
         $('.basket__promo .coupon-add').click(function (){
@@ -318,7 +318,7 @@
             });
         }
 
-        // updateCustomFee();
+        updateCustomFee();
 
 
     });

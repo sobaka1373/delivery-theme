@@ -204,93 +204,93 @@ function load_product_category_template($template) {
 }
 add_filter('template_include', 'load_product_category_template');
 
-//function pizza_buy_2_get_1_free_discount() {
-//    $cart = WC()->cart;
-//    $pizza_category = 'pizza'; // Укажи slug категории пиццы
-//    $eligible_items = [];
-//
-//    // Проходим по товарам в корзине
-//    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
-//        $product = $cart_item['data'];
-//        $product_id = $product->get_id();
-//        $parent_id = $product->get_parent_id(); // Получаем ID родительского товара
-//
-//        // Если это вариация, проверяем категорию у родителя
-//        if ($parent_id) {
-//            $product_id = $parent_id;
-//        }
-//
-//        // Проверяем, принадлежит ли товар к категории пиццы
-//        if (has_term($pizza_category, 'product_cat', $product_id)) {
-//            // Добавляем товар столько раз, сколько его единиц в корзине
-//            for ($i = 0; $i < $cart_item['quantity']; $i++) {
-//                $eligible_items[] = $cart_item;
-//            }
-//        }
-//    }
-//
-//    // Применяем скидку, если в корзине минимум 3 пиццы
-//    if (count($eligible_items) >= 3) {
-//        // Сортируем пиццы по цене (от дешевой к дорогой)
-//        usort($eligible_items, function($a, $b) {
-//            return $a['data']->get_price() <=> $b['data']->get_price();
-//        });
-//
-//        // Получаем самую дешевую пиццу
-//        $cheapest_item = $eligible_items[0];
-//        $cheapest_price = $cheapest_item['data']->get_price();
-//
-//        // Добавляем скидку
-//        $cart->add_fee(__('Акция 1+1=3 Скидка: ', 'woocommerce'), -$cheapest_price, false);
-//    }
-//}
-//add_action('woocommerce_cart_calculate_fees', 'pizza_buy_2_get_1_free_discount');
-//
-//function get_pizza_discount_html() {
-//    if (!WC()->cart) {
-//        wp_send_json_error();
-//    }
-//
-//    $cart = WC()->cart;
-//    $pizza_category = 'pizza';
-//    $eligible_items = [];
-//
-//    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
-//        $product = $cart_item['data'];
-//        $product_id = $product->get_id();
-//        $parent_id = $product->get_parent_id();
-//
-//        if ($parent_id) {
-//            $product_id = $parent_id;
-//        }
-//
-//        if (has_term($pizza_category, 'product_cat', $product_id)) {
-//            for ($i = 0; $i < $cart_item['quantity']; $i++) {
-//                $eligible_items[] = $cart_item;
-//            }
-//        }
-//    }
-//
-//    if (count($eligible_items) >= 3) {
-//        usort($eligible_items, function ($a, $b) {
-//            return $a['data']->get_price() <=> $b['data']->get_price();
-//        });
-//
-//        $cheapest_item = $eligible_items[0];
-//        $cheapest_price = wc_price($cheapest_item['data']->get_price());
-//
-//        ob_start();
-//        ?>
-<!--        <tr class="fee">-->
-<!--            <th>Акция 1+1=3 Скидка:</th>-->
-<!--            <td><span class="woocommerce-Price-amount amount">--><?php //echo $cheapest_price; ?><!--</span></td>-->
-<!--        </tr>-->
-<!--        --><?php
-//        wp_send_json_success(ob_get_clean());
-//    } else {
-//        wp_send_json_success('');
-//    }
-//}
-//
-//add_action('wp_ajax_get_pizza_discount_html', 'get_pizza_discount_html');
-//add_action('wp_ajax_nopriv_get_pizza_discount_html', 'get_pizza_discount_html');
+function pizza_buy_2_get_1_free_discount() {
+    $cart = WC()->cart;
+    $pizza_category = 'pizza'; // Укажи slug категории пиццы
+    $eligible_items = [];
+
+    // Проходим по товарам в корзине
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        $product = $cart_item['data'];
+        $product_id = $product->get_id();
+        $parent_id = $product->get_parent_id(); // Получаем ID родительского товара
+
+        // Если это вариация, проверяем категорию у родителя
+        if ($parent_id) {
+            $product_id = $parent_id;
+        }
+
+        // Проверяем, принадлежит ли товар к категории пиццы
+        if (has_term($pizza_category, 'product_cat', $product_id)) {
+            // Добавляем товар столько раз, сколько его единиц в корзине
+            for ($i = 0; $i < $cart_item['quantity']; $i++) {
+                $eligible_items[] = $cart_item;
+            }
+        }
+    }
+
+    // Применяем скидку, если в корзине минимум 3 пиццы
+    if (count($eligible_items) >= 3) {
+        // Сортируем пиццы по цене (от дешевой к дорогой)
+        usort($eligible_items, function($a, $b) {
+            return $a['data']->get_price() <=> $b['data']->get_price();
+        });
+
+        // Получаем самую дешевую пиццу
+        $cheapest_item = $eligible_items[0];
+        $cheapest_price = $cheapest_item['data']->get_price();
+
+        // Добавляем скидку
+        $cart->add_fee(__('Акция 1+1=3 Скидка: ', 'woocommerce'), -$cheapest_price, false);
+    }
+}
+add_action('woocommerce_cart_calculate_fees', 'pizza_buy_2_get_1_free_discount');
+
+function get_pizza_discount_html() {
+    if (!WC()->cart) {
+        wp_send_json_error();
+    }
+
+    $cart = WC()->cart;
+    $pizza_category = 'pizza';
+    $eligible_items = [];
+
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        $product = $cart_item['data'];
+        $product_id = $product->get_id();
+        $parent_id = $product->get_parent_id();
+
+        if ($parent_id) {
+            $product_id = $parent_id;
+        }
+
+        if (has_term($pizza_category, 'product_cat', $product_id)) {
+            for ($i = 0; $i < $cart_item['quantity']; $i++) {
+                $eligible_items[] = $cart_item;
+            }
+        }
+    }
+
+    if (count($eligible_items) >= 3) {
+        usort($eligible_items, function ($a, $b) {
+            return $a['data']->get_price() <=> $b['data']->get_price();
+        });
+
+        $cheapest_item = $eligible_items[0];
+        $cheapest_price = wc_price($cheapest_item['data']->get_price());
+
+        ob_start();
+        ?>
+        <tr class="fee">
+            <th>Акция 1+1=3 Скидка:</th>
+            <td><span class="woocommerce-Price-amount amount"><?php echo $cheapest_price; ?></span></td>
+        </tr>
+        <?php
+        wp_send_json_success(ob_get_clean());
+    } else {
+        wp_send_json_success('');
+    }
+}
+
+add_action('wp_ajax_get_pizza_discount_html', 'get_pizza_discount_html');
+add_action('wp_ajax_nopriv_get_pizza_discount_html', 'get_pizza_discount_html');
