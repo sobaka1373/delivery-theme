@@ -48,21 +48,25 @@
             <p><a href="tel:+375447127117" target="_blank">
                     +375 44 712-71-17
                 </a></p>
-<!--            <div class="title">Мы в соц. сетях:</div>-->
-<!--            <div class="flex">-->
-<!--                <a href="" target="_blank">-->
-<!--                    <img class="insta" src="--><?php //echo get_template_directory_uri(); ?><!--/assets/svg/insta.png"-->
-<!--                         alt="instagram">-->
-<!--                </a>-->
-<!--                <a href="" target="_blank">-->
-<!--                    <img class="telegram" src="--><?php //echo get_template_directory_uri(); ?><!--/assets/svg/tg.svg"-->
-<!--                         alt="telegram">-->
-<!--                </a>-->
-<!--                <a href="" target="_blank">-->
-<!--                    <img class="viber" src="--><?php //echo get_template_directory_uri(); ?><!--/assets/svg/viber.svg"-->
-<!--                         alt="viber">-->
-<!--                </a>-->
-<!--            </div>-->
+            <div class="title">Мы в соц. сетях:</div>
+            <div class="flex">
+                <a href="https://www.instagram.com/pishcheblok.gomel/" target="_blank">
+                    <img class="insta" src="<?php echo get_template_directory_uri(); ?>/assets/svg/insta.png"
+                         alt="instagram">
+                </a>
+                <a href="https://t.me/pishcheblokgomel" target="_blank">
+                    <img class="telegram" src="<?php echo get_template_directory_uri(); ?>/assets/svg/tg.svg"
+                         alt="telegram">
+                </a>
+                <a href="" target="_blank">
+                    <img class="viber" src="<?php echo get_template_directory_uri(); ?>/assets/svg/viber.svg"
+                         alt="viber">
+                </a>
+                <a href="https://www.tiktok.com/@pishcheblok.gomel" target="_blank">
+                    <img class="tiktok" src="<?php echo get_template_directory_uri(); ?>/assets/svg/tiktok.svg"
+                         alt="tiktok">
+                </a>
+            </div>
 <!--            <div class="flex">-->
 <!--                <a href="" target="_blank">-->
 <!--                    <img class="app" src="--><?php //echo get_template_directory_uri(); ?><!--/assets/img/app-store.png"-->

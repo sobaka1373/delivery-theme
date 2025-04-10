@@ -38,7 +38,7 @@
 <!--    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">-->
 <!--    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>-->
 <!--    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>-->
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=a036afad-cc41-455e-b4fb-8a902f3496b0&suggest_apikey=c1670e47-aa05-4b57-83d6-772f46f9ca2b"
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;coordorder=longlat&amp;apikey=52165c7a-8b69-40eb-bfe4-0e4598fa0160&suggest_apikey=19a2a598-caa6-4e8c-9903-53bd4791a2ed"
             type="text/javascript"></script>
     <?php wp_head(); ?>
 </head>

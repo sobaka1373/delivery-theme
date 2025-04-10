@@ -79,23 +79,24 @@
             $('.woocommerce-input-wrapper #billing_note').val($(this).val());
         });
 
-        $('.basket__delivery .complete-order').click(function (){
-            $('#place_order').click();
-            $('.custom-error-container').hide();
+        $('.basket__delivery .complete-order').on('click', function (e) {
+            e.preventDefault(); // предотвращаем стандартное поведение кнопки
+            $('.custom-error-container').hide().empty(); // прячем и очищаем старые ошибки
 
-            setTimeout(function() {
-                if($('.woocommerce-error')) {
-                    var $noticeGroup = $('.woocommerce-NoticeGroup.woocommerce-NoticeGroup-checkout');
-                    var $customErrorContainer = $('.custom-error-container');
+            // Подписываемся на событие ошибки от WooCommerce (оно триггерится при AJAX ошибке в checkout)
+            $(document.body).on('checkout_error', function () {
+                var $noticeGroup = $('.woocommerce-NoticeGroup.woocommerce-NoticeGroup-checkout');
+                var $customErrorContainer = $('.custom-error-container');
 
-                    if ($noticeGroup.length && $customErrorContainer.length) {
-                        $customErrorContainer.html($noticeGroup.html());
-                        $noticeGroup.remove();
-                    }
-
+                if ($noticeGroup.length && $customErrorContainer.length) {
+                    $customErrorContainer.html($noticeGroup.html());
+                    $noticeGroup.remove();
                     $customErrorContainer.show();
                 }
-            }, 1500);
+            });
+
+            // Триггерим оформление заказа программно
+            $('#place_order').trigger('click');
         });
 
         $('.basket__delivery #deliveryButton1').click(function (){
@@ -122,12 +123,12 @@
 
         $('.decrease').click(function () {
             changeQuantity(-1);
-            updateCustomFee();
+            // updateCustomFee();
         });
 
         $('.increase').click(function () {
             changeQuantity(1);
-            updateCustomFee();
+            // updateCustomFee();
         });
 
         $('.basket__promo .coupon-add').click(function (){
@@ -300,25 +301,25 @@
         }
 
 
-        function updateCustomFee() {
-            $.ajax({
-                url: wc_cart_params.ajax_url,
-                type: 'GET',
-                data: {
-                    action: "get_pizza_discount_html"
-                },
-                success: function (response) {
-                    if (response.success) {
-                        if ($('.custom-fee').length === 0) {
-                            $('<div class="custom-fee"></div>').insertAfter('.cart_totals');
-                        }
-                        $('.custom-fee').html(response.data);
-                    }
-                }
-            });
-        }
+        // function updateCustomFee() {
+        //     $.ajax({
+        //         url: wc_cart_params.ajax_url,
+        //         type: 'GET',
+        //         data: {
+        //             action: "get_pizza_discount_html"
+        //         },
+        //         success: function (response) {
+        //             if (response.success) {
+        //                 if ($('.custom-fee').length === 0) {
+        //                     $('<div class="custom-fee"></div>').insertAfter('.cart_totals');
+        //                 }
+        //                 $('.custom-fee').html(response.data);
+        //             }
+        //         }
+        //     });
+        // }
 
-        updateCustomFee();
+        // updateCustomFee();
 
 
     });
