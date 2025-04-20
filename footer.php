@@ -23,7 +23,7 @@
             <p class="address">
                 Адрес:
             </p>
-            <p class="address__link"><a href="https://yandex.by/maps/-/CHQv4JJD" target="_blank">
+            <p class="address__link"><a href="https://yandex.by/maps/-/CHRHmR4r" target="_blank">
                    Беларусь, г. Гомель, ул. Рабочая, 22, помещение 2
                 </a>
             </p>
@@ -82,7 +82,7 @@
             <div class="title">Время работы:</div>
             <p>ПН-ЧТ: 10:00 до 22:00
             </p>
-            <p>ПТ-ВС: 10:00 до 23:00</p>
+            <p>ПТ-ВС: 11:00 до 23:00</p>
         </div>
     </div>
     <div class="container center">

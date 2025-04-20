@@ -13,7 +13,9 @@ function my_theme_enqueue_assets()
     wp_enqueue_style('css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
     wp_enqueue_style('swiper-style', get_template_directory_uri() . '/assets/swiper/swiper-bundle.css', array(), null);
     wp_enqueue_script('swiper-script', get_template_directory_uri() . '/assets/swiper/swiper-bundle.js', array(), null, true);
-    wp_enqueue_script('tailwind-browser', get_template_directory_uri() . '/assets/tailwind/tailwind-bundle.js', array(), null, true);
+//    wp_enqueue_script('tailwind-browser', get_template_directory_uri() . '/assets/tailwind/tailwind-bundle.js', array(), null, true);
+    wp_enqueue_style('tailwind-style', get_template_directory_uri() . '/assets/tailwind/tailwind.min.css', array(), null);
+
     wp_enqueue_style( 'css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
     wp_enqueue_style( 'css-thank-you-page', get_template_directory_uri() . '/assets/css/thank-you-page.css');
     wp_enqueue_script( 'attr-toggle', get_template_directory_uri() . '/assets/js/attr-toggle.js');
@@ -174,7 +176,7 @@ function custom_redirect_on_payment_failure() {
         $current_host = $_SERVER['HTTP_HOST'];
 
         if ($current_host === $allowed_host) {
-            wp_safe_redirect(home_url('/checkout'));
+            wp_safe_redirect(home_url('/checkout/'));
             exit;
         }
     }
