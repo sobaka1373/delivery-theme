@@ -237,6 +237,9 @@ get_header(); ?>
                 <p>
                     Самовывоз - 20%
                 </p>
+                <p>
+                    * не распространяется на комбо и напитки
+                </p>
             </div>
           <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
           <input id="billing_first_name" type="text" placeholder="Вашe имя*"/>

@@ -9,6 +9,7 @@ require_once get_template_directory() . '/acf/init.php';
 
 function my_theme_enqueue_assets()
 {
+    global $post;
     wp_enqueue_style('my-theme-style', get_template_directory_uri() . '/assets/css/main.css');
     wp_enqueue_style('css-main-page', get_template_directory_uri() . '/assets/css/main-page.css');
     wp_enqueue_style('swiper-style', get_template_directory_uri() . '/assets/swiper/swiper-bundle.css', array(), null);
@@ -36,6 +37,10 @@ function my_theme_enqueue_assets()
 
     wp_enqueue_script( 'delivery_zones', get_template_directory_uri() . '/assets/js/delivery_zones.js', array('jquery'));
     wp_enqueue_script( 'work-time', get_template_directory_uri() . '/assets/js/work-time.js', array('jquery'));
+
+    if (is_page('promo') || $post->post_type === "promo_type") {
+        wp_enqueue_style( 'promo', get_template_directory_uri() . '/assets/css/promo.css');
+    }
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -187,13 +192,27 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
     $chosen_method = WC()->session->get('chosen_shipping_methods')[0] ?? '';
 
-    // Проверьте, содержит ли метод доставки 'local_pickup'
+    // Если метод доставки — самовывоз
     if (strpos($chosen_method, 'pickup_location') !== false) {
-        $discount = WC()->cart->subtotal * 0.20;
-        WC()->cart->add_fee('Скидка за самовывоз', -$discount);
-    }
+        $discount = 0;
 
+        // Перебираем все товары в корзине
+        foreach ($cart->get_cart() as $cart_item) {
+            $product = $cart_item['data'];
+
+            // Пропускаем товары с меткой 'sale'
+            if (!has_term('sale', 'product_tag', $product->get_id())) {
+                $item_subtotal = $product->get_price() * $cart_item['quantity'];
+                $discount += $item_subtotal * 0.20;
+            }
+        }
+
+        if ($discount > 0) {
+            $cart->add_fee('Скидка за самовывоз (без товаров со скидкой)', -$discount);
+        }
+    }
 });
+
 
 function load_product_category_template($template) {
     if (is_tax('product_cat')) {
@@ -205,3 +224,40 @@ function load_product_category_template($template) {
     return $template;
 }
 add_filter('template_include', 'load_product_category_template');
+
+add_action( 'init', 'register_post_types' );
+function register_post_types(){
+
+    flush_rewrite_rules( false );
+
+    register_post_type( 'promo_type', [
+        'label'  => null,
+        'labels' => [
+            'name'               => 'Акции',
+            'singular_name'      => 'Акция',
+            'add_new'            => 'Добавить Акцию',
+            'add_new_item'       => 'Добавить Акцию',
+            'edit_item'          => 'Редаактировать акцию',
+            'new_item'           => 'Новая акция',
+            'view_item'          => 'Просмотр акции',
+            'search_items'       => 'Поиск акции',
+            'not_found'          => 'Не Найдено',
+            'not_found_in_trash' => 'Не найдено',
+            'parent_item_colon'  => '',
+            'menu_name'          => 'Акции',
+        ],
+        'description'         => '',
+        'public'              => true,
+        'show_in_menu'        => true,
+        'show_in_rest'        => null,
+        'rest_base'           => null,
+        'menu_position'       => null,
+        'menu_icon'           => null,
+        'hierarchical'        => false,
+        'supports'            => [ 'title', 'editor' ],
+        'taxonomies'          => [],
+        'has_archive'         => false,
+        'rewrite'             => true,
+        'query_var'           => true,
+    ] );
+}

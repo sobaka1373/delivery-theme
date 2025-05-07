@@ -3,6 +3,7 @@
 if (function_exists('acf_add_options_page')) {
 
     require_once get_template_directory() . '/acf/acf_banner.php';
+    require_once get_template_directory() . '/acf/promo_acf.php';
 
     $option_page = acf_add_options_page(array(
         'page_title'    => __('Настройки сайта', 'delivery-theme'),

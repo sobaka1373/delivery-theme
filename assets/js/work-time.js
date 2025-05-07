@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
         if (day >= 1 && day <= 4) { // Понедельник - Четверг
             return hour >= 10 && hour < 22;
         } else { // Пятница, Суббота, Воскресенье
-            return hour >= 10 && hour < 23;
+            return hour >= 11 && hour < 23;
         }
     }
 

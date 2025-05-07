@@ -51,6 +51,7 @@
         </a>
         <ul class="flex menu mobile-menu">
             <li><a href="<?php echo esc_url(home_url('/')); ?>">Главная</a></li>
+            <li><a href="<?php echo esc_url(home_url('/promo')); ?>">Акции</a></li>
             <li><a href="<?php echo esc_url(home_url('/delivery')); ?>">Доставка</a></li>
             <li><a href="<?php echo esc_url(home_url('/about')); ?>">О нас</a></li>
         </ul>
@@ -195,6 +196,7 @@
             <?php
             $menu_items = [
                 ['href' => esc_url(home_url('#Pizza')), 'icon' => 'pizza.svg', 'label' => 'Пицца'],
+                ['href' => esc_url(home_url('#Combo')), 'icon' => 'fries.png', 'label' => 'Комбо'],
                 ['href' => esc_url(home_url('#Kulek')), 'icon' => 'kulek.svg', 'label' => 'Кульки'],
                 ['href' => esc_url(home_url('#Lunch')), 'icon' => 'lunch.svg', 'label' => 'Ланчи'],
                 ['href' => esc_url(home_url('#Sides')), 'icon' => 'zakus.svg', 'label' => 'Закуски'],
