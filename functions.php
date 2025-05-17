@@ -192,7 +192,6 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
     $chosen_method = WC()->session->get('chosen_shipping_methods')[0] ?? '';
 
-    // Получаем ID по slug
     $kupecheskaya_id = wc_get_product_id_by_slug('merchant');
     $kupecheskaya_obj = wc_get_product($kupecheskaya_id);
     $kupecheskaya_id = $kupecheskaya_obj->get_id();
@@ -208,8 +207,13 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
     $self_pickup_discount = 0;
     $has_combo = false;
 
+    $pizza_count = 0;
+    $pizza_total_price = 0;
+
+    $is_pickup = strpos($chosen_method, 'pickup_location') !== false;
+
     // Подсчёт скидки за самовывоз
-    if (strpos($chosen_method, 'pickup_location') !== false) {
+    if ($is_pickup) {
         foreach ($cart->get_cart() as $cart_item) {
             $product = $cart_item['data'];
             if (!has_term('sale', 'product_tag', $product->get_id())) {
@@ -223,8 +227,12 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
     foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
         $product = $cart_item['data'];
         $product_id = $product->get_id();
-
         $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
+
+        if (has_term('pizza', 'product_cat', $parent_id)) {
+            $pizza_count += $cart_item['quantity'];
+            $pizza_total_price += $product->get_price() * $cart_item['quantity'];
+        }
 
         if ($parent_id == $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
             $has_kupecheskaya = true;
@@ -256,18 +264,7 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         ];
     }
 
-    // 2. Купеческая за полцены
-//    if ($has_kupecheskaya && $has_other_pizza) {
-//        $kupecheskaya_item = $cart->get_cart()[$kupecheskaya_item_key];
-//        $kupecheskaya_price = $kupecheskaya_item['data']->get_price();
-//        $kupecheskaya_discount = $kupecheskaya_price * 0.5 * $kupecheskaya_item['quantity'];
-//        $possible_discounts['kupecheskaya'] = [
-//            'amount' => $kupecheskaya_discount,
-//            'label' => 'Скидка 50% на Купеческую пиццу'
-//        ];
-//    }
-
-    // 3. Пепперони в подарок (четверг, заказ от 30р)
+    // 2. Пицца Пепперони в подарок (четверг, заказ от 30р)
     $day_number = date('N');
     if ($day_number == '4' && $total_cart_amount >= 50 && $pepperoni_in_cart && !$has_combo) {
         $pepperoni_product = wc_get_product($pepperoni_id);
@@ -280,7 +277,32 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         }
     }
 
-    // Выбираем максимальную скидку
+    // 3. Скидка за количество пицц при доставке
+    if (!$is_pickup && $pizza_count >= 3) {
+        $percent_discount = 0;
+
+        if ($pizza_count >= 10) {
+            $percent_discount = 0.25;
+        } elseif ($pizza_count >= 7) {
+            $percent_discount = 0.20;
+        } elseif ($pizza_count >= 5) {
+            $percent_discount = 0.15;
+        } elseif ($pizza_count >= 3) {
+            $percent_discount = 0.10;
+        }
+
+        if ($percent_discount > 0) {
+            $pizza_discount = $pizza_total_price * $percent_discount;
+            $possible_discounts = [ // Переопределяем, чтобы исключить другие скидки
+                'pizza_quantity' => [
+                    'amount' => $pizza_discount,
+                    'label' => sprintf('Скидка %d%% за %d пицц%s при доставке', $percent_discount * 100, $pizza_count, $pizza_count === 3 ? 'ы' : ($pizza_count < 5 ? 'ы' : ''))
+                ]
+            ];
+        }
+    }
+
+    // Применяем максимальную скидку
     if (!empty($possible_discounts)) {
         $max_discount = array_reduce($possible_discounts, function($carry, $item) {
             return ($carry === null || $item['amount'] > $carry['amount']) ? $item : $carry;
@@ -289,7 +311,7 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         $cart->add_fee($max_discount['label'], -$max_discount['amount']);
         WC()->session->set('applied_discount_label', $max_discount['label']);
     } else {
-        WC()->session->__unset('applied_discount_label'); // если скидки нет, удаляем
+        WC()->session->__unset('applied_discount_label');
     }
 
 });
