@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 var coords = obj.geometry.getCoordinates(),
                     polygon = deliveryZones.searchContaining(coords).get(0);
 
+                var cashPaymentLabel = $(".payment-type label:has(input[value='cash'])");
+                var onlinePaymentRadio = $(".payment-type input[value='online']");
+                var wcOnlinePaymentRadio = $("#payment_method_alfabankby");
+
                 if (polygon) {
                     let cartTotalElement = document.querySelector('.cart-subtotal .woocommerce-Price-amount');
                     let totalCart = 0;
@@ -78,6 +82,10 @@ document.addEventListener("DOMContentLoaded", function() {
                             }, 1000);
                         }
                         enableOrdBtn();
+
+                        cashPaymentLabel.hide();
+                        onlinePaymentRadio.prop('checked', true).trigger('change').trigger('click');
+                        wcOnlinePaymentRadio.prop('checked', true).trigger('change');
                     }
                     if (polygon.properties.get('description').toLowerCase() === "желтая") {
                         $('#billing_zone').val("yellow_zone");
@@ -92,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             }, 1000);
                         }
                         enableOrdBtn();
+                        cashPaymentLabel.show();
                     }
                     if (polygon.properties.get('description').toLowerCase() === "зеленая") {
                         $('#billing_zone').val("green_zone");
@@ -106,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             }, 1000);
                         }
                         enableOrdBtn();
+                        cashPaymentLabel.show();
                     }
 
                     deliveryZones.setOptions('fillOpacity', 0.4);
@@ -135,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     $('.complete-order').prop('disabled', true);
                     $('.complete-order').addClass('disabled');
                     console.log(true);
+                    cashPaymentLabel.show();
                 }
 
                 function setData(obj) {
@@ -243,11 +254,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 $('#message').text(message);
             }
 
-            $('.delivery-information #billing_address_house, .delivery-information #billing_address_2').on('input', function (e) {
+            let geocodeTimeout;
+            $('.delivery-information #billing_address_house, .delivery-information #billing_address_2').on('input', function () {
                 if (!$('#shipping_method_0_pickup_location0').prop('checked') && $('#billing_address_house').val() !== "") {
-                    geocode();
-
-                    setInterval(geocode, 3000);
+                    clearTimeout(geocodeTimeout);
+                    geocodeTimeout = setTimeout(geocode, 800);
                 }
             });
 
