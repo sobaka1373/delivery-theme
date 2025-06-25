@@ -122,13 +122,25 @@
         });
 
         $('.decrease').click(function () {
-            changeQuantity(-1);
-            // updateCustomFee();
+            const quantityContainer = $(this).closest('.quantity');
+            const cartItemKey = quantityContainer.data('cart-item-key');
+            const input = quantityContainer.find('input[type="text"]');
+            const currentValue = parseInt(input.val());
+
+            if (currentValue > 1) {
+                updateCartQuantity(cartItemKey, currentValue - 1);
+                input.val(currentValue - 1);
+            }
         });
 
         $('.increase').click(function () {
-            changeQuantity(1);
-            // updateCustomFee();
+            const quantityContainer = $(this).closest('.quantity');
+            const cartItemKey = quantityContainer.data('cart-item-key');
+            const input = quantityContainer.find('input[type="text"]');
+            const currentValue = parseInt(input.val());
+
+            updateCartQuantity(cartItemKey, currentValue + 1);
+            input.val(currentValue + 1);
         });
 
         $('.basket__promo .coupon-add').click(function (){
@@ -246,49 +258,38 @@
             }, 2000);
         }
 
-        function changeQuantity(amount) {
-            const input = document.getElementById("quantityInput");
-            const cartItemKey = getCartItemKey(input);
-            if (!cartItemKey) return;
-
-            let currentValue = parseInt(input.value);
-
-            if (currentValue + amount >= parseInt(input.min)) {
-                currentValue += amount;
-                input.value = currentValue;
-
-                updateCartQuantity(cartItemKey, currentValue);
-            }
-        }
-
         function updateCartQuantity(cartItemKey, quantity) {
-            jQuery.ajax({
-                type: "POST",
+            if (!cartItemKey) {
+                console.error('Cart item key not found');
+                return;
+            }
+
+            $.ajax({
                 url: wc_cart_params.ajax_url,
+                type: 'POST',
                 data: {
-                    action: "update_cart_quantity",
-                    quantity: quantity,
-                    cart_item_key: cartItemKey
+                    action: 'update_cart_quantity',
+                    cart_item_key: cartItemKey,
+                    quantity: quantity
                 },
                 beforeSend: function() {
-                    toggleLoading(true); // Показываем лоадер при обновлении количества
+                    toggleLoading(true);
                 },
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
-                        totalUpdate();
+                        $(totalUpdate);
                     } else {
-                        alert("Ошибка обновления корзины.");
+                        console.error('Failed to update quantity');
                     }
                 },
                 complete: function() {
-                    toggleLoading(false); // Скрываем лоадер после обновления
-                },
+                    toggleLoading(false);
+                }
             });
         }
 
-        function getCartItemKey(input) {
-            const match = input.name.match(/\[([a-f0-9]{32})\]\[qty\]/);
-            return match ? match[1] : null;
+        function getCartItemKey(element) {
+            return $(element).closest('.quantity').data('cart-item-key');
         }
 
         function toggleLoading(isLoading) {

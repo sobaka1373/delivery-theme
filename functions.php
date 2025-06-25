@@ -192,128 +192,193 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
     $chosen_method = WC()->session->get('chosen_shipping_methods')[0] ?? '';
 
-    $kupecheskaya_id = wc_get_product_id_by_slug('merchant');
-    $kupecheskaya_obj = wc_get_product($kupecheskaya_id);
-    $kupecheskaya_id = $kupecheskaya_obj->get_id();
-    $pepperoni_id = wc_get_product_id_by_slug('pepperoni');
-    $pepperoni_obj = wc_get_product($pepperoni_id);
-    $pepperoni_id = $pepperoni_obj->get_id();
+    try {
+        $kupecheskaya_id = wc_get_product_id_by_slug('merchant');
+        $kupecheskaya_obj = wc_get_product($kupecheskaya_id);
+        $kupecheskaya_id = $kupecheskaya_obj->get_id();
+        $pepperoni_id = wc_get_product_id_by_slug('pepperoni');
+        $pepperoni_obj = wc_get_product($pepperoni_id);
+        $pepperoni_id = $pepperoni_obj->get_id();
 
-    $has_kupecheskaya = false;
-    $kupecheskaya_item_key = null;
-    $has_other_pizza = false;
-    $total_cart_amount = 0;
-    $pepperoni_in_cart = false;
-    $self_pickup_discount = 0;
-    $has_combo = false;
+        // Get Ham and Mushrooms pizza ID
+        $ham_mushrooms_id = wc_get_product_id_by_slug('ham-and-mushrooms');
+        $ham_mushrooms_obj = wc_get_product($ham_mushrooms_id);
+        $ham_mushrooms_id = $ham_mushrooms_obj->get_id();
 
-    $pizza_count = 0;
-    $pizza_total_price = 0;
+        $has_kupecheskaya = false;
+        $kupecheskaya_item_key = null;
+        $has_other_pizza = false;
+        $total_cart_amount = 0;
+        $pepperoni_in_cart = false;
+        $ham_mushrooms_in_cart = false;
+        $self_pickup_discount = 0;
+        $has_combo = false;
 
-    $is_pickup = strpos($chosen_method, 'pickup_location') !== false;
+        $pizza_count = 0;
+        $pizza_total_price = 0;
+        $pizzas_in_cart = [];
 
-    // Подсчёт скидки за самовывоз
-    if ($is_pickup) {
-        foreach ($cart->get_cart() as $cart_item) {
-            $product = $cart_item['data'];
-            if (!has_term('sale', 'product_tag', $product->get_id())) {
-                $item_subtotal = $product->get_price() * $cart_item['quantity'];
-                $self_pickup_discount += $item_subtotal * 0.20;
+        $is_pickup = strpos($chosen_method, 'pickup_location') !== false;
+
+        // Подсчёт скидки за самовывоз
+        if ($is_pickup) {
+            foreach ($cart->get_cart() as $cart_item) {
+                $product = $cart_item['data'];
+                if (!has_term('sale', 'product_tag', $product->get_id())) {
+                    $item_subtotal = $product->get_price() * $cart_item['quantity'];
+                    $self_pickup_discount += $item_subtotal * 0.20;
+                }
             }
         }
-    }
 
-    // Анализ корзины
-    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
-        $product = $cart_item['data'];
-        $product_id = $product->get_id();
-        $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
+        // Анализ корзины
+        foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+            $product = $cart_item['data'];
+            $product_id = $product->get_id();
+            $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
 
-        if (has_term('pizza', 'product_cat', $parent_id)) {
-            $pizza_count += $cart_item['quantity'];
-            $pizza_total_price += $product->get_price() * $cart_item['quantity'];
+            if (has_term('pizza', 'product_cat', $parent_id)) {
+                $pizza_count += $cart_item['quantity'];
+                $pizza_total_price += $product->get_price() * $cart_item['quantity'];
+                // Store pizza info for "1 + 1 = 3" and "60% off second pizza" promotions
+                for ($i = 0; $i < $cart_item['quantity']; $i++) {
+                    $pizzas_in_cart[] = [
+                        'id' => $parent_id,
+                        'price' => $product->get_price(),
+                        'key' => $cart_item_key
+                    ];
+                }
+            }
+
+            if ($parent_id == $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
+                $has_kupecheskaya = true;
+                $kupecheskaya_item_key = $cart_item_key;
+            }
+
+            if ($parent_id != $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
+                $has_other_pizza = true;
+            }
+
+            if ($parent_id == $pepperoni_id) {
+                $pepperoni_in_cart = true;
+            }
+
+            if ($parent_id == $ham_mushrooms_id) {
+                $ham_mushrooms_in_cart = true;
+            }
+
+            if (has_term('combo', 'product_cat', $parent_id)) {
+                $has_combo = true;
+            }
+
+            $total_cart_amount += $product->get_price() * $cart_item['quantity'];
         }
 
-        if ($parent_id == $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
-            $has_kupecheskaya = true;
-            $kupecheskaya_item_key = $cart_item_key;
-        }
+        $possible_discounts = [];
 
-        if ($parent_id != $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
-            $has_other_pizza = true;
-        }
-
-        if ($parent_id == $pepperoni_id) {
-            $pepperoni_in_cart = true;
-        }
-
-        if (has_term('combo', 'product_cat', $parent_id)) {
-            $has_combo = true;
-        }
-
-        $total_cart_amount += $product->get_price() * $cart_item['quantity'];
-    }
-
-    $possible_discounts = [];
-
-    // 1. Скидка за самовывоз
-    if ($self_pickup_discount > 0) {
-        $possible_discounts['pickup'] = [
-            'amount' => $self_pickup_discount,
-            'label' => 'Скидка за самовывоз (без товаров со скидкой)'
-        ];
-    }
-
-    // 2. Пицца Пепперони в подарок (четверг, заказ от 30р)
-    $day_number = date('N');
-    if ($day_number == '4' && $total_cart_amount >= 50 && $pepperoni_in_cart && !$has_combo) {
-        $pepperoni_product = wc_get_product($pepperoni_id);
-        if ($pepperoni_product) {
-            $pepperoni_price = $pepperoni_product->get_price();
-            $possible_discounts['pepperoni'] = [
-                'amount' => $pepperoni_price,
-                'label' => 'Пицца Пепперони в подарок (четверг при заказе от 30р)'
+        // 1. Скидка за самовывоз
+        if ($self_pickup_discount > 0) {
+            $possible_discounts['pickup'] = [
+                'amount' => $self_pickup_discount,
+                'label' => 'Скидка за самовывоз (без товаров со скидкой)'
             ];
         }
-    }
 
-    // 3. Скидка за количество пицц при доставке
-    if (!$is_pickup && $pizza_count >= 3) {
-        $percent_discount = 0;
-
-        if ($pizza_count >= 10) {
-            $percent_discount = 0.25;
-        } elseif ($pizza_count >= 7) {
-            $percent_discount = 0.20;
-        } elseif ($pizza_count >= 5) {
-            $percent_discount = 0.15;
-        } elseif ($pizza_count >= 3) {
-            $percent_discount = 0.10;
+        // 2. Пицца Пепперони в подарок (четверг, заказ от 30р)
+        $day_number = date('N');
+        if ($day_number == '4' && $total_cart_amount >= 50 && $pepperoni_in_cart && !$has_combo) {
+            $pepperoni_product = wc_get_product($pepperoni_id);
+            if ($pepperoni_product) {
+                $pepperoni_price = $pepperoni_product->get_price();
+                $possible_discounts['pepperoni'] = [
+                    'amount' => $pepperoni_price,
+                    'label' => 'Пицца Пепперони в подарок (четверг при заказе от 30р)'
+                ];
+            }
         }
 
-        if ($percent_discount > 0) {
-            $pizza_discount = $pizza_total_price * $percent_discount;
-            $possible_discounts = [ // Переопределяем, чтобы исключить другие скидки
-                'pizza_quantity' => [
+        // 3. Пицца Ветчина и грибы в подарок (среда, заказ от 30р)
+        if ($day_number == '3' && $total_cart_amount >= 50 && $ham_mushrooms_in_cart && !$has_combo) {
+            $ham_mushrooms_product = wc_get_product($ham_mushrooms_id);
+            if ($ham_mushrooms_product) {
+                $ham_mushrooms_price = $ham_mushrooms_product->get_price();
+                $possible_discounts['ham_mushrooms'] = [
+                    'amount' => $ham_mushrooms_price,
+                    'label' => 'Пицца Ветчина и грибы в подарок (среда при заказе от 30р)'
+                ];
+            }
+        }
+
+        // 4. Скидка 60% на вторую пиццу (понедельник)
+        if ($day_number == '1' && count($pizzas_in_cart) >= 2 && !$has_combo) {
+            // Sort pizzas by price descending to ensure we discount the cheaper one
+            usort($pizzas_in_cart, function($a, $b) {
+                return $b['price'] - $a['price'];
+            });
+
+            $second_pizza_discount = $pizzas_in_cart[1]['price'] * 0.6;
+            $possible_discounts['monday_second_pizza'] = [
+                'amount' => $second_pizza_discount,
+                'label' => 'Скидка 60% на вторую пиццу (понедельник)'
+            ];
+        }
+
+        // 5. Акция "1 + 1 = 3" (вторник)
+        if ($day_number == '2' && count($pizzas_in_cart) >= 3 && !$has_combo) {
+            // Sort pizzas by price ascending to make the cheapest one free
+            usort($pizzas_in_cart, function($a, $b) {
+                return $a['price'] - $b['price'];
+            });
+
+            $cheapest_pizza_discount = $pizzas_in_cart[0]['price'];
+            $possible_discounts['tuesday_three_pizzas'] = [
+                'amount' => $cheapest_pizza_discount,
+                'label' => 'Акция 1 + 1 = 3: третья пицца бесплатно (вторник)'
+            ];
+        }
+
+        // 6. Скидка за количество пицц при доставке
+        if (!$is_pickup && $pizza_count >= 3) {
+            $percent_discount = 0;
+            $discount_label = '';
+
+            if ($pizza_count >= 10) {
+                $percent_discount = 0.25;
+                $discount_label = 'Скидка 25% за 10 и более пицц при доставке';
+            } elseif ($pizza_count >= 7) {
+                $percent_discount = 0.20;
+                $discount_label = 'Скидка 20% за 7 пицц при доставке';
+            } elseif ($pizza_count >= 5) {
+                $percent_discount = 0.15;
+                $discount_label = 'Скидка 15% за 5 пицц при доставке';
+            } elseif ($pizza_count >= 3) {
+                $percent_discount = 0.10;
+                $discount_label = 'Скидка 10% за 3 пиццы при доставке';
+            }
+
+            if ($percent_discount > 0) {
+                $pizza_discount = $pizza_total_price * $percent_discount;
+                $possible_discounts['pizza_quantity'] = [
                     'amount' => $pizza_discount,
-                    'label' => sprintf('Скидка %d%% за %d пицц%s при доставке', $percent_discount * 100, $pizza_count, $pizza_count === 3 ? 'ы' : ($pizza_count < 5 ? 'ы' : ''))
-                ]
-            ];
+                    'label' => $discount_label
+                ];
+            }
         }
+
+        // Применяем максимальную скидку
+        if (!empty($possible_discounts)) {
+            $max_discount = array_reduce($possible_discounts, function($carry, $item) {
+                return ($carry === null || $item['amount'] > $carry['amount']) ? $item : $carry;
+            });
+
+            $cart->add_fee($max_discount['label'], -$max_discount['amount']);
+            WC()->session->set('applied_discount_label', $max_discount['label']);
+        } else {
+            WC()->session->__unset('applied_discount_label');
+        }
+    } catch (Exception $exception) {
+        error_log($exception->getMessage());
     }
-
-    // Применяем максимальную скидку
-    if (!empty($possible_discounts)) {
-        $max_discount = array_reduce($possible_discounts, function($carry, $item) {
-            return ($carry === null || $item['amount'] > $carry['amount']) ? $item : $carry;
-        });
-
-        $cart->add_fee($max_discount['label'], -$max_discount['amount']);
-        WC()->session->set('applied_discount_label', $max_discount['label']);
-    } else {
-        WC()->session->__unset('applied_discount_label');
-    }
-
 });
 
 // Функция для получения ID продукта по slug

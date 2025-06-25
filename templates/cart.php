@@ -85,9 +85,13 @@ get_header(); ?>
                                         <div class="decrease">
                                             &#8722;
                                         </div>
-                                        <input id="quantityInput" type="text" name="cart[<?php echo $cart_item_key; ?>][qty]"
-                                               value="<?php echo esc_attr($product_quantity); ?>" min="1"
-                                               class="w-16 text-center border border-gray-300 rounded" disabled/>
+                                        <input type="text" 
+                                               name="cart[<?php echo $cart_item_key; ?>][qty]"
+                                               value="<?php echo esc_attr($product_quantity); ?>" 
+                                               min="1"
+                                               data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>"
+                                               class="w-16 text-center border border-gray-300 rounded" 
+                                               disabled/>
                                         <div class="increase">
                                             &#43;
                                         </div>

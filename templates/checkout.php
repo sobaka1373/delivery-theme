@@ -41,7 +41,7 @@ get_header(); ?>
                     $product_image = $_product->get_image('thumbnail');
                     $product_price = wc_price($_product->get_price());
                     $product_quantity = $cart_item['quantity'];?>
-                    <div class="item flex">
+                    <div class="item flex cart_item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                         <?php if ($product_permalink): ?>
                             <a href="<?php echo esc_url($product_permalink); ?>">
                                 <?php echo $product_image; ?>
@@ -51,7 +51,6 @@ get_header(); ?>
                         <?php endif; ?>
                         <div class="name flex">
                             <div class="item__name">
-
                                 <?php if ($product_permalink): ?>
                                     <a href="<?php echo esc_url($product_permalink); ?>" class="hover:underline">
                                         <p><?php echo esc_html($product_name); ?></p>
@@ -79,15 +78,18 @@ get_header(); ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="quantity">
+                            <div class="quantity" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                                 <form method="post" action="">
                                     <div class="flex">
                                         <div class="decrease">
                                             &#8722;
                                         </div>
-                                        <input id="quantityInput" type="text" name="cart[<?php echo $cart_item_key; ?>][qty]"
-                                               value="<?php echo esc_attr($product_quantity); ?>" min="1"
-                                               class="w-16 text-center border border-gray-300 rounded" disabled/>
+                                        <input type="text" 
+                                               name="cart[<?php echo $cart_item_key; ?>][qty]"
+                                               value="<?php echo esc_attr($product_quantity); ?>" 
+                                               min="1"
+                                               class="w-16 text-center border border-gray-300 rounded" 
+                                               disabled/>
                                         <div class="increase">
                                             &#43;
                                         </div>
@@ -223,7 +225,7 @@ get_header(); ?>
                             Суммы для бесплатной доставки:
                         </p>
                         <p class="delivery-info">
-                            Зеленая зона: 25 руб, иначе доставка 5 руб
+                            Зеленая зона: 25 руб, иначе доставка 6 руб
                         </p>
                         <p class="delivery-info">
                             Желтая зона: 35 руб, иначе доставка 8 руб
@@ -234,7 +236,7 @@ get_header(); ?>
                         <p>
                             Стоимость доставки:
                             <span id="delivery-price-value">
-                  Мин 5,00 Br Введите адрес
+                  Мин 6,00 Br Введите адрес
                   </span>
                         </p>
                     </div>
