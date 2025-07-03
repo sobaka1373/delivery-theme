@@ -41,6 +41,11 @@ function my_theme_enqueue_assets()
     if (is_page('promo') || $post->post_type === "promo_type") {
         wp_enqueue_style( 'promo', get_template_directory_uri() . '/assets/css/promo.css');
     }
+
+    wp_enqueue_script('dilivery-add-to-cart-ajax', get_template_directory_uri() . '/assets/js/add-to-cart-ajax.js', ['jquery'], null, true);
+    wp_localize_script('dilivery-add-to-cart-ajax', 'wc_add_to_cart_params', [
+        'ajax_url' => admin_url('admin-ajax.php')
+    ]);
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -221,15 +226,32 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         $is_pickup = strpos($chosen_method, 'pickup_location') !== false;
 
         // Подсчёт скидки за самовывоз
+// Подсчёт скидки за самовывоз
         if ($is_pickup) {
+            $today = new DateTime('now', wp_timezone());
+            $start = new DateTime('2025-07-03');
+            $end = new DateTime('2025-07-06');
+
             foreach ($cart->get_cart() as $cart_item) {
                 $product = $cart_item['data'];
-                if (!has_term('sale', 'product_tag', $product->get_id())) {
+                $product_id = $product->get_id();
+                $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
+
+                // Проверка: является ли товар пиццей и не со скидкой
+                if (has_term('pizza', 'product_cat', $parent_id) && !has_term('sale', 'product_tag', $product_id)) {
                     $item_subtotal = $product->get_price() * $cart_item['quantity'];
-                    $self_pickup_discount += $item_subtotal * 0.20;
+
+                    if ($today >= $start && $today <= $end) {
+                        // С 3 по 6 июня — скидка 30%
+                        $self_pickup_discount += $item_subtotal * 0.30;
+                    } else {
+                        // Остальное время — стандартная скидка 20%
+                        $self_pickup_discount += $item_subtotal * 0.20;
+                    }
                 }
             }
         }
+
 
         // Анализ корзины
         foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
@@ -278,9 +300,13 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
         // 1. Скидка за самовывоз
         if ($self_pickup_discount > 0) {
+            $pickup_discount_label = ($today >= $start && $today <= $end)
+                ? 'Скидка 30% на пиццы при самовывозе (3–6 июня)'
+                : 'Скидка 20% за самовывоз (без товаров со скидкой)';
+
             $possible_discounts['pickup'] = [
                 'amount' => $self_pickup_discount,
-                'label' => 'Скидка за самовывоз (без товаров со скидкой)'
+                'label' => $pickup_discount_label
             ];
         }
 
@@ -434,4 +460,96 @@ function register_post_types(){
         'rewrite'             => true,
         'query_var'           => true,
     ] );
+}
+
+add_action('wp_ajax_custom_add_to_cart', 'custom_add_to_cart');
+add_action('wp_ajax_nopriv_custom_add_to_cart', 'custom_add_to_cart');
+
+function custom_add_to_cart() {
+    $product_id = intval($_POST['product_id']);
+    $quantity = intval($_POST['quantity']);
+
+    $added = WC()->cart->add_to_cart($product_id, $quantity);
+
+    if ($added) {
+        $fragments = [
+            '.basket-dropdown' => render_basket_dropdown_html(),
+            '.basket-icon .cart-total-text' => '<p class="cart-total-text">' . WC()->cart->get_cart_total() . '</p>',
+        ];
+
+        wp_send_json_success([
+            'fragments' => $fragments
+        ]);
+    } else {
+        wp_send_json_error('Не удалось добавить товар');
+    }
+}
+
+
+function render_basket_dropdown_html() {
+    ob_start();
+
+    $cart = WC()->cart->get_cart();
+    ?>
+    <div class="basket-dropdown">
+        <?php if (!empty($cart)): ?>
+            <ul>
+                <?php foreach ($cart as $cart_item_key => $cart_item):
+                    $hasVariation = $cart_item['variation_id'] && !empty($cart_item['variation']);
+                    $product = $hasVariation ?
+                        wc_get_product($cart_item['variation_id']) :
+                        wc_get_product($cart_item['product_id']);
+                    $quantity = $cart_item['quantity'];
+                    $price = $product->get_price() * $quantity;
+                    ?>
+                    <li class="basket-item-wrapper" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">
+                        <div class="basket-item-image-wrapper">
+                            <img src="<?php echo esc_url(get_the_post_thumbnail_url($cart_item['product_id'], 'thumbnail')); ?>"
+                                 alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
+                        </div>
+                        <div class="basket-item-info">
+                            <div class="basket-item-name">
+                                <p><?php echo esc_html($product->get_name()); ?></p>
+                            </div>
+                            <div class="basket-item-description">
+                                <p><?php echo esc_html($quantity); ?> шт</p>
+                                <p><?php echo wc_price($price); ?></p>
+                            </div>
+                        </div>
+                        <div class="remove-item">
+                            <button data-cart-item="<?php echo esc_attr($cart_item_key); ?>">✖</button>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="cart-total">
+                <?php
+                $applied_coupons = WC()->cart->get_applied_coupons();
+                if (!empty($applied_coupons)):
+                    foreach ($applied_coupons as $key => $coupon):
+                        $coupon_obj = new WC_Coupon($coupon);
+                        ?>
+                        <div class="cart-discount">
+                            <p>Промокод: <?php echo esc_html($coupon_obj->get_code()); ?></p>
+                            <p>Скидка: -
+                                <span class="cart-discount-text">
+                              <?php echo wc_price(WC()->cart->get_cart_discount_total()); ?>
+                          </span>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <p>Итого:
+                    <span class="cart-total-text">
+                        <?php echo WC()->cart->get_cart_total(); ?>
+                    </span>
+                </p>
+            </div>
+        <?php else: ?>
+            <p>Корзина пуста</p>
+        <?php endif; ?>
+    </div>
+    <?php
+
+    return ob_get_clean();
 }

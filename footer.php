@@ -67,6 +67,7 @@
                          alt="tiktok">
                 </a>
             </div>
+            <div class="title-slivki">Наши партнеры: <a href="https://www.slivki.by/">slivki.by</a></div>
 <!--            <div class="flex">-->
 <!--                <a href="" target="_blank">-->
 <!--                    <img class="app" src="--><?php //echo get_template_directory_uri(); ?><!--/assets/img/app-store.png"-->

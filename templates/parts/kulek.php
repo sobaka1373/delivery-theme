@@ -66,7 +66,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="quantity-wrapper hide">
+                            <div class="decrease">&#8722;</div>
+                            <input type="text"
+                                   value="1"
+                                   min="1"
+                                   class="w-16 text-center border border-gray-300 rounded"
+                                   disabled/>
+                            <div class="increase">&#43;</div>
+                        </div>
                     </div>
                 <?php endwhile; ?>
             <?php else : ?>

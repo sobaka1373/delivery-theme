@@ -26,6 +26,24 @@ header {
     }
   }
 
+  .sticky-header-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 9999;
+    transition: transform 0.3s ease;
+  }
+
+  .sticky-header-wrapper.sticky-header--hidden {
+    transform: translateY(-100%);
+  }
+
+  .sticky-wrapper {
+    height: auto;
+  }
+
   .image {
     &__logo {
       height: 48px;

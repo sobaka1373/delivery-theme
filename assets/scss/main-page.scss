@@ -242,3 +242,42 @@
     }
   }
 }
+
+.quantity-wrapper {
+  display: grid;
+  grid-template-columns: 55px 68px 55px;
+  gap: 0;
+  margin: 0 auto;
+  justify-content: center;
+
+  .decrease, .increase {
+    color: #019875;
+    font-family: CyrillicOld, serif;
+    cursor: pointer;
+    padding: 0 20px;
+    font-size: 24px;
+    margin: auto;
+
+    &:hover {
+      transition: .2s;
+      opacity: .7;
+    }
+  }
+
+  input {
+    text-align: center;
+    font-family: CyrillicOld, serif;
+    border-color: rgb(209, 213, 219);
+    background-color: rgba(239, 239, 239, 0.3);
+    font-size: 24px;
+    margin: 0 auto;
+  }
+}
+
+.quantity-wrapper.hide {
+  display: none;
+}
+
+.quantity-wrapper.show {
+  display: grid;
+}
