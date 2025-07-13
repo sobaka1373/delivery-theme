@@ -1,25 +1,14 @@
 jQuery(document).ready(function($){
+    // Добавление товара
     $(document).on('click', '.add-to-cart', function(e){
         e.preventDefault();
-
-        var $button = $(this);
-        var href = $button.attr('href');
+        var $btn = $(this);
+        var href = $btn.attr('href');
         var match = href.match(/add-to-cart=([0-9]+)/);
-        if (!match) {
-            console.error('Ошибка: не удалось определить ID товара');
-            return;
-        }
-
+        if (!match) return;
         var product_id = match[1];
         var quantity = 1;
 
-        // === Показываем quantity-wrapper вместо визуального эффекта ===
-        var $item = $button.closest('.pizza__item');
-        var $qtyWrapper = $item.find('.quantity-wrapper');
-        $qtyWrapper.removeClass('hide').addClass('show');
-
-
-        // === AJAX добавление товара ===
         $.ajax({
             url: wc_add_to_cart_params.ajax_url,
             type: 'POST',
@@ -30,19 +19,72 @@ jQuery(document).ready(function($){
                 quantity: quantity
             },
             success: function(response){
-                if (response.success && response.data.fragments) {
-                    $.each(response.data.fragments, function(key, value){
-                        $(key).replaceWith(value);
-                    });
-                } else {
-                    console.warn('Не удалось добавить товар в корзину:', response.data);
+                if (response.success) {
+                    if (response.data.fragments) {
+                        $.each(response.data.fragments, function(key, value){
+                            $(key).replaceWith(value);
+                        });
+                    }
+                    $btn.hide();
+                    var $qtyWrap = $btn.closest('.basket').find('.quantity-wrapper');
+                    $qtyWrap.removeClass('hide');
+                    $qtyWrap.find('input').val(quantity);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX ошибка:', error);
             }
         });
     });
+
+    // Увеличение количества
+    $(document).on('click', '.quantity-wrapper .increase', function(){
+        var $wrap = $(this).closest('.quantity-wrapper');
+        var product_id = $wrap.data('product_id');
+        var $input = $wrap.find('input');
+        var quantity = parseInt($input.val()) + 1;
+        updateCartQuantity(product_id, quantity, $input, $wrap);
+    });
+
+    // Уменьшение количества
+    $(document).on('click', '.quantity-wrapper .decrease', function(){
+        var $wrap = $(this).closest('.quantity-wrapper');
+        var product_id = $wrap.data('product_id');
+        var $input = $wrap.find('input');
+        var quantity = Math.max(0, parseInt($input.val()) - 1);
+        updateCartQuantity(product_id, quantity, $input, $wrap);
+    });
+
+    function updateCartQuantity(product_id, quantity, $input, $wrap) {
+        if (quantity === 0) {
+            // Если 0, скрываем qty, показываем кнопку добавить
+            $wrap.addClass('hide');
+            $wrap.closest('.basket').find('.add-to-cart').show();
+        }
+        $.ajax({
+            url: wc_add_to_cart_params.ajax_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'update_cart_quantity_by_product_id',
+                product_id: product_id,
+                quantity: quantity
+            },
+            success: function(response){
+                if (response.success) {
+                    $input.val(quantity);
+                    if (quantity === 0) {
+                        $wrap.addClass('hide');
+                        $wrap.closest('.basket').find('.add-to-cart').show();
+                    } else {
+                        $wrap.removeClass('hide');
+                    }
+                    if (response.data && response.data.fragments) {
+                        $.each(response.data.fragments, function(key, value){
+                            $(key).replaceWith(value);
+                        });
+                    }
+                }
+            }
+        });
+    }
 
     // Sticky header logic
     const $header = $('#main-nav');

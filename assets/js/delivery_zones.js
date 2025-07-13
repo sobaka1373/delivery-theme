@@ -70,17 +70,36 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
 
                     if (polygon.properties.get('description').toLowerCase() === "красная") {
-                        $('#billing_zone').val("red_zone");
-                        if (totalCart && totalCart >= 45) {
-                            $('#shipping_method_0_free_shipping3').click();
-                            updateDeliveryPrice(0);
-                        } else if (totalCart && totalCart < 45) {
-                            $('#shipping_method_0_flat_rate5').click();
+                        const itemNames = $('.basket__information .item__name p')
+                            .map(function() {
+                                return $(this).text().trim();
+                            }).get();
+
+                        const hasSet1 = itemNames.includes("Сливки сет 1");
+                        const hasSet2 = itemNames.includes("Сливки сет 2");
+
+                        if (hasSet1 || hasSet2) {
+                            $('#shipping_method_0_flat_rate8').click();
                             setTimeout(function() {
-                                let priceFlatRate5 = getShippingPrice('#shipping_method_0_flat_rate5');
+                                let priceFlatRate5 = getShippingPrice('#shipping_method_0_flat_rate8');
                                 updateDeliveryPrice(priceFlatRate5);
                             }, 1000);
+                            console.log("Найден Сливки сет 1 или Сливки сет 2");
+                        } else {
+                            $('#billing_zone').val("red_zone");
+                            if (totalCart && totalCart >= 45) {
+                                $('#shipping_method_0_free_shipping3').click();
+                                updateDeliveryPrice(0);
+                            } else if (totalCart && totalCart < 45) {
+                                $('#shipping_method_0_flat_rate5').click();
+                                setTimeout(function() {
+                                    let priceFlatRate5 = getShippingPrice('#shipping_method_0_flat_rate5');
+                                    updateDeliveryPrice(priceFlatRate5);
+                                }, 1000);
+                            }
+
                         }
+
                         enableOrdBtn();
 
                         cashPaymentLabel.hide();
@@ -88,32 +107,68 @@ document.addEventListener("DOMContentLoaded", function() {
                         wcOnlinePaymentRadio.prop('checked', true).trigger('change');
                     }
                     if (polygon.properties.get('description').toLowerCase() === "желтая") {
-                        $('#billing_zone').val("yellow_zone");
-                        if (totalCart && totalCart >= 35) {
-                            $('#shipping_method_0_free_shipping3').click();
-                            updateDeliveryPrice(0);
-                        } else if (totalCart && totalCart < 35) {
-                            $('#shipping_method_0_flat_rate4').click();
+                        const itemNames = $('.basket__information .item__name p')
+                            .map(function() {
+                                return $(this).text().trim();
+                            }).get();
+
+                        const hasSet1 = itemNames.includes("Сливки сет 1");
+                        const hasSet2 = itemNames.includes("Сливки сет 2");
+
+                        if (hasSet1 || hasSet2) {
+                            $('#shipping_method_0_flat_rate7').click();
                             setTimeout(function() {
-                                let priceFlatRate4 = getShippingPrice('#shipping_method_0_flat_rate4');
-                                updateDeliveryPrice(priceFlatRate4);
+                                let priceFlatRate7 = getShippingPrice('#shipping_method_0_flat_rate7');
+                                updateDeliveryPrice(priceFlatRate7);
                             }, 1000);
+                            console.log("Найден Сливки сет 1 или Сливки сет 2");
+                        } else {
+                            $('#billing_zone').val("yellow_zone");
+                            if (totalCart && totalCart >= 35) {
+                                $('#shipping_method_0_free_shipping3').click();
+                                updateDeliveryPrice(0);
+                            } else if (totalCart && totalCart < 35) {
+                                $('#shipping_method_0_flat_rate4').click();
+                                setTimeout(function() {
+                                    let priceFlatRate4 = getShippingPrice('#shipping_method_0_flat_rate4');
+                                    updateDeliveryPrice(priceFlatRate4);
+                                }, 1000);
+                            }
                         }
+
                         enableOrdBtn();
                         cashPaymentLabel.show();
                     }
                     if (polygon.properties.get('description').toLowerCase() === "зеленая") {
-                        $('#billing_zone').val("green_zone");
-                        if (totalCart && totalCart >= 25) {
-                            $('#shipping_method_0_free_shipping3').click();
-                            updateDeliveryPrice(0);
-                        } else if (totalCart && totalCart < 25) {
-                            $('#shipping_method_0_flat_rate2').click();
+                        const itemNames = $('.basket__information .item__name p')
+                            .map(function() {
+                                return $(this).text().trim();
+                            }).get();
+
+                        const hasSet1 = itemNames.includes("Сливки сет 1");
+                        const hasSet2 = itemNames.includes("Сливки сет 2");
+
+                        if (hasSet1 || hasSet2) {
+                            $('#shipping_method_0_flat_rate6').click();
                             setTimeout(function() {
-                                let priceFlatRate2 = getShippingPrice('#shipping_method_0_flat_rate2');
-                                updateDeliveryPrice(priceFlatRate2);
+                                let priceFlatRate6 = getShippingPrice('#shipping_method_0_flat_rate6');
+                                updateDeliveryPrice(priceFlatRate6);
                             }, 1000);
+                            console.log("Найден Сливки сет 1 или Сливки сет 2");
+                        } else {
+                            $('#billing_zone').val("green_zone");
+                            if (totalCart && totalCart >= 25) {
+                                $('#shipping_method_0_free_shipping3').click();
+                                updateDeliveryPrice(0);
+                            } else if (totalCart && totalCart < 25) {
+                                $('#shipping_method_0_flat_rate2').click();
+                                setTimeout(function() {
+                                    let priceFlatRate2 = getShippingPrice('#shipping_method_0_flat_rate2');
+                                    updateDeliveryPrice(priceFlatRate2);
+                                }, 1000);
+                            }
                         }
+
                         enableOrdBtn();
                         cashPaymentLabel.show();
                     }

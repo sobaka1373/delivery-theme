@@ -204,8 +204,6 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         $pepperoni_id = wc_get_product_id_by_slug('pepperoni');
         $pepperoni_obj = wc_get_product($pepperoni_id);
         $pepperoni_id = $pepperoni_obj->get_id();
-
-        // Get Ham and Mushrooms pizza ID
         $ham_mushrooms_id = wc_get_product_id_by_slug('ham-and-mushrooms');
         $ham_mushrooms_obj = wc_get_product($ham_mushrooms_id);
         $ham_mushrooms_id = $ham_mushrooms_obj->get_id();
@@ -237,17 +235,14 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
                 $product_id = $product->get_id();
                 $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
 
-                // Проверка: является ли товар пиццей и не со скидкой
-                if (has_term('pizza', 'product_cat', $parent_id) && !has_term('sale', 'product_tag', $product_id)) {
+                // Скидка на все товары, кроме категорий sale и slivki-sets
+                if (
+                    !has_term('sale', 'product_tag', $product_id) &&
+                    !has_term('slivki-sets', 'product_cat', $parent_id)
+                ) {
                     $item_subtotal = $product->get_price() * $cart_item['quantity'];
-
-                    if ($today >= $start && $today <= $end) {
-                        // С 3 по 6 июня — скидка 30%
-                        $self_pickup_discount += $item_subtotal * 0.30;
-                    } else {
-                        // Остальное время — стандартная скидка 20%
-                        $self_pickup_discount += $item_subtotal * 0.20;
-                    }
+                    $discount_rate = ($today >= $start && $today <= $end) ? 0.30 : 0.20;
+                    $self_pickup_discount += $item_subtotal * $discount_rate;
                 }
             }
         }
@@ -259,10 +254,13 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
             $product_id = $product->get_id();
             $parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product_id;
 
-            if (has_term('pizza', 'product_cat', $parent_id)) {
+            $is_pizza = has_term('pizza', 'product_cat', $parent_id);
+            $is_slivki = has_term('slivki-sets', 'product_cat', $parent_id);
+
+            if ($is_pizza && !$is_slivki) {
                 $pizza_count += $cart_item['quantity'];
                 $pizza_total_price += $product->get_price() * $cart_item['quantity'];
-                // Store pizza info for "1 + 1 = 3" and "60% off second pizza" promotions
+
                 for ($i = 0; $i < $cart_item['quantity']; $i++) {
                     $pizzas_in_cart[] = [
                         'id' => $parent_id,
@@ -272,12 +270,12 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
                 }
             }
 
-            if ($parent_id == $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
+            if ($parent_id == $kupecheskaya_id && $is_pizza && !$is_slivki) {
                 $has_kupecheskaya = true;
                 $kupecheskaya_item_key = $cart_item_key;
             }
 
-            if ($parent_id != $kupecheskaya_id && has_term('pizza', 'product_cat', $parent_id)) {
+            if ($parent_id != $kupecheskaya_id && $is_pizza && !$is_slivki) {
                 $has_other_pizza = true;
             }
 
@@ -301,16 +299,15 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         // 1. Скидка за самовывоз
         if ($self_pickup_discount > 0) {
             $pickup_discount_label = ($today >= $start && $today <= $end)
-                ? 'Скидка 30% на пиццы при самовывозе (3–6 июня)'
+                ? 'Скидка 30% на пиццы при самовывозе (3–6 июля)'
                 : 'Скидка 20% за самовывоз (без товаров со скидкой)';
-
             $possible_discounts['pickup'] = [
                 'amount' => $self_pickup_discount,
                 'label' => $pickup_discount_label
             ];
         }
 
-        // 2. Пицца Пепперони в подарок (четверг, заказ от 30р)
+        // 2. Пицца Пепперони в подарок (четверг, заказ от 50р)
         $day_number = date('N');
         if ($day_number == '4' && $total_cart_amount >= 50 && $pepperoni_in_cart && !$has_combo) {
             $pepperoni_product = wc_get_product($pepperoni_id);
@@ -318,26 +315,25 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
                 $pepperoni_price = $pepperoni_product->get_price();
                 $possible_discounts['pepperoni'] = [
                     'amount' => $pepperoni_price,
-                    'label' => 'Пицца Пепперони в подарок (четверг при заказе от 30р)'
+                    'label' => 'Пицца Пепперони в подарок (четверг при заказе от 50р)'
                 ];
             }
         }
 
-        // 3. Пицца Ветчина и грибы в подарок (среда, заказ от 30р)
+        // 3. Пицца Ветчина и грибы в подарок (среда, заказ от 50р)
         if ($day_number == '3' && $total_cart_amount >= 50 && $ham_mushrooms_in_cart && !$has_combo) {
             $ham_mushrooms_product = wc_get_product($ham_mushrooms_id);
             if ($ham_mushrooms_product) {
                 $ham_mushrooms_price = $ham_mushrooms_product->get_price();
                 $possible_discounts['ham_mushrooms'] = [
                     'amount' => $ham_mushrooms_price,
-                    'label' => 'Пицца Ветчина и грибы в подарок (среда при заказе от 30р)'
+                    'label' => 'Пицца Ветчина и грибы в подарок (среда при заказе от 50р)'
                 ];
             }
         }
 
         // 4. Скидка 60% на вторую пиццу (понедельник)
         if ($day_number == '1' && count($pizzas_in_cart) >= 2 && !$has_combo) {
-            // Sort pizzas by price descending to ensure we discount the cheaper one
             usort($pizzas_in_cart, function($a, $b) {
                 return $b['price'] - $a['price'];
             });
@@ -351,7 +347,6 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
         // 5. Акция "1 + 1 = 3" (вторник)
         if ($day_number == '2' && count($pizzas_in_cart) >= 3 && !$has_combo) {
-            // Sort pizzas by price ascending to make the cheapest one free
             usort($pizzas_in_cart, function($a, $b) {
                 return $a['price'] - $b['price'];
             });
@@ -406,6 +401,7 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
         error_log($exception->getMessage());
     }
 });
+
 
 // Функция для получения ID продукта по slug
 function wc_get_product_id_by_slug($slug) {

@@ -233,6 +233,12 @@ get_header(); ?>
                         <p class="delivery-info">
                             Красная зона: 45 руб, иначе доставка 10 руб
                         </p>
+                        <p class="delivery-info" style="color: red">
+                           Доставка сета Сливок всегда платная!
+                        </p>
+                        <p class="delivery-info">
+                            Зеленая зона - 5р, Желатая - 6р, Красная - 7р
+                        </p>
                         <p>
                             Стоимость доставки:
                             <span id="delivery-price-value">

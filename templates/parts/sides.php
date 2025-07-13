@@ -25,6 +25,14 @@
                 <?php while ($query->have_posts()) :
                     $query->the_post();
                     $product = wc_get_product(get_the_ID());
+                    $cart = WC()->cart->get_cart();
+                    $cart_quantity = 0;
+                    foreach ($cart as $cart_item) {
+                        if ($cart_item['product_id'] == $product->get_id()) {
+                            $cart_quantity = $cart_item['quantity'];
+                            break;
+                        }
+                    }
                     ?>
 
                     <div class="pizza__item">
@@ -60,9 +68,14 @@
                             </div>
                             <div class="flex">
                                 <div class="basket">
-                                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart" <?php if ($cart_quantity > 0) echo 'style="display:none;"'; ?>>
                                         <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
                                     </a>
+                                    <div class="quantity-wrapper<?php if ($cart_quantity == 0) echo ' hide'; ?>" data-product_id="<?php echo $product->get_id(); ?>">
+                                        <div class="decrease">&#8722;</div>
+                                        <input type="text" value="<?php echo $cart_quantity > 0 ? $cart_quantity : 1; ?>" min="1" class="w-16 text-center border border-gray-300 rounded" disabled/>
+                                        <div class="increase">&#43;</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
