@@ -9,15 +9,18 @@ if( get_field('activate', 'options') === 'yes' ) {
 ?>
 
 <?php
+
 require_once locate_template('templates/parts/pizza-block.php');
 
 require_once locate_template('templates/parts/combo.php');
 
 require_once locate_template('templates/parts/kulek.php');
 
-//require_once locate_template('templates/parts/lunch.php');
+require_once locate_template('templates/parts/lunch.php');
 
 require_once locate_template('templates/parts/sides.php');
+
+//require_once locate_template('templates/parts/combo.php');
 
 require_once locate_template('templates/parts/toasts.php');
 
