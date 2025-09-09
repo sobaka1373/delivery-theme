@@ -42,10 +42,10 @@ function my_theme_enqueue_assets()
         wp_enqueue_style( 'promo', get_template_directory_uri() . '/assets/css/promo.css');
     }
 
-    wp_enqueue_script('dilivery-add-to-cart-ajax', get_template_directory_uri() . '/assets/js/add-to-cart-ajax.js', ['jquery'], null, true);
-    wp_localize_script('dilivery-add-to-cart-ajax', 'wc_add_to_cart_params', [
-        'ajax_url' => admin_url('admin-ajax.php')
-    ]);
+//    wp_enqueue_script('dilivery-add-to-cart-ajax', get_template_directory_uri() . '/assets/js/add-to-cart-ajax.js', ['jquery'], null, true);
+//    wp_localize_script('dilivery-add-to-cart-ajax', 'wc_add_to_cart_params', [
+//        'ajax_url' => admin_url('admin-ajax.php')
+//    ]);
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');

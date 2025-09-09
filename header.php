@@ -6,6 +6,8 @@
     <title>
         Пищеблок №1 Гомель | Доставка пиццы, шаурмы, закусок Гомель
     </title>
+    <link rel="icon" href="https://pishcheblok.by/wp-content/uploads/fbrfg/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://pishcheblok.by/wp-content/uploads/fbrfg/favicon.ico"  type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
