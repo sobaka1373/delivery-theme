@@ -41,7 +41,7 @@ get_header(); ?>
                     $product_image = $_product->get_image('thumbnail');
                     $product_price = wc_price($_product->get_price());
                     $product_quantity = $cart_item['quantity'];?>
-                    <div class="item flex">
+                    <div class="item flex cart_item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                         <?php if ($product_permalink): ?>
                             <a href="<?php echo esc_url($product_permalink); ?>">
                                 <?php echo $product_image; ?>
@@ -51,7 +51,6 @@ get_header(); ?>
                         <?php endif; ?>
                         <div class="name flex">
                             <div class="item__name">
-
                                 <?php if ($product_permalink): ?>
                                     <a href="<?php echo esc_url($product_permalink); ?>" class="hover:underline">
                                         <p><?php echo esc_html($product_name); ?></p>
@@ -79,18 +78,17 @@ get_header(); ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="quantity">
+                            <div class="quantity" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                                 <form method="post" action="">
                                     <div class="flex">
                                         <div class="decrease">
                                             &#8722;
                                         </div>
-                                        <input type="text" 
+                                        <input type="text"
                                                name="cart[<?php echo $cart_item_key; ?>][qty]"
-                                               value="<?php echo esc_attr($product_quantity); ?>" 
+                                               value="<?php echo esc_attr($product_quantity); ?>"
                                                min="1"
-                                               data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>"
-                                               class="w-16 text-center border border-gray-300 rounded" 
+                                               class="w-16 text-center border border-gray-300 rounded"
                                                disabled/>
                                         <div class="increase">
                                             &#43;
@@ -196,6 +194,14 @@ get_header(); ?>
                     <?php endif; ?>
                 </div>
             </div>
+            <div class="custom-fee">
+                <?php
+                $applied_discount_label = WC()->session->get('applied_discount_label');
+                if (!empty($applied_discount_label)) {
+                    echo '<p class="applied-discount">Применена скидка: ' . esc_html($applied_discount_label) . '</p>';
+                }
+                ?>
+            </div>
             <div class="total">
                 Итого: <?php echo WC()->cart->get_total(); ?>
             </div>
@@ -219,7 +225,7 @@ get_header(); ?>
                             Суммы для бесплатной доставки:
                         </p>
                         <p class="delivery-info">
-                            Зеленая зона: 25 руб, иначе доставка 5 руб
+                            Зеленая зона: 25 руб, иначе доставка 6 руб
                         </p>
                         <p class="delivery-info">
                             Желтая зона: 35 руб, иначе доставка 8 руб
@@ -227,16 +233,25 @@ get_header(); ?>
                         <p class="delivery-info">
                             Красная зона: 45 руб, иначе доставка 10 руб
                         </p>
+                        <!--                        <p class="delivery-info" style="color: red">-->
+                        <!--                           Доставка сета Сливок всегда платная!-->
+                        <!--                        </p>-->
+                        <!--                        <p class="delivery-info">-->
+                        <!--                            Зеленая зона - 5р, Желатая - 6р, Красная - 7р-->
+                        <!--                        </p>-->
                         <p>
                             Стоимость доставки:
                             <span id="delivery-price-value">
-                  Мин 5,00 Br Введите адрес
+                  Мин 6,00 Br Введите адрес
                   </span>
                         </p>
                     </div>
                     <div id="pickup-location">
                         <p>
                             Самовывоз - 20%
+                        </p>
+                        <p>
+                            * не распространяется на комбо и напитки
                         </p>
                     </div>
                     <input id="billing_phone" type="text" placeholder="Ваш номер*"/>
