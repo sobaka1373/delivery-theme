@@ -6,12 +6,12 @@ $terms = get_the_terms($product->get_id(), 'product_cat');
 <div class="dominos-product-page product-page container center">
     <div class="category flex">
         <div class="button__back">
-            <a href="">
+            <a href="javascript:history.back()">
                 &lt; Назад
             </a>
         </div>
         <div class="button__home">
-            <a href="">
+            <a href="<?php echo home_url();?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/home.svg">
             </a>
         </div>
@@ -19,7 +19,7 @@ $terms = get_the_terms($product->get_id(), 'product_cat');
             &gt;
         </div>
         <div class="button__category">
-            <a href="">
+            <a href="<?php echo home_url() . "#" . ucfirst($terms[0]->slug); ?>">
                 <?php
                 if (isset($terms) && !empty($terms)) {
                     echo $terms[0]->name;

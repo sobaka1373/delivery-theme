@@ -304,26 +304,26 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
 
         $day_number = date('N');
 
-        // 2. Пицца Пепперони в подарок (четверг, заказ от 50р)
-        if ($day_number == '4' && $total_cart_amount >= 50 && $pepperoni_in_cart && !$has_combo) {
+        // 2. Пицца Пепперони в подарок (четверг, заказ от 30р)
+        if ($day_number == '4' && $total_cart_amount >= 30 && $pepperoni_in_cart && !$has_combo) {
             $pepperoni_product = wc_get_product($pepperoni_id);
             if ($pepperoni_product) {
                 $pepperoni_price = $pepperoni_product->get_price();
                 $possible_discounts['pepperoni'] = [
                     'amount' => $pepperoni_price,
-                    'label'  => 'Пицца Пепперони в подарок (четверг при заказе от 50р)',
+                    'label'  => 'Пицца Пепперони в подарок (четверг при заказе от 30р)',
                 ];
             }
         }
 
-        // 3. Пицца Ветчина и грибы в подарок (среда, заказ от 50р)
-        if ($day_number == '3' && $total_cart_amount >= 50 && $ham_mushrooms_in_cart && !$has_combo) {
+        // 3. Пицца Ветчина и грибы в подарок (среда, заказ от 30р)
+        if ($day_number == '3' && $total_cart_amount >= 30 && $ham_mushrooms_in_cart && !$has_combo) {
             $ham_mushrooms_product = wc_get_product($ham_mushrooms_id);
             if ($ham_mushrooms_product) {
                 $ham_mushrooms_price = $ham_mushrooms_product->get_price();
                 $possible_discounts['ham_mushrooms'] = [
                     'amount' => $ham_mushrooms_price,
-                    'label'  => 'Пицца Ветчина и грибы в подарок (среда при заказе от 50р)',
+                    'label'  => 'Пицца Ветчина и грибы в подарок (среда при заказе от 30р)',
                 ];
             }
         }

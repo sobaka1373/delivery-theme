@@ -242,7 +242,7 @@ get_header(); ?>
                         <p>
                             Стоимость доставки:
                             <span id="delivery-price-value">
-                  Мин 6,00 Br Введите адрес
+                  Мин 0 Br Введите адрес
                   </span>
                         </p>
                     </div>
