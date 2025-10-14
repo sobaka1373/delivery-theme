@@ -2,10 +2,27 @@
 global $product;
 $terms = get_the_terms($product->get_id(), 'product_cat');
 $variations = $product->get_available_variations();
+
+// Собираем выбранные вариации и количества из корзины
+$selected_variations = [];
+if (function_exists('WC') && WC()->cart) {
+    foreach (WC()->cart->get_cart() as $cart_item) {
+        if (!$cart_item['variation_id']) continue;
+        $parentId = (int) $cart_item['data']->get_parent_id();
+        if ((int)$product->get_id() === $parentId) {
+            $selected_variations[(int)$cart_item['variation_id']] = (int)$cart_item['quantity'];
+        }
+    }
+}
+$first_active_variation_id = 0;
+if (!empty($selected_variations)) {
+    $keys = array_keys($selected_variations);
+    $first_active_variation_id = (int)$keys[0];
+}
 ?>
 
 <div class="dominos-product-page product-page container center">
-    <div class="category flex">
+    <div class="category flex" aria-label="Хлебные крошки" itemscope itemtype="https://schema.org/BreadcrumbList">
         <div class="button__back">
             <a href="javascript:history.back()">
                 &lt; Назад
@@ -29,7 +46,7 @@ $variations = $product->get_available_variations();
             </a>
         </div>
         <div class="arrow">&gt;</div>
-        <div class="button__name"><a href=""><?php the_title(); ?></a></div>
+        <div class="button__name"><a href="" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name"><?php the_title(); ?></span><meta itemprop="position" content="3" /></a></div>
     </div>
     <div class="item-content container mx-auto py-10">
         <div class="item-information flex">
@@ -61,13 +78,14 @@ $variations = $product->get_available_variations();
                         if (!empty($variations)) {
                             foreach ($variations as $key => $variation_data) {
                                 $variation = new WC_Product_Variation($variation_data['variation_id']);
+                                $varId = (int)$variation->get_id();
+                                $isActive = $first_active_variation_id ? ($varId === $first_active_variation_id) : ($key === 0);
                                 ?>
-                                <div class="pizza__price product-<?php echo $variation->get_id(); ?><?php echo $key === 0 ? ' active' : ''; ?>">
+                                <div class="pizza__price product-<?php echo $variation->get_id(); ?><?php echo $isActive ? ' active' : ''; ?>">
                                     <?php echo $variation->get_price_html(); ?>
                                 </div>
                                 <?php
-                                ?>
-                            <?php }
+                            }
                         }
                         ?>
 
@@ -94,8 +112,11 @@ $variations = $product->get_available_variations();
                                 foreach ($variations as $index => $variation) {
                                     $size = $variation['attributes']['attribute_pa_size'];
                                     $size_output = str_replace('cm', '', $size);
-                                    $checked = $index === 0 ? 'checked' : '';
-                                    echo "<label class='size-toggle pizza__size'>";
+                                    $varId = (int)$variation['variation_id'];
+                                    $isActive = $first_active_variation_id ? ($varId === $first_active_variation_id) : ($index === 0);
+                                    $checked = $isActive ? 'checked' : '';
+                                    $activeClass = $isActive ? ' active' : '';
+                                    echo "<label class='size-toggle pizza__size{$activeClass}'>";
                                     echo "<input type='radio' name='pizza_size' value='{$size}' {$checked}>";
                                     echo "<span>{$size_output} см</span>";
                                     echo "</label>";
@@ -106,13 +127,54 @@ $variations = $product->get_available_variations();
                     </div>
                     <div class="variation-container">
                         <?php
-                        wc_get_template('single-product/add-to-cart/variable.php', [
-                            'available_variations' => $product->get_available_variations(),
-                            'attributes' => $product->get_variation_attributes(),
-                            'selected_attributes' => $product->get_default_attributes(),
-                        ]);
+                        if (!empty($variations)) {
+                            foreach ($variations as $index => $variation_data) {
+                                $variation = new WC_Product_Variation($variation_data['variation_id']);
+                                $varId = (int)$variation->get_id();
+                                $isSelected = array_key_exists($varId, $selected_variations);
+                                $qty = $isSelected ? (int)$selected_variations[$varId] : 1;
+                                $isActive = $first_active_variation_id ? ($varId === $first_active_variation_id) : ($index === 0);
+                                ?>
+                                <div class="pizza__price flex product-<?php echo $varId; ?><?php echo $isActive ? ' active' : ''; ?>">
+                                    <div class="price"><?php echo $variation->get_price_html(); ?></div>
+                                    <div class="count-container<?php echo $isSelected ? '' : ' hide'; ?>">
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="#" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="count" value="<?php echo $qty; ?>" disabled>
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="?add-to-cart=<?php echo $varId; ?>" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-container<?php echo $isSelected ? ' hide' : ''; ?>">
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="?add-to-cart=<?php echo $varId; ?>" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }
                         ?>
                     </div>
+
+                    <?php if ($product->get_description()) : ?>
+                        <div class="product-seo-description">
+                            <?php echo wp_kses_post(wpautop($product->get_description())); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

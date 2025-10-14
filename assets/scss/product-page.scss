@@ -17,6 +17,19 @@
       margin: 0 10px;
     }
 
+    span {
+      font-size: 28px;
+
+      a {
+        font-size: 28px;
+
+        &:hover {
+          transition: .2s;
+          opacity: .7;
+        }
+      }
+    }
+
     .button__back {
       background-color: #ececec;
       border-radius: 10%;
@@ -135,12 +148,17 @@
         font-size: 36px;
         color: main.$greenColor;
 
-        .active {
+        .pizza__price.active {
           display: block;
         }
 
-        div {
+        .pizza__price {
           display: none;
+        }
+
+        .pizza__price .price {
+          margin-left: 0;
+          color: main.$fontColor;
         }
       }
 
@@ -181,6 +199,29 @@
             background-color: #efefef;
           }
         }
+
+        .toggle-container {
+          text-align: center;
+          background-color: #d9d9d9;
+          display: flex;
+          width: 300px;
+          margin: 0;
+
+          .size-toggle {
+            max-width: none;
+            width: 50%;
+            background-color: #efefef;
+            font-weight: 400;
+
+            &.active {
+              background-color: #D9D9D9;
+
+              span {
+                font-weight: 600;
+              }
+            }
+          }
+        }
       }
 
       .quantity {
@@ -195,6 +236,17 @@
 
       .button {
         margin-left: 0;
+      }
+
+      .variation-container {
+        .pizza__price .price {
+          margin-left: 0;
+          color: main.$fontColor;
+        }
+      }
+
+      .product-seo-description {
+        margin-top: 20px;
       }
 
       @media (max-width: 530px) {
@@ -256,6 +308,8 @@
     display: none;
   }
   .mobile-title {
+    margin-top: 20px;
+
     @media (max-width: 530px) {
       font-size: 24px;
     }
