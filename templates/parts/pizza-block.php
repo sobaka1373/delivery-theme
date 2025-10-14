@@ -2,7 +2,7 @@
     <div class="container center">
         <div class="flex justify-content">
             <div class="title">
-                Пицца
+                <h1>Пицца</h1>
             </div>
         </div>
         <div class="grid">

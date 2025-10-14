@@ -2,7 +2,7 @@
     <div class="container center">
         <div class="flex justify-content">
             <div class="title">
-                Соусы
+                <h3>Соусы</h3>
             </div>
         </div>
         <div class="grid">

@@ -82,6 +82,15 @@
     @media (max-width: 1100px) {
       font-size: 36px;
     }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: main.$fontTitle, serif;
+      font-size: 48px;
+      color: main.$fontColor;
+      @media (max-width: 1100px) {
+        font-size: 36px;
+      }
+    }
   }
 
   button {
@@ -104,6 +113,7 @@
   &__item {
     padding: 20px;
     background-color: #fff;
+    border-radius: 32px;
 
     .new {
       min-height: 35px;
@@ -229,8 +239,8 @@
     .basket {
       cursor: pointer;
       background-color: #019875;
-      padding: 5px 15px;
-      border-radius: 12px;
+      padding: 5px;
+      border-radius: 50%;
       align-content: center;
       max-height: 40px;
       align-self: center;

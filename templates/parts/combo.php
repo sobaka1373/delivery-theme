@@ -2,7 +2,7 @@
     <div class="container center">
         <div class="flex justify-content">
             <div class="title">
-                Комбо
+                <h2>Комбо</h2>
             </div>
         </div>
         <div class="grid">

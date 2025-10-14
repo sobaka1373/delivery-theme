@@ -2,7 +2,7 @@
     <div class="container center">
         <div class="flex justify-content">
             <div class="title">
-                Кульки
+                <h2>Кульки</h2>
             </div>
         </div>
         <div class="grid">

@@ -2,7 +2,7 @@
     <div class="container center">
         <div class="flex justify-content">
             <div class="title">
-                Тосты
+                <h3>Тосты</h3>
             </div>
         </div>
         <div class="grid">

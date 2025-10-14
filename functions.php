@@ -543,3 +543,22 @@ function render_basket_dropdown_html() {
 
     return ob_get_clean();
 }
+
+add_action('woocommerce_checkout_create_order', function($order, $data) {
+    $discount_label  = WC()->session->get('applied_discount_label');
+    $discount_amount = 0;
+
+    if ($discount_label) {
+        $fees = WC()->cart->get_fees();
+        foreach ($fees as $fee) {
+            if ($fee->name === $discount_label) {
+                $discount_amount = abs($fee->amount);
+                break;
+            }
+        }
+
+        // Сохраняем скидку в мета заказа
+        $order->update_meta_data('_applied_discount_label', $discount_label);
+        $order->update_meta_data('_applied_discount_amount', $discount_amount);
+    }
+}, 10, 2);
