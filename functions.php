@@ -42,10 +42,10 @@ function my_theme_enqueue_assets()
         wp_enqueue_style( 'promo', get_template_directory_uri() . '/assets/css/promo.css');
     }
 
-//    wp_enqueue_script('dilivery-add-to-cart-ajax', get_template_directory_uri() . '/assets/js/add-to-cart-ajax.js', ['jquery'], null, true);
-//    wp_localize_script('dilivery-add-to-cart-ajax', 'wc_add_to_cart_params', [
-//        'ajax_url' => admin_url('admin-ajax.php')
-//    ]);
+    wp_enqueue_script('dilivery-add-to-cart-ajax', get_template_directory_uri() . '/assets/js/add-to-cart-ajax.js', ['jquery'], null, true);
+    wp_localize_script('dilivery-add-to-cart-ajax', 'wc_add_to_cart_params', [
+        'ajax_url' => admin_url('admin-ajax.php')
+    ]);
 }
 
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets');
@@ -100,16 +100,32 @@ function remove_item_from_cart() {
     $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
 
     $cart = WC()->cart;
+
+    // Определяем ID продукта (учитываем вариации) до удаления
+    $removed_product_id = 0;
+    $cart_item = $cart->get_cart_item($cart_item_key);
+    if ($cart_item) {
+        $removed_product_id = (int) ($cart_item['variation_id'] ?: $cart_item['product_id']);
+    }
+
     $cart->remove_cart_item($cart_item_key);
+    WC()->cart->calculate_totals();
 
     $new_total = WC()->cart->get_total();
     $new_discount = wc_price(WC()->cart->get_discount_total());
     $cart_empty = WC()->cart->is_empty();
 
+    $fragments = [
+        '.basket-dropdown' => render_basket_dropdown_html(),
+        '.basket-icon .cart-total-text' => '<p class="cart-total-text">' . WC()->cart->get_cart_total() . '</p>',
+    ];
+
     wp_send_json_success([
         'new_total' => $new_total,
         'new_discount' => $new_discount,
-        'cart_empty' => $cart_empty
+        'cart_empty' => $cart_empty,
+        'removed_product_id' => $removed_product_id,
+        'fragments' => $fragments,
     ]);
 }
 add_action('wp_ajax_remove_item_from_cart', 'remove_item_from_cart');
@@ -126,16 +142,44 @@ add_action("wp_ajax_update_cart_quantity", "update_cart_quantity");
 add_action("wp_ajax_nopriv_update_cart_quantity", "update_cart_quantity");
 
 function update_cart_quantity() {
-    if (!isset($_POST["quantity"]) || !isset($_POST["cart_item_key"])) {
+    // Поддержка двух режимов: по cart_item_key и по product_id (вариация)
+    $quantity = isset($_POST['quantity']) ? (int) sanitize_text_field($_POST['quantity']) : null;
+    $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field($_POST['cart_item_key']) : null;
+    $product_id = isset($_POST['product_id']) ? (int) sanitize_text_field($_POST['product_id']) : null;
+
+    if ($quantity === null) {
         wp_send_json_error("Неверные данные");
     }
 
-    $quantity = (int) sanitize_text_field($_POST["quantity"]);
-    $cart_item_key = sanitize_text_field($_POST["cart_item_key"]);
+    $updated = false;
 
-    if (WC()->cart->set_quantity($cart_item_key, $quantity, true)) {
+    if ($cart_item_key) {
+        $updated = WC()->cart->set_quantity($cart_item_key, $quantity, true);
+    } elseif ($product_id) {
+        // Найти позицию в корзине по product_id (поддержка вариаций)
+        foreach (WC()->cart->get_cart() as $key => $item) {
+            $matchedProductId = $item['variation_id'] ?: $item['product_id'];
+            if ((int)$matchedProductId === (int)$product_id) {
+                if ($quantity > 0) {
+                    $updated = WC()->cart->set_quantity($key, $quantity, true);
+                } else {
+                    $updated = WC()->cart->remove_cart_item($key);
+                }
+                break;
+            }
+        }
+    }
+
+    if ($updated) {
         WC()->cart->calculate_totals();
-        wp_send_json_success("Количество обновлено");
+        $fragments = [
+            '.basket-dropdown' => render_basket_dropdown_html(),
+            '.basket-icon .cart-total-text' => '<p class="cart-total-text">' . WC()->cart->get_cart_total() . '</p>',
+        ];
+        wp_send_json_success([
+            'message' => 'Количество обновлено',
+            'fragments' => $fragments,
+        ]);
     } else {
         wp_send_json_error("Не удалось обновить количество");
     }

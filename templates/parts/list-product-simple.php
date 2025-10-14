@@ -23,13 +23,34 @@ if (!$product) return;
     </div>
     <div class="pizza__subtitle"><?php echo $product->get_short_description(); ?></div>
 
-    <div class="pizza__price flex">
+    <div class="pizza__price flex product-<?php echo $product->get_id(); ?>">
         <div class="price"><?php echo $product->get_price_html(); ?></div>
-        <div class="flex">
-            <div class="basket">
-                <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
-                </a>
+
+        <div class="count-container hide">
+            <div class="flex">
+                <div class="basket">
+                    <a href="#" class="add-to-cart">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="add-to-cart">
+                    </a>
+                </div>
+            </div>
+            <input type="text" name="count" value="1" disabled>
+            <div class="flex">
+                <div class="basket">
+                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="add-container">
+            <div class="flex">
+                <div class="basket">
+                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                    </a>
+                </div>
             </div>
         </div>
     </div>

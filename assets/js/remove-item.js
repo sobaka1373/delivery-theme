@@ -1,11 +1,12 @@
 jQuery(document).ready(function($) {
-    $('.remove-item button').on('click', function(e) {
+    // Делегируем, чтобы работало на динамически обновлённых списках
+    $(document).on('click', '.remove-item button', function(e) {
         e.preventDefault();
 
         var cartItemKey = $(this).data('cart-item');
 
         $.ajax({
-            url: '/wp-admin/admin-ajax.php',
+            url: ajaxurl,
             method: 'POST',
             data: {
                 action: 'remove_item_from_cart',
@@ -13,15 +14,23 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if(response.success) {
-                    $('[data-cart-item="' + cartItemKey + '"]').fadeOut(function() {
-                        $(this).remove();
-                    });
+                    // Обновляем фрагменты корзины в хедере
+                    if (response.data && response.data.fragments) {
+                        $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
+                    }
 
-                    $('.cart-total-text').html(response.data.new_total);
-                    $('.cart-discount-text').html(response.data.new_discount);
-
-                    if (response.data.cart_empty) {
-                        $('.basket-dropdown').html('<p style="text-align: center">Корзина пуста</p>');
+                    // Возвращаем карточки товара на странице в исходное состояние
+                    var removedId = response.data.removed_product_id;
+                    if (removedId) {
+                        $('.pizza__price.product-' + removedId).each(function(){
+                            var $price = $(this);
+                            $price.find('.count-container').addClass('hide');
+                            $price.find('.add-container').removeClass('hide');
+                            $price.find('input[name="count"]').val(1);
+                            // На старой разметке
+                            $price.find('.quantity-wrapper').addClass('hide');
+                            $price.find('a.add-to-cart[href*="add-to-cart="]').show();
+                        });
                     }
                 } else {
                     alert('Ошибка при удалении товара.');
