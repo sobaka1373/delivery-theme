@@ -38,7 +38,7 @@ function my_theme_enqueue_assets()
     wp_enqueue_script( 'delivery_zones', get_template_directory_uri() . '/assets/js/delivery_zones.js', array('jquery'));
     wp_enqueue_script( 'work-time', get_template_directory_uri() . '/assets/js/work-time.js', array('jquery'));
 
-    if (is_page('promo') || $post->post_type === "promo_type") {
+    if (!is_null($post) && (is_page('promo') || $post->post_type === "promo_type")) {
         wp_enqueue_style( 'promo', get_template_directory_uri() . '/assets/css/promo.css');
     }
 
