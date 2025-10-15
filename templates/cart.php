@@ -28,6 +28,7 @@ get_header(); ?>
     </div>
     <div class="basket-mobile-flex flex justify-content center">
         <div class="basket__information">
+            <div class="basket__list">
             <?php if (WC()->cart->get_cart_contents_count() > 0):
                 foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
                     $_product = $cart_item['data'];
@@ -82,7 +83,7 @@ get_header(); ?>
                                 <form method="post" action="">
                                     <div class="flex">
                                         <div class="decrease">
-                                            &#8722;
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="minus">
                                         </div>
                                         <input type="text"
                                                name="cart[<?php echo $cart_item_key; ?>][qty]"
@@ -91,7 +92,7 @@ get_header(); ?>
                                                class="w-16 text-center border border-gray-300 rounded"
                                                disabled/>
                                         <div class="increase">
-                                            &#43;
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus">
                                         </div>
                                     </div>
                                 </form>
@@ -100,15 +101,15 @@ get_header(); ?>
                                 <?php echo $product_price; ?>
                             </div>
                             <div class="delete">
-                                <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>">
-                                    &#10006;
-                                </a>
+                                <button class="ajax-remove" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">&#10006;</button>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
+            </div>
 
+            <div class="basket__separator"></div>
             <div class="additional">
                 <div class="justify-content flex title-container">
                     <div class="add-sos">
@@ -153,10 +154,45 @@ get_header(); ?>
                                     <?php echo $product->get_price_html(); ?>
                                 </div>
                             </div>
-                            <div class="add-button-sos">
-                                <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
-                                    &#43;
-                                </a>
+                            <?php
+                            $cart_quantity = 0;
+                            if (function_exists('WC') && WC()->cart) {
+                                foreach (WC()->cart->get_cart() as $ci) {
+                                    $matchedId = $ci['variation_id'] ?: $ci['product_id'];
+                                    if ((int)$matchedId === (int)$product->get_id()) {
+                                        $cart_quantity = (int)$ci['quantity'];
+                                        break;
+                                    }
+                                }
+                            }
+                            ?>
+                            <div class="pizza__price flex product-<?php echo $product->get_id(); ?>">
+                                <div class="count-container<?php echo $cart_quantity === 0 ? ' hide' : ''; ?>">
+                                    <div class="flex">
+                                        <div class="basket">
+                                            <a href="#" class="add-to-cart">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="minus">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="count" value="<?php echo $cart_quantity > 0 ? $cart_quantity : 1; ?>" disabled>
+                                    <div class="flex">
+                                        <div class="basket">
+                                            <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-container<?php echo $cart_quantity > 0 ? ' hide' : ''; ?>">
+                                    <div class="flex">
+                                        <div class="basket">
+                                            <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

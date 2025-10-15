@@ -4,9 +4,15 @@
   &__title {
     font-family: main.$fontTitle, serif;
     font-size: 36px;
-    color: main.$greenColor;
+    color: main.$fontColor;
     margin-top: 15px;
     margin-bottom: 15px;
+  }
+
+  @media (max-width: 500px) {
+    .basket__list {
+      overflow: scroll;
+    }
   }
 
   &__information {
@@ -25,8 +31,14 @@
 
     .price {
       @media (max-width: 500px) {
-        font-size: 20px;
+        font-size: 16px;
       }
+    }
+
+    .basket__separator {
+      height: 1px;
+      width: 100%;
+      background-color: main.$fontColor;
     }
   }
 
@@ -35,10 +47,18 @@
     font-size: 24px;
     color: main.$greyColor;
     align-items: center;
-    width: 500px;
+    width: 640px;
     place-content: space-between;
     @media (max-width: 1300px) {
       width: 100%;
+    }
+
+    .item__name {
+      width: 200px;
+
+      @media (max-width: 500px) {
+        width: 80px;
+      }
     }
   }
 
@@ -77,27 +97,34 @@
     @media (max-width: 768px) {
       line-height: 25px;
       min-width: 215px;
+      margin-left: 10px;
     }
     @media (max-width: 720px) {
       min-width: 240px;
+      margin-left: 10px;
     }
     @media (max-width: 660px) {
       min-width: 204px;
+      margin-left: 10px;
     }
     @media (max-width: 620px) {
       min-width: 170px;
+      margin-left: 10px;
     }
     @media (max-width: 565px) {
       font-size: 18px;
-      min-width: 169px;
+      min-width: 80px;
+      margin-left: 10px;
     }
     @media (max-width: 500px) {
-      min-width: 130px;
+      min-width: 80px;
+      margin-left: 10px;
     }
     @media (max-width: 400px) {
       margin-left: 10px;
-      min-width: 100px;
+      min-width: 80px;
       line-height: 20px;
+      margin-left: 10px;
     }
   }
 
@@ -163,16 +190,20 @@
 
   .delivery-self {
     .active {
-      background-color: main.$greenColor;
+      background-color: #d9d9d9;
+      font-weight: 600;
+      border-radius: 32px;
     }
 
     div {
-      background-color: #eaeaea;
+      width: 50%;
+      background-color: #efefef;
+      font-weight: 400;
       color: main.$fontColor;
       font-family: main.$fontTitle, serif;
       cursor: pointer;
-      padding: 0 20px;
-      border-radius: 5%;
+      //padding: 0 20px;
+      //border-radius: 5%;
 
       &:hover {
         transition: .2s;
@@ -182,10 +213,13 @@
   }
 
   .decrease {
-    color: main.$greenColor;
-    font-family: main.$fontTitle, serif;
     cursor: pointer;
-    padding: 0 20px;
+    background-color: #d9d9d9;
+    padding: 5px;
+    border-radius: 50%;
+    align-content: center;
+    max-height: 40px;
+    align-self: center;
 
     &:hover {
       transition: .2s;
@@ -193,18 +227,39 @@
     }
 
     @media (max-width: 565px) {
-      padding: 0 10px;
+      padding: 0 3px;
     }
     @media (max-width: 400px) {
-      padding: 0 5px;
+      padding: 0 3px;
+    }
+  }
+
+  .quantity .flex {
+    display: flex;
+    background-color: #d9d9d9;
+    border-radius: 32px;
+
+    input {
+      padding: 0 6px;
+      margin: 0 6px;
+      width: 60px;
+      background-color: #d9d9d9;
+      text-align: center;
+
+      @media (max-width: 620px) {
+        width: 38px;
+      }
     }
   }
 
   .increase {
-    color: main.$greenColor;
-    font-family: 'Arial', sans-serif;
     cursor: pointer;
-    padding: 0 20px;
+    background-color: #d9d9d9;
+    padding: 5px;
+    border-radius: 50%;
+    align-content: center;
+    max-height: 40px;
+    align-self: center;
 
     &:hover {
       transition: .2s;
@@ -212,18 +267,22 @@
     }
 
     @media (max-width: 565px) {
-      padding: 0 10px;
+      padding: 0 3px;
     }
     @media (max-width: 400px) {
-      padding: 0 5px;
+      padding: 0 3px;
     }
   }
 
   .delete {
-    color: main.$greenColor;
+    //color: main.$fontColor;
     font-family: 'Arial', sans-serif;
     cursor: pointer;
     padding: 0 20px;
+
+    @media (max-width: 565px) {
+      padding: 0 5px;
+    }
 
     &:hover {
       transition: .2s;
@@ -298,20 +357,33 @@
   }
 
   .total {
-    color: main.$greenColor;
+    color: main.$fontColor;
     font-family: main.$fontTitle, serif;
     margin-top: 20px;
+    font-size: 32px;
   }
 
   .basket__delivery {
     margin-top: 20px;
+    border-radius: 32px;
+
+    .delivery-self {
+      background-color: #efefef;
+      text-align: center;
+      border-radius: 32px;
+    }
+
+    .delivery {
+      text-align: center;
+    }
 
     input {
       margin-bottom: 10px;
     }
 
     div {
-      margin-top: 10px;
+      margin: 5px;
+
 
       :first-child {
         margin-right: 10px
@@ -353,13 +425,13 @@
 
   .complete-order {
     margin-top: 20px;
-    background-color: main.$greenColor;
+    background-color: #d9d9d9;
     height: 49px;
     padding: 0 47px;
     border: none;
     border-radius: 12px;
     font-size: 24px;
-    color: #ffffff;
+    color: main.$fontColor;
     cursor: pointer;
     text-decoration: none;
     font-family: main.$fontTitle, serif;
@@ -417,12 +489,12 @@
             line-height: 25px;
           }
           @media (max-width: 500px) {
-            min-width: 100px;
+            min-width: 80px;
             margin-left: 0;
             font-size: 20px;
           }
           @media (max-width: 400px) {
-            min-width: 95px;
+            min-width: 80px;
           }
         }
 

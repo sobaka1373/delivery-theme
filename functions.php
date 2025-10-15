@@ -126,6 +126,7 @@ function remove_item_from_cart() {
         'cart_empty' => $cart_empty,
         'removed_product_id' => $removed_product_id,
         'fragments' => $fragments,
+        'basket_information' => render_checkout_basket_information_html(),
     ]);
 }
 add_action('wp_ajax_remove_item_from_cart', 'remove_item_from_cart');
@@ -179,6 +180,7 @@ function update_cart_quantity() {
         wp_send_json_success([
             'message' => 'Количество обновлено',
             'fragments' => $fragments,
+            'basket_information' => render_checkout_basket_information_html(),
         ]);
     } else {
         wp_send_json_error("Не удалось обновить количество");
@@ -512,7 +514,8 @@ function custom_add_to_cart() {
         ];
 
         wp_send_json_success([
-            'fragments' => $fragments
+            'fragments' => $fragments,
+            'basket_information' => render_checkout_basket_information_html(),
         ]);
     } else {
         wp_send_json_error('Не удалось добавить товар');
@@ -585,6 +588,58 @@ function render_basket_dropdown_html() {
     </div>
     <?php
 
+    return ob_get_clean();
+}
+
+// Renders the basket items list used on checkout/cart pages for AJAX updates
+function render_checkout_basket_information_html() {
+    ob_start();
+    if (WC()->cart && WC()->cart->get_cart_contents_count() > 0):
+        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
+            $_product = $cart_item['data'];
+            $product_name = $_product->get_name();
+            $attributes = $_product->get_attributes();
+            if (!empty($attributes) && isset($attributes['pa_size'])) {
+                $product_name = str_replace(array(' - 30 см', ' - 40 см'), '', $product_name);
+            }
+            $product_permalink = $_product->is_visible() ? $_product->get_permalink() : '';
+            $product_image = $_product->get_image('thumbnail');
+            $product_price = wc_price($_product->get_price());
+            $product_quantity = (int) $cart_item['quantity'];
+            ?>
+            <div class="item flex cart_item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
+                <?php if ($product_permalink): ?>
+                    <a href="<?php echo esc_url($product_permalink); ?>"><?php echo $product_image; ?></a>
+                <?php else: ?>
+                    <?php echo $product_image; ?>
+                <?php endif; ?>
+                <div class="name flex">
+                    <div class="item__name">
+                        <?php if ($product_permalink): ?>
+                            <a href="<?php echo esc_url($product_permalink); ?>" class="hover:underline"><p><?php echo esc_html($product_name); ?></p></a>
+                        <?php else: ?>
+                            <?php echo esc_html($product_name); ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="quantity" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
+                        <div class="flex">
+                            <div class="decrease"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="minus"></div>
+                            <input type="text"
+                                   name="cart[<?php echo esc_attr($cart_item_key); ?>][qty]"
+                                   value="<?php echo esc_attr($product_quantity); ?>"
+                                   min="1"
+                                   class="w-16 text-center border border-gray-300 rounded"
+                                   disabled />
+                            <div class="increase"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus"></div>
+                        </div>
+                    </div>
+                    <div class="price"><?php echo $product_price; ?></div>
+                    <div class="delete"><button class="ajax-remove" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">✖</button></div>
+                </div>
+            </div>
+            <?php
+        endforeach;
+    endif;
     return ob_get_clean();
 }
 

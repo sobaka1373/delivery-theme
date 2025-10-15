@@ -121,7 +121,7 @@
             }, 1000);
         });
 
-        $('.decrease').click(function () {
+        $(document).on('click', '.decrease', function () {
             const quantityContainer = $(this).closest('.quantity');
             const cartItemKey = quantityContainer.data('cart-item-key');
             const input = quantityContainer.find('input[type="text"]');
@@ -133,7 +133,7 @@
             }
         });
 
-        $('.increase').click(function () {
+        $(document).on('click', '.increase', function () {
             const quantityContainer = $(this).closest('.quantity');
             const cartItemKey = quantityContainer.data('cart-item-key');
             const input = quantityContainer.find('input[type="text"]');
@@ -277,6 +277,13 @@
                 },
                 success: function(response) {
                     if (response.success) {
+                        // Обновляем список товаров и хедерные фрагменты
+                        if (response.data && response.data.basket_information) {
+                            $('.basket__information .basket__list').html(response.data.basket_information);
+                        }
+                        if (response.data && response.data.fragments) {
+                            $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
+                        }
                         $(totalUpdate);
                     } else {
                         console.error('Failed to update quantity');
@@ -287,6 +294,40 @@
                 }
             });
         }
+
+        // Делегированное удаление товара из списка в checkout/cart
+        $(document).on('click', '.basket__information .ajax-remove, .basket__information .remove-item button', function(e){
+            e.preventDefault();
+            var cartItemKey = $(this).data('cart-item') || $(this).data('cart-item-key');
+            if (!cartItemKey) return;
+            $.ajax({
+                url: wc_cart_params.ajax_url,
+                type: 'POST',
+                dataType: 'json',
+                data: { action: 'remove_item_from_cart', cart_item_key: cartItemKey },
+                success: function(response){
+                    if (response.success) {
+                        if (response.data && response.data.basket_information) {
+                            $('.basket__information .basket__list').html(response.data.basket_information);
+                        }
+                        if (response.data && response.data.fragments) {
+                            $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
+                        }
+                        // Сброс UI в additional у соответствующего товара
+                        var removedId = response.data.removed_product_id;
+                        if (removedId) {
+                            $('.additional .product-' + removedId).each(function(){
+                                var $p = $(this);
+                                $p.find('.count-container').addClass('hide');
+                                $p.find('.add-container').removeClass('hide');
+                                $p.find('input[name="count"]').val(1);
+                            });
+                        }
+                        $(totalUpdate);
+                    }
+                }
+            });
+        });
 
         function getCartItemKey(element) {
             return $(element).closest('.quantity').data('cart-item-key');

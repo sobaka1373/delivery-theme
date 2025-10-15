@@ -31,6 +31,9 @@ jQuery(document).ready(function($){
                     if (response.data && response.data.fragments) {
                         $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
                     }
+                    if (response.data && response.data.basket_information) {
+                        $('.basket__information .basket__list').html(response.data.basket_information);
+                    }
                     var $price = $btn.closest('.pizza__price');
                     if (!$price.length) {
                         // fallback: ищем внутри карточки товара
@@ -111,6 +114,9 @@ jQuery(document).ready(function($){
             },
             success: function(response){
                 if (response && response.success) {
+                    if (response.data && response.data.basket_information) {
+                        $('.basket__information .basket__list').html(response.data.basket_information);
+                    }
                     if (response.data && response.data.fragments) {
                         $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
                     }

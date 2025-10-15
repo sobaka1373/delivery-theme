@@ -28,9 +28,20 @@
                         $query->the_post();
                         $product = wc_get_product(get_the_ID());
 
-                        // Проверяем, является ли товар переменным
+                        // Подготовка данных по вариациям/количеству из корзины
                         $has_size_variations = false;
                         $sizes = [];
+                        $selected_variations = [];
+                        if (function_exists('WC') && WC()->cart) {
+                            foreach (WC()->cart->get_cart() as $cart_item) {
+                                if ($cart_item['variation_id']) {
+                                    $parentId = (int) $cart_item['data']->get_parent_id();
+                                    if ($parentId === (int) get_the_ID()) {
+                                        $selected_variations[(int)$cart_item['variation_id']] = (int)$cart_item['quantity'];
+                                    }
+                                }
+                            }
+                        }
 
                         if ($product->is_type('variable')) {
                             $variations = $product->get_available_variations();
@@ -44,12 +55,19 @@
                                 }
                             }
                         }
+
+                        // Выбор активной вариации: первая выбранная, иначе первая по списку
+                        $first_active_variation_id = 0;
+                        if (!empty($selected_variations)) {
+                            $keys = array_keys($selected_variations);
+                            $first_active_variation_id = (int)$keys[0];
+                        }
                         ?>
 
                       <div class="pizza__item">
-                        <div class="new flex">
-                            <?php showTags($product); ?>
-                        </div>
+<!--                        <div class="new flex">-->
+<!--                            --><?php //showTags($product); ?>
+<!--                        </div>-->
                         <a href="<?php the_permalink(); ?>">
                           <div class="pizza__image">
                               <?php if (has_post_thumbnail()) : ?>
@@ -75,9 +93,13 @@
 
                           <?php if ($has_size_variations) : ?>
                             <div class="toggle-container center">
-                                <?php foreach ($sizes as $size => $variation_id) : ?>
-                                  <label class="size-toggle pizza__size">
-                                    <input type="radio" name="pizza_size_<?php echo get_the_ID(); ?>" value="<?php echo $size; ?>" data-variation-id="<?php echo $variation_id; ?>" <?php echo ($size === array_key_first($sizes)) ? 'checked' : ''; ?>>
+                                <?php foreach ($sizes as $size => $variation_id) :
+                                    $isActive = $first_active_variation_id ? ($variation_id === $first_active_variation_id) : ($size === array_key_first($sizes));
+                                    $checked = $isActive ? 'checked' : '';
+                                    $activeClass = $isActive ? ' active' : '';
+                                    ?>
+                                  <label class="size-toggle pizza__size<?php echo $activeClass; ?>">
+                                    <input type="radio" name="pizza_size_<?php echo get_the_ID(); ?>" value="<?php echo $size; ?>" data-variation-id="<?php echo $variation_id; ?>" <?php echo $checked; ?>>
                                     <span><?php echo str_replace('cm', '', $size); ?> см</span>
                                   </label>
                                 <?php endforeach; ?>
@@ -85,27 +107,81 @@
 
                             <div class="variation-container">
                                 <?php foreach ($sizes as $size => $variation_id) :
-                                    $variation = new WC_Product_Variation($variation_id); ?>
-                                  <div class="pizza__price flex product-<?php echo $variation_id; ?><?php echo ($size === array_key_first($sizes)) ? ' active' : ''; ?>">
+                                    $variation = new WC_Product_Variation($variation_id);
+                                    $isActive = $first_active_variation_id ? ($variation_id === $first_active_variation_id) : ($size === array_key_first($sizes));
+                                    $isSelected = array_key_exists($variation_id, $selected_variations);
+                                    $qty = $isSelected ? (int)$selected_variations[$variation_id] : 1;
+                                    ?>
+                                  <div class="pizza__price flex product-<?php echo $variation_id; ?><?php echo $isActive ? ' active' : ''; ?>">
                                     <div class="price"><?php echo $variation->get_price_html(); ?></div>
-                                    <div class="flex">
-                                      <div class="basket">
-                                        <a href="?add-to-cart=<?php echo $variation_id; ?>" class="add-to-cart">
-                                          <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
-                                        </a>
-                                      </div>
+                                    <div class="count-container<?php echo $isSelected ? '' : ' hide'; ?>">
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="#" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="count" value="<?php echo $qty; ?>" disabled>
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="?add-to-cart=<?php echo $variation_id; ?>" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-container<?php echo $isSelected ? ' hide' : ''; ?>">
+                                        <div class="flex">
+                                            <div class="basket">
+                                                <a href="?add-to-cart=<?php echo $variation_id; ?>" class="add-to-cart">
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                   </div>
                                 <?php endforeach; ?>
                             </div>
                           <?php else : ?>
-                            <div class="pizza__price flex">
+                            <?php
+                            $cart_quantity = 0;
+                            if (function_exists('WC') && WC()->cart) {
+                                foreach (WC()->cart->get_cart() as $cart_item) {
+                                    $matchedId = $cart_item['variation_id'] ?: $cart_item['product_id'];
+                                    if ((int)$matchedId === (int)$product->get_id()) {
+                                        $cart_quantity = (int)$cart_item['quantity'];
+                                        break;
+                                    }
+                                }
+                            }
+                            ?>
+                            <div class="pizza__price flex product-<?php echo $product->get_id(); ?>">
                               <div class="price"><?php echo $product->get_price_html(); ?></div>
-                              <div class="flex">
-                                <div class="basket">
-                                  <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
-                                  </a>
+                              <div class="count-container<?php echo $cart_quantity === 0 ? ' hide' : ''; ?>">
+                                <div class="flex">
+                                  <div class="basket">
+                                    <a href="#" class="add-to-cart">
+                                      <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="add-to-cart">
+                                    </a>
+                                  </div>
+                                </div>
+                                <input type="text" name="count" value="<?php echo $cart_quantity > 0 ? $cart_quantity : 1; ?>" disabled>
+                                <div class="flex">
+                                  <div class="basket">
+                                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                      <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="add-container<?php echo $cart_quantity > 0 ? ' hide' : ''; ?>">
+                                <div class="flex">
+                                  <div class="basket">
+                                    <a href="?add-to-cart=<?php echo $product->get_id(); ?>" class="add-to-cart">
+                                      <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="add-to-cart">
+                                    </a>
+                                  </div>
                                 </div>
                               </div>
                             </div>

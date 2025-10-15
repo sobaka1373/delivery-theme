@@ -4,9 +4,9 @@ if (!$product) return;
 ?>
 
 <div class="pizza__item">
-    <div class="new flex">
-        <?php showTags($product); ?>
-    </div>
+<!--    <div class="new flex">-->
+<!--        --><?php //showTags($product); ?>
+<!--    </div>-->
     <a href="<?php the_permalink(); ?>">
         <div class="pizza__image">
             <?php if (has_post_thumbnail()) : ?>

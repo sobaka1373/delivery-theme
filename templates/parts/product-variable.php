@@ -64,9 +64,9 @@ if (!empty($selected_variations)) {
             <!-- Информация о товаре -->
             <div class="w-full lg:w-1/2 px-4">
                 <div class="product-details">
-                    <div class="new flex">
-                        <?php showTags($product); ?>
-                    </div>
+<!--                    <div class="new flex">-->
+<!--                        --><?php //showTags($product); ?>
+<!--                    </div>-->
                     <h1 class="mobile-title text-4xl font-bold mb-4">
                         <?php the_title(); ?>
                     </h1>

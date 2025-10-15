@@ -19,6 +19,10 @@ jQuery(document).ready(function($) {
                         $.each(response.data.fragments, function(key, value){ $(key).replaceWith(value); });
                     }
 
+                    if (response.data && response.data.basket_information) {
+                        $('.basket__information .basket__list').html(response.data.basket_information);
+                    }
+
                     // Возвращаем карточки товара на странице в исходное состояние
                     var removedId = response.data.removed_product_id;
                     if (removedId) {
@@ -30,6 +34,13 @@ jQuery(document).ready(function($) {
                             // На старой разметке
                             $price.find('.quantity-wrapper').addClass('hide');
                             $price.find('a.add-to-cart[href*="add-to-cart="]').show();
+                        });
+
+                        // Также сбросим в блоке additional (если карточка оформлена иначе)
+                        $('.additional .product-' + removedId).each(function(){
+                            var $p = $(this);
+                            $p.find('.count-container').addClass('hide');
+                            $p.find('.add-container').removeClass('hide');
                         });
                     }
                 } else {
