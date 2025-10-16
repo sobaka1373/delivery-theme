@@ -29,84 +29,84 @@ get_header(); ?>
     <div class="basket-mobile-flex flex justify-content center">
         <div class="basket__information">
             <div class="basket__list">
-            <?php if (WC()->cart->get_cart_contents_count() > 0):
-                foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
-                    $_product = $cart_item['data'];
-                    $product_id = $cart_item['product_id'];
-                    $product_name = $_product->get_name();
-                    $attributes = $_product->get_attributes();
-                    if (!empty($attributes) && isset($attributes['pa_size'])) {
-                        $product_name = str_replace(array(' - 30 см', ' - 40 см'), '', $product_name);
-                    }
-                    $product_permalink = $_product->is_visible() ? $_product->get_permalink() : '';
-                    $product_image = $_product->get_image('thumbnail');
-                    $product_price = wc_price($_product->get_price());
-                    $product_quantity = $cart_item['quantity'];?>
-                    <div class="item flex cart_item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
-                        <?php if ($product_permalink): ?>
-                            <a href="<?php echo esc_url($product_permalink); ?>">
+                <?php if (WC()->cart->get_cart_contents_count() > 0):
+                    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
+                        $_product = $cart_item['data'];
+                        $product_id = $cart_item['product_id'];
+                        $product_name = $_product->get_name();
+                        $attributes = $_product->get_attributes();
+                        if (!empty($attributes) && isset($attributes['pa_size'])) {
+                            $product_name = str_replace(array(' - 30 см', ' - 40 см'), '', $product_name);
+                        }
+                        $product_permalink = $_product->is_visible() ? $_product->get_permalink() : '';
+                        $product_image = $_product->get_image('thumbnail');
+                        $product_price = wc_price($_product->get_price());
+                        $product_quantity = $cart_item['quantity'];?>
+                        <div class="item flex cart_item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
+                            <?php if ($product_permalink): ?>
+                                <a href="<?php echo esc_url($product_permalink); ?>">
+                                    <?php echo $product_image; ?>
+                                </a>
+                            <?php else: ?>
                                 <?php echo $product_image; ?>
-                            </a>
-                        <?php else: ?>
-                            <?php echo $product_image; ?>
-                        <?php endif; ?>
-                        <div class="name flex">
-                            <div class="item__name">
-                                <?php if ($product_permalink): ?>
-                                    <a href="<?php echo esc_url($product_permalink); ?>" class="hover:underline">
-                                        <p><?php echo esc_html($product_name); ?></p>
-                                    </a>
-                                <?php else: ?>
-                                    <?php echo esc_html($product_name); ?>
-                                <?php endif; ?>
-                                <div class="flex">
-                                    <div class="weight">
-                                        <?php if(!empty($_product->get_weight())) :
-                                            echo $_product->get_weight() . "г";
-                                        endif; ?>
-                                    </div>
-                                    |
-                                    <div class="size">
-                                        <?php
-                                        if (!empty($attributes) && isset($attributes['pa_size'])) {
-                                            if ($attributes['pa_size'] === '30cm') {
-                                                echo '30 см';
-                                            } elseif ($attributes['pa_size'] === '40cm') {
-                                                echo '40 см';
-                                            }
-                                        }
-                                        ?>
-                                    </div>
+                            <?php endif; ?>
+                            <div class="name flex">
+                                <div class="item__name">
+                                    <?php if ($product_permalink): ?>
+                                        <a href="<?php echo esc_url($product_permalink); ?>" class="hover:underline">
+                                            <p><?php echo esc_html($product_name); ?></p>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php echo esc_html($product_name); ?>
+                                    <?php endif; ?>
+                                    <!--                                <div class="flex">-->
+                                    <!--                                    <div class="weight">-->
+                                    <!--                                        --><?php //if(!empty($_product->get_weight())) :
+                                    //                                            echo $_product->get_weight() . "г";
+                                    //                                        endif; ?>
+                                    <!--                                    </div>-->
+                                    <!--                                    |-->
+                                    <!--                                    <div class="size">-->
+                                    <!--                                        --><?php
+                                    //                                        if (!empty($attributes) && isset($attributes['pa_size'])) {
+                                    //                                            if ($attributes['pa_size'] === '30cm') {
+                                    //                                                echo '30 см';
+                                    //                                            } elseif ($attributes['pa_size'] === '40cm') {
+                                    //                                                echo '40 см';
+                                    //                                            }
+                                    //                                        }
+                                    //                                        ?>
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
+                                </div>
+                                <div class="quantity" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
+                                    <form method="post" action="">
+                                        <div class="flex">
+                                            <div class="decrease">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="minus">
+                                            </div>
+                                            <input type="text"
+                                                   name="cart[<?php echo $cart_item_key; ?>][qty]"
+                                                   value="<?php echo esc_attr($product_quantity); ?>"
+                                                   min="1"
+                                                   class="w-16 text-center border border-gray-300 rounded"
+                                                   disabled/>
+                                            <div class="increase">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="price">
+                                    <?php echo $product_price; ?>
+                                </div>
+                                <div class="delete">
+                                    <button class="ajax-remove" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">&#10006;</button>
                                 </div>
                             </div>
-                            <div class="quantity" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
-                                <form method="post" action="">
-                                    <div class="flex">
-                                        <div class="decrease">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/minus.svg" alt="minus">
-                                        </div>
-                                        <input type="text"
-                                               name="cart[<?php echo $cart_item_key; ?>][qty]"
-                                               value="<?php echo esc_attr($product_quantity); ?>"
-                                               min="1"
-                                               class="w-16 text-center border border-gray-300 rounded"
-                                               disabled/>
-                                        <div class="increase">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/plus.svg" alt="plus">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="price">
-                                <?php echo $product_price; ?>
-                            </div>
-                            <div class="delete">
-                                <button class="ajax-remove" data-cart-item="<?php echo esc_attr($cart_item_key); ?>">&#10006;</button>
-                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <div class="basket__separator"></div>
@@ -310,11 +310,11 @@ get_header(); ?>
                         <div id="message"></div>
                     </div>
                     <div class="payment-type">
-                        <label>
+                        <label class="radio-label">
                             <input type="radio" name="payment" value="cash" checked>
                             Оплата наличными
                         </label>
-                        <label>
+                        <label class="radio-label">
                             <input type="radio" name="payment" value="online">
                             Оплата онлайн
                         </label>

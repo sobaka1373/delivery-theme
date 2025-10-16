@@ -1,51 +1,53 @@
 <div class="slider-wrapper-container">
     <div class="slider-wrapper">
-        <!-- Контейнер слайдера -->
         <div id="slider" class="swiper-container">
             <div class="swiper-wrapper">
                 <?php
+                $today = date('N');
                 $banners = get_field('banner_block', 'option');
-                foreach ($banners as $banner) : ?>
-                    <div class="swiper-slide">
-                        <?php if ($banner['is_two_sec'][0] === 'Yes'): ?>
-                            <div class="grid__two">
-                                <div class="left-item">
-                                    <?php echo $banner['left_sec']; ?>
+
+                if ($banners) :
+                    foreach ($banners as $banner) :
+                        $day_number = $banner['day_number'];
+                        if ($day_number === $today || $day_number === '8') :
+                            $image = $banner['image'];
+                            if ($image) : ?>
+                                <div class="swiper-slide">
+                                    <?php
+                                    $image_id = $image['ID'];
+                                    $size = 'large';
+                                    echo wp_get_attachment_image( $image_id, $size, false, array(
+                                        'loading' => 'lazy',
+                                        'alt' => esc_attr($image['alt']),
+                                        'class' => 'slider-image',
+                                    ) );
+                                    ?>
                                 </div>
-                                <div>
-                                    <?php echo $banner['right']; ?>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <div class="grid__one">
-                                <div class="left-item">
-                                    <?php echo $banner['left_sec']; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
+                            <?php endif;
+                        endif;
+                    endforeach;
+                endif;
+                ?>
             </div>
-            <!-- Пагинация для слайдера -->
             <div class="swiper-pagination"></div>
         </div>
     </div>
 </div>
+
 <script>
     var swiper = new Swiper('#slider', {
         slidesPerView: 1,
         spaceBetween: 0,
         loop: true,
         autoplay: {
-            delay: 5000,
+            delay: 10000,
             disableOnInteraction: false,
         },
-        speed: 1500,
+        speed: 5000,
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
         },
         grabCursor: true,
     });
-     // swiper.autoplay.stop();
 </script>

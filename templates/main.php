@@ -4,7 +4,7 @@
 
 <?php
 if( get_field('activate', 'options') === 'yes' ) {
-//    require_once locate_template('templates/parts/banner.php');
+    require_once locate_template('templates/parts/banner.php');
 }
 ?>
 
@@ -30,5 +30,16 @@ require_once locate_template('templates/parts/drinks.php');
 
 require_once locate_template('templates/parts/sause.php');
 ?>
-
+    <div class="background_grey">
+        <div class="container center">
+            <?php
+            $frontpage_id = get_option('page_on_front');
+            $seo_text = get_post_field('post_content', $frontpage_id);
+            if ( $seo_text ) : ?>
+                <div class="seo-text">
+                <?php echo apply_filters('the_content', $seo_text); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 <?php get_footer(); ?>

@@ -33,9 +33,21 @@
   user-select: none;
   width: 100%;
 
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  //.swiper-slide {
+  //  margin: 0 auto;
+  //  max-width: 1000px;
+  //}
+
   img {
-    max-width: 100%;
     height: auto;
+    margin: 0 auto;
+    max-width: 1000px;
+    border-radius: 32px;
+    max-height: 420px;
   }
 }
 
@@ -330,4 +342,14 @@
 
 .quantity-wrapper.show {
   display: grid;
+}
+
+.background_grey {
+  background-color: #ededed;
+  .seo-text {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: main.$fontTitle;
+    font-weight: 400;
+  }
 }
