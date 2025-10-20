@@ -158,12 +158,15 @@
     text-align: center;
     min-height: 260px;
     max-height: 260px;
+
     @media (max-width: 1300px) {
       min-height: 200px;
     }
 
     img {
       max-width: 250px;
+      margin: 0 auto;
+
       @media (max-width: 1300px) {
         max-width: 200px;
       }
