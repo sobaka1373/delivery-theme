@@ -14,7 +14,7 @@ if (function_exists('WC') && WC()->cart) {
 }
 ?>
 
-<div class="dominos-product-page product-page container center">
+<div class="dominos-product-page product-page simple-product container center">
     <nav class="category flex" aria-label="Хлебные крошки" itemscope itemtype="https://schema.org/BreadcrumbList">
         <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <a itemprop="item" href="<?php echo esc_url(home_url('/')); ?>">

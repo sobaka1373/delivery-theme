@@ -320,3 +320,9 @@
     }
   }
 }
+
+.product-page.simple-product {
+  .item-content .product-details .price .pizza__price {
+    display: flex;
+  }
+}

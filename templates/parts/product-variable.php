@@ -21,7 +21,7 @@ if (!empty($selected_variations)) {
 }
 ?>
 
-<div class="dominos-product-page product-page container center">
+<div class="dominos-product-page product-page variable-product container center">
     <div class="category flex" aria-label="Хлебные крошки" itemscope itemtype="https://schema.org/BreadcrumbList">
         <div class="button__back">
             <a href="javascript:history.back()">
