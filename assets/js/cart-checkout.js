@@ -2,7 +2,7 @@
     'use strict';
     $(document).ready(function() {
 
-        let shippingMethod = $("#shipping_method #shipping_method_0_flat_rate2");
+        let shippingMethod = $("#shipping_method #shipping_method_0_flat_rate9");
         if (shippingMethod.length) {
             shippingMethod.trigger("click");
             setTimeout(function() {
@@ -103,7 +103,7 @@
             $('.woocommerce-input-wrapper #billing_delivery_delivery').click();
 
             setDelivery();
-            $('#shipping_method #shipping_method_0_flat_rate2').click();
+            $('#shipping_method #shipping_method_0_flat_rate9').click();
 
             setTimeout(function() {
                 $(totalUpdate);
@@ -248,11 +248,11 @@
                 complete: function () {
                     $(".basket__promo .total").removeClass("loading"); // Убираем лоадер
                     toggleLoading(false);
+                    updateCustomFee();
                 },
             });
 
             $('body').trigger('update_checkout');
-
             setTimeout(function() {
                 $('#billing_address_house').trigger('change');
             }, 2000);
@@ -291,6 +291,7 @@
                 },
                 complete: function() {
                     toggleLoading(false);
+                    updateCustomFee();
                 }
             });
         }
@@ -342,27 +343,22 @@
             }
         }
 
-
-        // function updateCustomFee() {
-        //     $.ajax({
-        //         url: wc_cart_params.ajax_url,
-        //         type: 'GET',
-        //         data: {
-        //             action: "get_pizza_discount_html"
-        //         },
-        //         success: function (response) {
-        //             if (response.success) {
-        //                 if ($('.custom-fee').length === 0) {
-        //                     $('<div class="custom-fee"></div>').insertAfter('.cart_totals');
-        //                 }
-        //                 $('.custom-fee').html(response.data);
-        //             }
-        //         }
-        //     });
-        // }
-
-        // updateCustomFee();
-
+        function updateCustomFee() {
+            $.ajax({
+                url: wc_cart_params.ajax_url,
+                type: 'POST',
+                dataType: 'json',
+                data: { action: 'get_applied_discount' },
+                success: function(response) {
+                    if (response.success) {
+                        if ($('.custom-fee').length === 0) {
+                            $('<div class="custom-fee"></div>').insertAfter('.cart_totals');
+                        }
+                        $('.custom-fee').html(response.data.html);
+                    }
+                }
+            });
+        }
 
     });
 })(jQuery);

@@ -48,6 +48,21 @@
     max-width: 1000px;
     border-radius: 32px;
     max-height: 420px;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
+  }
+}
+
+.mobile-single-image {
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  .image {
+    margin: 10px auto;
   }
 }
 

@@ -661,3 +661,23 @@ add_action('woocommerce_checkout_create_order', function($order, $data) {
         $order->update_meta_data('_applied_discount_amount', $discount_amount);
     }
 }, 10, 2);
+
+// functions.php
+add_action('wp_ajax_get_applied_discount', 'get_applied_discount');
+add_action('wp_ajax_nopriv_get_applied_discount', 'get_applied_discount');
+
+function get_applied_discount() {
+    if (!WC()->session) {
+        wp_send_json_error(['message' => 'Session not found']);
+    }
+
+    $applied_discount_label = WC()->session->get('applied_discount_label');
+
+    ob_start();
+    if (!empty($applied_discount_label)) {
+        echo '<p class="applied-discount">Применена скидка: ' . esc_html($applied_discount_label) . '</p>';
+    }
+    $html = ob_get_clean();
+
+    wp_send_json_success(['html' => $html]);
+}

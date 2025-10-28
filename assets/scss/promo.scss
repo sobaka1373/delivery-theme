@@ -38,9 +38,21 @@
       .promo-container {
         width: 100%;
 
+        @media (max-width: 768px) {
+          background: #f3f3f3;
+          border-radius: 16px;
+          overflow: hidden;
+        }
+
         .title {
           font-size: 32px;
           text-decoration: none;
+
+          @media (max-width:  768px) {
+            font-size: 22px;
+            text-align: center;
+            margin: 10px 0;
+          }
         }
 
         .promo-img {
@@ -48,6 +60,10 @@
           width: 100%;
           height: 250px;
           margin-bottom: 20px;
+
+          @media (max-width: 768px) {
+            height: 140px;
+          }
         }
       }
     }
