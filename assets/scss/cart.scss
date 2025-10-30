@@ -40,6 +40,13 @@
       width: 100%;
       background-color: main.$fontColor;
     }
+
+    .promo-text {
+      font-family: main.$fontTitle, serif;
+      font-size: 24px;
+      margin: 10px 0;
+      color: main.$greenColor;
+    }
   }
 
   .name {
@@ -143,7 +150,7 @@
       font-family: main.$fontTitle, serif;
       font-size: 24px;
       color: main.$fontColor;
-      margin-left: 20px;
+      //margin-left: 20px;
       align-items: center;
 
       img {

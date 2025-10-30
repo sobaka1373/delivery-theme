@@ -110,6 +110,22 @@ get_header(); ?>
             </div>
 
             <div class="basket__separator"></div>
+            <?php
+            $current_date = date('Y-m-d');
+            $special_start = '2025-10-31';
+            $special_end   = '2025-11-02';
+            if ($current_date >= $special_start && $current_date <= $special_end ):
+            ?>
+            <div class="promo-text">
+                <p>
+                    Сегодня дествует акция на пиццы 1+1=3 при самовывозе!
+                </p>
+                <p>
+                    Добавь 3 пиццы в корзину и мы отним цену за пиццу меньшей стоимости.
+                </p>
+            </div>
+            <?php endif; ?>
+
             <div class="additional">
                 <div class="justify-content flex title-container">
                     <div class="add-sos">

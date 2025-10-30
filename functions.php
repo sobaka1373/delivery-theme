@@ -400,6 +400,30 @@ add_action('woocommerce_cart_calculate_fees', function(WC_Cart $cart) {
             ];
         }
 
+        // 5.1 Акция 1+1=3 на самовывоз (31.10–02.11)
+        $current_date = date('Y-m-d');
+        $special_start = '2025-10-31';
+        $special_end   = '2025-11-02';
+
+        if (
+            $is_pickup &&
+            $current_date >= $special_start &&
+            $current_date <= $special_end &&
+            count($pizzas_in_cart) >= 3 &&
+            !$has_combo
+        ) {
+            usort($pizzas_in_cart, function($a, $b) {
+                return $a['price'] <=> $b['price'];
+            });
+
+            $cheapest_pizza_discount = $pizzas_in_cart[0]['price'];
+
+            $possible_discounts['weekend_three_pizzas'] = [
+                'amount' => $cheapest_pizza_discount,
+                'label'  => 'Акция 1 + 1 = 3 (только самовывоз, выходные)'
+            ];
+        }
+
         // 6. Скидка за количество пицц при доставке
         if (!$is_pickup && $pizza_count >= 3) {
             $percent_discount = 0;
